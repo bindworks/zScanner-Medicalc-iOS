@@ -24,8 +24,8 @@ class AppCoordinator: Coordinator {
 
     // MARK: Navigation methods
     private func showSplashScreen() {
-        let viewController = SeaCatSplashViewController(coordinator: self)
-        changeWindowControllerTo(viewController)
+ //        showSplashScreen()
+        startDocumentsCoordinator(with: UserSession(login: LoginDomainModel(username: "Test")))
     }
 
     private func runLoginFlow() {
