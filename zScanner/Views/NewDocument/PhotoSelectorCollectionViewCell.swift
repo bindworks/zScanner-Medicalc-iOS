@@ -59,6 +59,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
+        textField.delegate = self
         contentView.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.height.equalTo(35)
