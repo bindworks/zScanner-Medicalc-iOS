@@ -246,7 +246,7 @@ extension NewDocumentFolderViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         var searchText = searchText
         
-        if searchText.length >= Config.minimumSearchLength {
+        if searchText.isPIN() {
             viewModel.search(query: searchText)
         } else {
             searchText = ""
