@@ -12,7 +12,7 @@ enum Config {
     static let productionURL: String = "https://tempra.ikem.seacat/api-zscanner/v3"
     static let testingURL: String = "https://desolate-meadow-62603.herokuapp.com/api-zscanner/v3"
     static let authUrl: String = "http://auth.ikem.seacat"
-    
+
     static let currentEnvironment: Environment = .testing
     static let folderUsageHistoryCount = 3
     static let maximumNumberOfConcurentUploads = 4
@@ -23,14 +23,14 @@ enum Config {
 enum Environment {
     case production
     case testing
-    
+
     var baseUrl: String {
         switch self {
             case .production: return Config.productionURL
             case .testing: return Config.testingURL
         }
     }
-    
+
     var authUrl: String {
         switch self {
             case .production: return Config.authUrl

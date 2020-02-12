@@ -9,53 +9,53 @@
 import UIKit
 
 class AppCoordinator: Coordinator {
-    
+
     //MARK: - Instance part
     init() {
         let window = UIWindow(frame: UIScreen.main.bounds)
         super.init(window: window, navigationController: nil)
     }
-    
+
     // MARK: Inteface
     func begin() {
         //        showSplashScreen()
         startDocumentsCoordinator(with: UserSession(login: LoginDomainModel(username: "Test")))
     }
-    
+
     // MARK: Navigation methods
     private func showSplashScreen() {
         let viewController = SeaCatSplashViewController(coordinator: self)
         changeWindowControllerTo(viewController)
     }
-    
+
     private func runLoginFlow() {
         let coordinator = LoginCoordinator(flowDelegate: self, window: window)
         addChildCoordinator(coordinator)
         coordinator.begin()
     }
-    
+
     private func startDocumentsCoordinator(with userSession: UserSession) {
         let coordinator = DocumentsCoordinator(userSession: userSession, flowDelegate: self, window: window)
         addChildCoordinator(coordinator)
         coordinator.begin()
     }
-    
+
     // MARK: Helpers
     private let database: Database = try! RealmDatabase()
     private let tracker: Tracker = FirebaseAnalytics()
-    
+
     private func storeUserSession(_ userSession: UserSession) {
         let databaseLogin = LoginDatabaseModel(login: userSession.login)
         database.saveObject(databaseLogin)
     }
-    
+
     private var restoredUserSession: UserSession? {
         if let login = database.loadObjects(LoginDatabaseModel.self).first?.toDomainModel() {
             return UserSession(login: login)
         }
         return nil
     }
-    
+
     private func removeUserSession() {
         database.deleteAll(of: LoginDatabaseModel.self)
     }
@@ -64,7 +64,7 @@ class AppCoordinator: Coordinator {
 // MARK: - SeaCatSplashCoordinator implementation
 extension AppCoordinator: SeaCatSplashCoordinator {
     func seaCatInitialized() {
-        
+
         // It's not about SeaCat is ready but more about certificate exists.
         // In this case we are creating certificate with credentials on login.
         // Therefore is more like credentials exists -> is logged in
