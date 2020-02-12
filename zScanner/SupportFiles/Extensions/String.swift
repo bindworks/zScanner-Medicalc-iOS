@@ -41,18 +41,14 @@ extension String {
         return String(self[start ..< end])
     }
     
-    /* if personal identification number is valid */
+    /* if the personal identification number (PIN) a has length equal to 9 so year must be 53 and less othewise length has to be 10 */
     func isPIN() -> Bool {
-        if length == 10 {
-            if let number = Int(self) {
-                return number % 11 == 0
-            } else {
-                return false
-            }
-        }
-        
-        if length == 9 {
-            return true
+        if let number = Int(self) {
+            
+            if (number/10000000) <= 53 && length == 9 { return true }
+            if (number/100000000) > 53 && length == 10 { return true }
+            return false
+            
         } else {
             return false
         }
