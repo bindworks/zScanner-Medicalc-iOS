@@ -59,6 +59,14 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
+        textView.delegate = self
+        contentView.addSubview(textView)
+        textView.snp.makeConstraints { make in
+            make.height.equalTo(35)
+            make.width.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
         contentView.addSubview(deleteButton)
         deleteButton.snp.makeConstraints { make in
             make.width.height.equalTo(25)
@@ -75,6 +83,13 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
+    private var textView : UITextView = {
+        let text = UITextView()
+        text.text = "newDocumentPhotos.description.placeholder".localized
+        text.textColor = UIColor.lightGray
+        return text
+    }()
+    
     private var deleteButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "delete").withRenderingMode(.alwaysTemplate), for: .normal)
@@ -84,3 +99,17 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     }()
 }
 
+extension PhotoSelectorCollectionViewCell: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+       }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "newDocumentPhotos.description.placeholder".localized
+            textView.textColor = UIColor.lightGray
+        }
+    }
+}
