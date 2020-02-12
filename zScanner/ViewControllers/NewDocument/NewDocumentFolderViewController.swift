@@ -161,6 +161,7 @@ class NewDocumentFolderViewController: BaseViewController {
         search.delegate = self
         search.placeholder = "newDocumentFolder.searchBar.title".localized
         search.sizeToFit()
+        search.keyboardType = .numberPad
         return search
     }()
     
