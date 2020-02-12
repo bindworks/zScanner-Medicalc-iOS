@@ -143,7 +143,7 @@ class NewDocumentCoordinator: Coordinator {
         // Store images
         pages
             .enumerated()
-            .forEach({ (index,page) in
+            .forEach({ (index, page) in
                 newDocument.pages.append(page)
             })
         }
