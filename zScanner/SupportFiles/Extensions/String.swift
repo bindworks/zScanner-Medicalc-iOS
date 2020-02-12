@@ -41,16 +41,12 @@ extension String {
         return String(self[start ..< end])
     }
     
-    /* if the personal identification number (PIN) a has length equal to 9 so year must be 53 and less othewise length has to be 10 */
+    /* if the personal identification number (PIN - YYMMDD/___?) a has length equal to 9 so year must be 53 and less othewise length has to be 10 */
     func isPIN() -> Bool {
-        if let number = Int(self) {
-            
-            if (number/10000000) <= 53 && length == 9 { return true }
-            if (number/100000000) > 53 && length == 10 { return true }
-            return false
-            
-        } else {
-            return false
-        }
+        guard let year = Int(self.prefix(2)) else { return false }
+        let newFormatYear = 54
+        let oldFormat = 9
+        let newFormat = 10
+        return (year < newFormatYear && length == oldFormat) || (year >= newFormatYear && length == newFormat)
     }
 }
