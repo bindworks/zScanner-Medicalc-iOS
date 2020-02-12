@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol NewDocumentPhotosCoordinator: BaseCoordinator {
-    func savePhotos(_ photos: [UIImage])
+    func savePhotos(_ photos: [Picture])
     func showNextStep()
 }
 
@@ -200,7 +200,8 @@ class NewDocumentPhotosViewController: BaseViewController {
 extension NewDocumentPhotosViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            viewModel.addImage(pickedImage, fromGallery: picker.sourceType == .photoLibrary)
+            let pickedPicture = Picture(image: pickedImage)
+            viewModel.addImage(pickedPicture, fromGallery: picker.sourceType == .photoLibrary)
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -212,7 +213,7 @@ extension NewDocumentPhotosViewController: UIImagePickerControllerDelegate, UINa
 
 // MARK: - PhotoSelectorCellDelegate implementation
 extension NewDocumentPhotosViewController: PhotoSelectorCellDelegate {
-    func delete(image: UIImage) {
+    func delete(image: Picture) {
         viewModel.removeImage(image)
     }
 }
