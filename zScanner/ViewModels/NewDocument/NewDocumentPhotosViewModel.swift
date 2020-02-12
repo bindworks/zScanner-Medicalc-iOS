@@ -10,6 +10,21 @@ import UIKit
 import RxSwift
 import RxRelay
 
+class Picture: Equatable {
+    let image: UIImage
+    let description: String?
+    
+    init(image: UIImage, description: String? = nil) {
+        self.image = image
+        self.description = description
+    }
+    
+    static func == (lhs: Picture, rhs: Picture) -> Bool {
+        return lhs.image == rhs.image && lhs.description == rhs.description
+    }
+}
+
+
 class NewDocumentPhotosViewModel {
     
     // MARK: Instance part
@@ -20,9 +35,9 @@ class NewDocumentPhotosViewModel {
     }
     
     // MARK: Interface
-    let pictures = BehaviorRelay<[UIImage]>(value: [])
+    let pictures = BehaviorRelay<[Picture]>(value: [])
     
-    func addImage(_ image: UIImage, fromGallery: Bool) {
+    func addImage(_ image: Picture, fromGallery: Bool) {
         // Tracking
         tracker.track(.galleryUsed(fromGallery))
         
@@ -32,7 +47,7 @@ class NewDocumentPhotosViewModel {
         pictures.accept(newArray)
     }
     
-    func removeImage(_ image: UIImage) {
+    func removeImage(_ image: Picture) {
         // Tracking
         tracker.track(.deleteImage)
 

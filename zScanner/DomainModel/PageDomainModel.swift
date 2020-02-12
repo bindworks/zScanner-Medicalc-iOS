@@ -13,6 +13,7 @@ struct PageDomainModel: Equatable {
     var index: Int
     var correlationId: String
     var relativePath: String
+//    var description: String
     
     var image: UIImage {
         get {
@@ -40,8 +41,10 @@ struct PageDomainModel: Equatable {
 }
 
 extension PageDomainModel {
-    init(image: UIImage, index: Int, correlationId: String) {
+    init(picture: Picture, index: Int, correlationId: String) {
         self.init(id: UUID().uuidString, index: index, correlationId: correlationId, relativePath: "")
-        self.image = image
+        
+        self.image = picture.image
+//        if let description = picture.description { self.description = description } else { self.description = "" }
     }
 }

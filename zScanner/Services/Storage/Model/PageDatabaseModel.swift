@@ -14,6 +14,7 @@ class PageDatabaseModel: Object {
     @objc dynamic var index = 0
     @objc dynamic var correlationId = ""
     @objc dynamic var relativePath = ""
+//    @objc dynamic var descript = ""
     
     convenience init(page: PageDomainModel) {
         self.init()
@@ -22,6 +23,7 @@ class PageDatabaseModel: Object {
         self.correlationId = page.correlationId
         self.index = page.index
         self.relativePath = page.relativePath
+//        self.descript = page.description
     }
     
     override class func primaryKey() -> String {
@@ -36,6 +38,7 @@ extension PageDatabaseModel {
             index: index,
             correlationId: correlationId,
             relativePath: relativePath
+//            description: descript
         )
     }
 }
