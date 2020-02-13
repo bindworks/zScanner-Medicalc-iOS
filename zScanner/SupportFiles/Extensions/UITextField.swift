@@ -21,15 +21,39 @@ extension UITextField {
     }
     
     #warning("TODO Maybe we can merge these two methods")
-    func addBottomBorder() {
-        let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 2)
-        bottomLine.backgroundColor = UIColor.red.cgColor
-        borderStyle = .none
-        layer.addSublayer(bottomLine)
+    func addBottomBorder(height: CGFloat = 1, color: UIColor = UIColor.red, leftInset: CGFloat = 0, rightInset: CGFloat = 0) {
+        let bottomLine = UIView()
+        bottomLine.frame = CGRect(x: leftInset, y: self.frame.size.height - 1 , width: self.frame.size.width - leftInset - rightInset, height: height)
+        bottomLine.backgroundColor = color
+        self.addSubview(bottomLine)
     }
     
     func removeBottomBorder() {
-        self.layer.sublayers?.removeAll()
+        self.subviews.forEach { $0.removeFromSuperview() }
+    }
+    
+    enum Inset {
+        case left
+        case right
+        case both
+    }
+    
+    func setInset(inset: Inset, amount: CGFloat, mode: UITextField.ViewMode = .always) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        
+        switch inset {
+        case .right:
+            self.rightView = paddingView
+            self.rightViewMode = mode
+        case .left:
+            self.leftView = paddingView
+            self.leftViewMode = mode
+        case .both:
+            self.leftView = paddingView
+            self.leftViewMode = mode
+            
+            self.rightView = paddingView
+            self.rightViewMode = mode
+        }
     }
 }
