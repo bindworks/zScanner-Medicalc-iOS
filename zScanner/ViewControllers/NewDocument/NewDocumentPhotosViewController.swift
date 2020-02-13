@@ -117,7 +117,8 @@ class NewDocumentPhotosViewController: BaseViewController {
     }
     
     private func setupView() {
-        self.hideKeyboardWhenTappedAround()
+        setupKeyboardHandling()
+        
         navigationItem.title = "newDocumentPhotos.screen.title".localized
 
         view.addSubview(collectionView)

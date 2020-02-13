@@ -115,8 +115,6 @@ class NewDocumentFolderViewController: BaseViewController {
     }
     
     private func setupView() {
-        setupKeyboardHandling()
-        
         navigationItem.title = "newDocumentFolder.screen.title".localized
         
         view.addSubview(searchBar)
