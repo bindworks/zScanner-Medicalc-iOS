@@ -69,7 +69,7 @@ class DocumentsCoordinator: Coordinator {
     // MARK: Helpers
     private let api: API = NativeAPI()
     private let networkManager: NetworkManager
-    private let database: Database = try! RealmDatabase()
+    private let database: Database = try! RealmDatabase(configuration: RealmDatabase.getConfiguration())
     private let tracker: Tracker = FirebaseAnalytics()
     private var documentCreatedInThisSession = false
     

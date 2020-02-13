@@ -40,7 +40,7 @@ class AppCoordinator: Coordinator {
     }
     
     // MARK: Helpers
-    private let database: Database = try! RealmDatabase()
+    private let database: Database = try! RealmDatabase(configuration: RealmDatabase.getConfiguration())
     private let tracker: Tracker = FirebaseAnalytics()
     
     private func storeUserSession(_ userSession: UserSession) {

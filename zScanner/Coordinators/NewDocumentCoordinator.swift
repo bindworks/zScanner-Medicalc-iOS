@@ -52,7 +52,7 @@ class NewDocumentCoordinator: Coordinator {
     }
     
     // MARK: Helepers
-    private let database: Database = try! RealmDatabase()
+    private let database: Database = try! RealmDatabase(configuration: RealmDatabase.getConfiguration())
     private let networkManager: NetworkManager = IkemNetworkManager(api: NativeAPI())
     private let tracker: Tracker = FirebaseAnalytics()
     
