@@ -99,3 +99,13 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         return button
     }()
 }
+
+extension PhotoSelectorCollectionViewCell: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.addBottomBorder()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.removeBottomBorder()
+    }
+}
