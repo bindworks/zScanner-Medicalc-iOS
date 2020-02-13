@@ -31,7 +31,7 @@ class DocumentDatabaseModel: Object {
         self.name = document.name
         self.notes = document.notes
         
-        let realm = try! Realm(configuration: Realm.getConfiguration())
+        let realm = try! Realm()
         self.folder = realm.loadObject(FolderDatabaseModel.self, withId: document.folder.id) ?? FolderDatabaseModel(folder: document.folder)
         
         self.pages.append(objectsIn: document.pages.map({ PageDatabaseModel(page: $0) }))

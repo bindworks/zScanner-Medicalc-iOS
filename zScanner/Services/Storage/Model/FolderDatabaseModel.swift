@@ -29,7 +29,7 @@ class FolderDatabaseModel: Object {
     }
     
     static func updateLastUsage(of folder: FolderDatabaseModel) {
-        let realm = try! Realm(configuration: Realm.getConfiguration())
+        let realm = try! Realm()
         if let stored = realm.object(ofType: FolderDatabaseModel.self, forPrimaryKey: folder.id) {
             try! realm.write {
                 stored.lastUsed = Date()

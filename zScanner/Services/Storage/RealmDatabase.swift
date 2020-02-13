@@ -16,10 +16,13 @@ extension Object: Storable {}
 
 typealias RealmDatabase = Realm
 
-extension Realm: Database {
-    static func getConfiguration() -> Configuration {
-        return Realm.Configuration(schemaVersion: Config.realmSchemaVersion)
+extension RealmDatabase {
+    static func configure() {
+        Realm.Configuration.defaultConfiguration.schemaVersion = Config.realmSchemaVersion
     }
+}
+
+extension Realm: Database {
     
     func loadObjects<T>(_ type: T.Type) -> [T] where T: Storable {
         let objects = self.objects(type as! Object.Type)
