@@ -41,7 +41,7 @@ extension String {
         return String(self[start ..< end])
     }
     
-    /* if the personal identification number (PIN - YYMMDD/___?) a has length equal to 9 so year must be 53 and less othewise length has to be 10 */
+    /* Personal identification number (PIN) before the year 1954 had only 9 digits, but starting 1954, they changed it to 10 */
     func isPIN() -> Bool {
         guard let year = Int(self.prefix(2)) else { return false }
         let newFormatYear = 54
