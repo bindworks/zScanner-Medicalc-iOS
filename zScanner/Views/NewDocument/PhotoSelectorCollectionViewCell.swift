@@ -9,14 +9,14 @@
 import UIKit
 
 protocol PhotoSelectorCellDelegate: class {
-    func delete(image: Picture)
+    func delete(image: PageDomainModel)
 }
 
 // MARK: -
 class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     
     // MARK: Instance part
-    private var picture: Picture? {
+    private var picture: PageDomainModel? {
         didSet {
             imageView.image = picture?.image
         }
@@ -40,7 +40,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: Interface
-    func setup(with picture: Picture, delegate: PhotoSelectorCellDelegate) {
+    func setup(with picture: PageDomainModel, delegate: PhotoSelectorCellDelegate) {
         self.picture = picture
         self.delegate = delegate
     }
