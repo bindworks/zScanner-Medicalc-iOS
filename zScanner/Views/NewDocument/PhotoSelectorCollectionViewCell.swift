@@ -59,9 +59,8 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
-        textView.delegate = self
-        contentView.addSubview(textView)
-        textView.snp.makeConstraints { make in
+        contentView.addSubview(textField)
+        textField.snp.makeConstraints { make in
             make.height.equalTo(35)
             make.width.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -83,10 +82,11 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    private var textView : UITextView = {
-        let text = UITextView()
-        text.text = "newDocumentPhotos.description.placeholder".localized
-        text.textColor = UIColor.lightGray
+    private var textField : UITextField = {
+        let text = UITextField()
+        text.placeholder = "newDocumentPhotos.description.placeholder".localized
+        text.adjustsFontSizeToFitWidth = true
+        text.backgroundColor = UIColor.white
         return text
     }()
     
@@ -97,19 +97,4 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         button.dropShadow()
         return button
     }()
-}
-
-extension PhotoSelectorCollectionViewCell: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
-            textView.text = nil
-            textView.textColor = UIColor.black
-       }
-    }
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "newDocumentPhotos.description.placeholder".localized
-            textView.textColor = UIColor.lightGray
-        }
-    }
 }
