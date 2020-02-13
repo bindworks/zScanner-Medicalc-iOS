@@ -13,7 +13,8 @@ extension UIViewController {
         return view.safeAreaLayoutGuide
     }
     
-    func hideKeyboardWhenTappedAround() {
+    // Whenever user gonna tap somewhere else than the current view so it will dismiss the keyboard
+    func setupKeyboardHandling() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
