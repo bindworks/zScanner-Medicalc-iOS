@@ -12,27 +12,27 @@ extension String {
     var localized: String {
         return localized(withComment: "")
     }
-    
+
     func localized(withComment comment: String) -> String {
         return NSLocalizedString(self, comment: comment)
     }
-    
+
     var length: Int {
         return count
     }
-    
+
     subscript (i: Int) -> String {
         return self[i ..< i + 1]
     }
-    
+
     func substring(fromIndex: Int) -> String {
         return self[min(fromIndex, length) ..< length]
     }
-    
+
     func substring(toIndex: Int) -> String {
         return self[0 ..< max(0, toIndex)]
     }
-    
+
     subscript (r: Range<Int>) -> String {
         let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
                                             upper: min(length, max(0, r.upperBound))))
@@ -41,4 +41,12 @@ extension String {
         return String(self[start ..< end])
     }
     
+    /* Personal identification number (PIN) before the year 1954 had only 9 digits, but starting 1954, they changed it to 10 */
+    func isPIN() -> Bool {
+        guard let year = Int(self.prefix(2)) else { return false }
+        let newFormatYear = 54
+        let oldFormat = 9
+        let newFormat = 10
+        return (year < newFormatYear && length == oldFormat) || (year >= newFormatYear && length == newFormat)
+    }
 }
