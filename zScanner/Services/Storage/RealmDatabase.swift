@@ -16,6 +16,12 @@ extension Object: Storable {}
 
 typealias RealmDatabase = Realm
 
+extension RealmDatabase {
+    static func configure() {
+        Realm.Configuration.defaultConfiguration.schemaVersion = Config.realmSchemaVersion
+    }
+}
+
 extension Realm: Database {
     
     func loadObjects<T>(_ type: T.Type) -> [T] where T: Storable {

@@ -17,6 +17,7 @@ enum Config {
     static let folderUsageHistoryCount = 3
     static let minimumSearchLength = 3
     static let maximumNumberOfConcurentUploads = 4
+    static let realmSchemaVersion: UInt64 = 1
 }
 
 //MARK: -
