@@ -15,6 +15,11 @@ protocol NetworkManager {
     /// - Returns: Observable request status
     func getDocumentTypes() -> Observable<RequestStatus<[DocumentTypeNetworkModel]>>
     
+    /// Fetch all departments
+    ///
+    /// - Returns: Observable request status
+    func getDepartments() -> Observable<RequestStatus<[DepartmentNetworkModel]>>
+    
     /// Upload document to server
     ///
     /// - Parameter document: New document to upload

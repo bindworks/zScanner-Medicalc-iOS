@@ -17,6 +17,7 @@ struct DocumentNetworkModel: Encodable {
     var datetime: String
     var name: String
     var notes: String
+    var department: String
     
     init(from domainModel: DocumentDomainModel) {
         self.correlation = domainModel.id
@@ -28,5 +29,6 @@ struct DocumentNetworkModel: Encodable {
         self.datetime = domainModel.date.utcString
         self.name = domainModel.type.name
         self.notes = domainModel.notes
+        self.department = domainModel.department.name
     }
 }

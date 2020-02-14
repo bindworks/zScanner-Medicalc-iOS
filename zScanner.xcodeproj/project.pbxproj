@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16A2CAC323F70C85006E9577 /* DepartmentNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC223F70C85006E9577 /* DepartmentNetworkModel.swift */; };
+		16A2CAC523F70CDB006E9577 /* DepartmentsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */; };
+		16A2CAC723F70E2F006E9577 /* DepartmentDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */; };
+		16A2CAC923F71091006E9577 /* DepartmentDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */; };
 		16B8D4BD23F7035D003DFD71 /* GetFolderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */; };
 		434027612302212C0038A40C /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434027602302212C0038A40C /* MenuCoordinator.swift */; };
 		435A3AF82309AE5000BF2D9C /* LoadingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */; };
@@ -141,6 +145,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		16A2CAC223F70C85006E9577 /* DepartmentNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DepartmentNetworkModel.swift; path = zScanner/Services/Network/Medicalc/Model/DepartmentNetworkModel.swift; sourceTree = SOURCE_ROOT; };
+		16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsRequest.swift; sourceTree = "<group>"; };
+		16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDomainModel.swift; sourceTree = "<group>"; };
+		16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDatabaseModel.swift; sourceTree = "<group>"; };
 		16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFolderRequest.swift; sourceTree = "<group>"; };
 		434027602302212C0038A40C /* MenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCoordinator.swift; sourceTree = "<group>"; };
 		435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCircle.swift; sourceTree = "<group>"; };
@@ -320,6 +328,7 @@
 				BD99E58323F9A5E800792532 /* Page.swift */,
 				BD7EAC3B232583C3002C225A /* PageDomainModel.swift */,
 				BD389A2922F7093B002F935F /* FolderDomainModel.swift */,
+				16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */,
 			);
 			path = DomainModel;
 			sourceTree = "<group>";
@@ -377,6 +386,7 @@
 		BD2B9E7C22EDC1A000FFCD3B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				16A2CAC223F70C85006E9577 /* DepartmentNetworkModel.swift */,
 				BD2B9E7D22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift */,
 				BDEA570C22FA2CD9004C48F0 /* DocumentNetworkModel.swift */,
 				BD406FDF22FF156D0096693D /* FolderNetworkModel.swift */,
@@ -397,6 +407,7 @@
 				BDEA570A22FA2828004C48F0 /* SubmitRequest.swift */,
 				BD88F1582309537F00569D71 /* UploadPageRequest.swift */,
 				16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */,
+				16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -620,6 +631,7 @@
 				BD14268F2328351D0079465F /* PageUploadStatusDatabaseModel.swift */,
 				BD2B9E8722EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift */,
 				BD8AA80E23003D530082441F /* FolderDatabaseModel.swift */,
+				16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -896,9 +908,11 @@
 				BD8AA80F23003D530082441F /* FolderDatabaseModel.swift in Sources */,
 				BD2B9E8122EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift in Sources */,
 				BD59A09B22E36EF900FA9CD0 /* RequestStatus.swift in Sources */,
+				16A2CAC723F70E2F006E9577 /* DepartmentDomainModel.swift in Sources */,
 				BDBDF4DD22C8016700183BBF /* AppDelegate.swift in Sources */,
 				BD7EAC3A2325839C002C225A /* PageViewModel.swift in Sources */,
 				BD72DB3D2337E5A80016C2E0 /* Bundle.swift in Sources */,
+				16A2CAC323F70C85006E9577 /* DepartmentNetworkModel.swift in Sources */,
 				BD59A07122E36D8800FA9CD0 /* Array.swift in Sources */,
 				BD59A0A522E378BC00FA9CD0 /* LoginCoordinator.swift in Sources */,
 				43C14A102300F07800F7C24E /* AboutViewController.swift in Sources */,
@@ -931,11 +945,13 @@
 				BD389A2522F70170002F935F /* NewDocumentTypeViewModel.swift in Sources */,
 				BD85C93822E502A3004DC76E /* DocumentViewModel.swift in Sources */,
 				BD000CDE22E4CE6C001EE38A /* DocumentsListViewController.swift in Sources */,
+				16A2CAC923F71091006E9577 /* DepartmentDatabaseModel.swift in Sources */,
 				BD389A2722F70596002F935F /* FormField.swift in Sources */,
 				BDBE340622FA3A50000F8498 /* Encodable.swift in Sources */,
 				BD2B9E7E22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift in Sources */,
 				BD678DA3230489DF00AE5B15 /* NewDocumentPhotosViewController.swift in Sources */,
 				BD678DA523048A3A00AE5B15 /* NewDocumentPhotosViewModel.swift in Sources */,
+				16A2CAC523F70CDB006E9577 /* DepartmentsRequest.swift in Sources */,
 				BD2F209022EBA33600534916 /* Database.swift in Sources */,
 				BD678DA7230496AE00AE5B15 /* PhotoSelectorCollectionViewCell.swift in Sources */,
 				BD80224522F82604009B8B69 /* FormFieldTableViewCell.swift in Sources */,

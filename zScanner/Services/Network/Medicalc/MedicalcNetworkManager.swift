@@ -37,6 +37,11 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
+    func getDepartments() -> Observable<RequestStatus<[DepartmentNetworkModel]>> {
+        let request = DepartmentsRequest()
+        return observe(request)
+    }
+    
     func uploadDocument(_ document: DocumentNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
         let request = SubmitReuest(document: document)
         return observe(request)

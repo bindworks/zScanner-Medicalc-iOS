@@ -17,6 +17,7 @@ class DocumentDatabaseModel: Object {
     @objc dynamic var date = Date()
     @objc dynamic var name = ""
     @objc dynamic var notes = ""
+    @objc dynamic var department: DepartmentDatabaseModel?
     @objc dynamic var folder: FolderDatabaseModel?
     let pages = List<PageDatabaseModel>()
     
@@ -33,6 +34,7 @@ class DocumentDatabaseModel: Object {
         self.notes = document.notes
         
         let realm = try! Realm()
+        self.department = realm.loadObject(DepartmentDatabaseModel.self, withId: document.department.id) ?? DepartmentDatabaseModel(document: document.department)
         self.folder = realm.loadObject(FolderDatabaseModel.self, withId: document.folder.id) ?? FolderDatabaseModel(folder: document.folder)
         
         self.pages.append(objectsIn: document.pages.map({ PageDatabaseModel(page: $0) }))
@@ -57,7 +59,8 @@ extension DocumentDatabaseModel {
             date: date,
             name: name,
             notes: notes,
-            pages: pages.map({ $0.toDomainModel() })
+            pages: pages.map({ $0.toDomainModel() }),
+            department: department!.toDomainModel()
         )
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 
 enum MedicalcEndpoint: String, Endpoint {
+    case departments = "/departments"
     case documentTypes = "/documenttypes"
     case submitDocument = "/documents/summary"
     case uploadPage = "/documents/page"
