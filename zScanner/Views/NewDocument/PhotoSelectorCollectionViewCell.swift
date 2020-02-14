@@ -88,7 +88,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         text.placeholder = "newDocumentPhotos.description.placeholder".localized
         text.adjustsFontSizeToFitWidth = true
         text.backgroundColor = UIColor.white
-        text.setInset(inset: .left, amount: 7)
+        text.setPadding(padding: .left, size: 7)
         return text
     }()
     
@@ -103,10 +103,10 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
 
 extension PhotoSelectorCollectionViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.addBottomBorder(height: 2, leftInset: 7)
+        textField.setBottomBorder(color: UIColor.red.cgColor)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.removeBottomBorder()
+        textField.setBottomBorder(show: false)
     }
 }
