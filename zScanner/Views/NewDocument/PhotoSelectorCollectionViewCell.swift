@@ -103,7 +103,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
 
 extension PhotoSelectorCollectionViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.setBottomBorder(color: UIColor.red.cgColor)
+        textField.setBottomBorder(color: UIColor.red.cgColor, animated: true, duration: 0.6)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

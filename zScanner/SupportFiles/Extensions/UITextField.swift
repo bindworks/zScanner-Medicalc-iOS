@@ -9,15 +9,23 @@
 import UIKit
 
 extension UITextField {
-    func setBottomBorder(show: Bool = true, color: CGColor = UIColor.white.cgColor) {
+    func setBottomBorder(show: Bool = true, color: CGColor = UIColor.white.cgColor, animated: Bool = false, duration: CFTimeInterval = 1) {
         borderStyle = .none
         
         layer.backgroundColor = UIColor.white.cgColor
         layer.masksToBounds = false
         layer.shadowColor = show ? color : UIColor.clear.cgColor
         layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        layer.shadowOpacity = show ? 1.0 : 0
         layer.shadowRadius = 0.0
+        
+        if animated {
+            let animation:CABasicAnimation = CABasicAnimation(keyPath: "shadowOpacity")
+            animation.fromValue = 0
+            animation.toValue = 1
+            animation.duration = duration
+            layer.add(animation, forKey: "Opacity")
+            layer.shadowOpacity = 1
+        }
     }
     
     enum Padding {
