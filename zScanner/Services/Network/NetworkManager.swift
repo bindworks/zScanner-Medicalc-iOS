@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 
 protocol NetworkManager {
-
     /// Fetch all document subtypes
     ///
     /// - Returns: Observable request status

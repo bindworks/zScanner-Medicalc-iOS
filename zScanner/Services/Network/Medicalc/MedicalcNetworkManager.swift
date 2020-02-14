@@ -9,7 +9,8 @@
 import Foundation
 import RxSwift
 
-class IkemNetworkManager: NetworkManager {
+class MedicalcNetworkManager: NetworkManager {
+    
     
     // MARK: Instance part
     private let api: API

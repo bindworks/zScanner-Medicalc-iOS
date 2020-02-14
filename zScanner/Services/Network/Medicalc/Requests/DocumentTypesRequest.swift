@@ -11,7 +11,7 @@ import Foundation
 struct DocumentTypesRequest: Request {
     typealias DataType = [DocumentTypeNetworkModel]
     
-    var endpoint: Endpoint = IkemEndpoint.documentTypes
+    var endpoint: Endpoint = MedicalcEndpoint.documentTypes
     var method: HTTPMethod = .get
     var parameters: Parameters? = nil
     var headers: HTTPHeaders = [:]

@@ -8,15 +8,15 @@
 
 import Foundation
 
-struct GetFolderRequest: Request, ParametersURLEncoded {
-    typealias DataType = FolderNetworkModel
+struct SearchFoldersRequest: Request, ParametersURLEncoded {
+    typealias DataType = [FolderNetworkModel]
     
-    var endpoint: Endpoint = IkemEndpoint.folderDecode
+    var endpoint: Endpoint = MedicalcEndpoint.folderSearch
     var method: HTTPMethod = .get
     var parameters: Parameters?
     var headers: HTTPHeaders = [:]
     
-    init(with id: String) {
-        parameters = ["query": id]
+    init(query: String) {
+        parameters = ["query": query]
     }
 }

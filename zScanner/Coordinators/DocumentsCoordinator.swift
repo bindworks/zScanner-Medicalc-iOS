@@ -23,7 +23,7 @@ class DocumentsCoordinator: Coordinator {
     init(userSession: UserSession, flowDelegate: DocumentsFlowDelegate, window: UIWindow) {
         self.userSession = userSession
         self.flowDelegate = flowDelegate
-        self.networkManager = IkemNetworkManager(api: api)
+        self.networkManager = MedicalcNetworkManager(api: api)
         
         super.init(window: window)
         

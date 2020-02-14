@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16B8D4BD23F7035D003DFD71 /* GetFolderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */; };
 		434027612302212C0038A40C /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434027602302212C0038A40C /* MenuCoordinator.swift */; };
 		435A3AF82309AE5000BF2D9C /* LoadingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */; };
 		4386045E230626B7009ED8D5 /* BehaviorRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386045D230626B7009ED8D5 /* BehaviorRelay.swift */; };
@@ -26,12 +27,12 @@
 		BD0F21D82319B988002A9F53 /* libseacatclientios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDDA127A231498410029A7DF /* libseacatclientios.a */; };
 		BD1426902328351D0079465F /* PageUploadStatusDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD14268F2328351D0079465F /* PageUploadStatusDatabaseModel.swift */; };
 		BD2B9E7622EDBFF400FFCD3B /* NewDocumentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E7522EDBFF400FFCD3B /* NewDocumentCoordinator.swift */; };
-		BD2B9E7922EDC11E00FFCD3B /* IkemNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E7822EDC11E00FFCD3B /* IkemNetworkManager.swift */; };
+		BD2B9E7922EDC11E00FFCD3B /* MedicalcNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E7822EDC11E00FFCD3B /* MedicalcNetworkManager.swift */; };
 		BD2B9E7B22EDC15000FFCD3B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E7A22EDC15000FFCD3B /* NetworkManager.swift */; };
 		BD2B9E7E22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E7D22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift */; };
 		BD2B9E8122EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8022EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift */; };
 		BD2B9E8422EDCC2500FFCD3B /* DocumentTypesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8322EDCC2500FFCD3B /* DocumentTypesRequest.swift */; };
-		BD2B9E8622EDCD0900FFCD3B /* IkemEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8522EDCD0900FFCD3B /* IkemEndpoint.swift */; };
+		BD2B9E8622EDCD0900FFCD3B /* MedicalcEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8522EDCD0900FFCD3B /* MedicalcEndpoint.swift */; };
 		BD2B9E8822EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8722EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift */; };
 		BD2C5F8222F378A20023D097 /* NewDocumentTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2C5F8122F378A20023D097 /* NewDocumentTypeViewController.swift */; };
 		BD2F209022EBA33600534916 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F208F22EBA33600534916 /* Database.swift */; };
@@ -41,13 +42,12 @@
 		BD389A2722F70596002F935F /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD389A2622F70596002F935F /* FormField.swift */; };
 		BD389A2A22F7093B002F935F /* FolderDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD389A2922F7093B002F935F /* FolderDomainModel.swift */; };
 		BD402E71230084FD00049DF9 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD402E70230084FD00049DF9 /* ScannerViewController.swift */; };
-		BD402E772300B99100049DF9 /* GetFolderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD402E762300B99100049DF9 /* GetFolderRequest.swift */; };
 		BD402E792300C46F00049DF9 /* UISearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD402E782300C46F00049DF9 /* UISearchBar.swift */; };
 		BD402E7B2300D60B00049DF9 /* FolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD402E7A2300D60B00049DF9 /* FolderTableViewCell.swift */; };
 		BD402E7E2300E1C400049DF9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD402E802300E1C400049DF9 /* InfoPlist.strings */; };
 		BD406FDA22FF043C0096693D /* NewDocumentFolderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD406FD922FF043C0096693D /* NewDocumentFolderViewModel.swift */; };
 		BD406FDC22FF045A0096693D /* NewDocumentFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD406FDB22FF045A0096693D /* NewDocumentFolderViewController.swift */; };
-		BD406FDE22FF15260096693D /* FolderSearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD406FDD22FF15260096693D /* FolderSearchRequest.swift */; };
+		BD406FDE22FF15260096693D /* SearchFoldersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD406FDD22FF15260096693D /* SearchFoldersRequest.swift */; };
 		BD406FE022FF156D0096693D /* FolderNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD406FDF22FF156D0096693D /* FolderNetworkModel.swift */; };
 		BD44E27A232703BC00A0B9E5 /* DocumentUploadStatusDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD44E279232703BC00A0B9E5 /* DocumentUploadStatusDatabaseModel.swift */; };
 		BD59A05D22E36A8100FA9CD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD59A05C22E36A8100FA9CD0 /* Coordinator.swift */; };
@@ -141,6 +141,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFolderRequest.swift; sourceTree = "<group>"; };
 		434027602302212C0038A40C /* MenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCoordinator.swift; sourceTree = "<group>"; };
 		435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCircle.swift; sourceTree = "<group>"; };
 		4386045D230626B7009ED8D5 /* BehaviorRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorRelay.swift; sourceTree = "<group>"; };
@@ -159,12 +160,12 @@
 		BD000CE022E4FB5A001EE38A /* DocumentsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsListViewModel.swift; sourceTree = "<group>"; };
 		BD14268F2328351D0079465F /* PageUploadStatusDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageUploadStatusDatabaseModel.swift; sourceTree = "<group>"; };
 		BD2B9E7522EDBFF400FFCD3B /* NewDocumentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentCoordinator.swift; sourceTree = "<group>"; };
-		BD2B9E7822EDC11E00FFCD3B /* IkemNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkemNetworkManager.swift; sourceTree = "<group>"; };
+		BD2B9E7822EDC11E00FFCD3B /* MedicalcNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalcNetworkManager.swift; sourceTree = "<group>"; };
 		BD2B9E7A22EDC15000FFCD3B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		BD2B9E7D22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTypeNetworkModel.swift; sourceTree = "<group>"; };
 		BD2B9E8022EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTypeDomainModel.swift; sourceTree = "<group>"; };
 		BD2B9E8322EDCC2500FFCD3B /* DocumentTypesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTypesRequest.swift; sourceTree = "<group>"; };
-		BD2B9E8522EDCD0900FFCD3B /* IkemEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IkemEndpoint.swift; sourceTree = "<group>"; };
+		BD2B9E8522EDCD0900FFCD3B /* MedicalcEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalcEndpoint.swift; sourceTree = "<group>"; };
 		BD2B9E8722EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DcumentTypeDatabaseModel.swift; sourceTree = "<group>"; };
 		BD2C5F8122F378A20023D097 /* NewDocumentTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentTypeViewController.swift; sourceTree = "<group>"; };
 		BD2F208F22EBA33600534916 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
@@ -174,14 +175,13 @@
 		BD389A2622F70596002F935F /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
 		BD389A2922F7093B002F935F /* FolderDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDomainModel.swift; sourceTree = "<group>"; };
 		BD402E70230084FD00049DF9 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
-		BD402E762300B99100049DF9 /* GetFolderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFolderRequest.swift; sourceTree = "<group>"; };
 		BD402E782300C46F00049DF9 /* UISearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchBar.swift; sourceTree = "<group>"; };
 		BD402E7A2300D60B00049DF9 /* FolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTableViewCell.swift; sourceTree = "<group>"; };
 		BD402E7F2300E1C400049DF9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BD402E812300E1DE00049DF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD406FD922FF043C0096693D /* NewDocumentFolderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentFolderViewModel.swift; sourceTree = "<group>"; };
 		BD406FDB22FF045A0096693D /* NewDocumentFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentFolderViewController.swift; sourceTree = "<group>"; };
-		BD406FDD22FF15260096693D /* FolderSearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FolderSearchRequest.swift; path = zScanner/Services/Network/Ikem/Model/FolderSearchRequest.swift; sourceTree = SOURCE_ROOT; };
+		BD406FDD22FF15260096693D /* SearchFoldersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFoldersRequest.swift; sourceTree = "<group>"; };
 		BD406FDF22FF156D0096693D /* FolderNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderNetworkModel.swift; sourceTree = "<group>"; };
 		BD44E279232703BC00A0B9E5 /* DocumentUploadStatusDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentUploadStatusDatabaseModel.swift; sourceTree = "<group>"; };
 		BD59A05C22E36A8100FA9CD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -363,15 +363,15 @@
 			path = NewDocument;
 			sourceTree = "<group>";
 		};
-		BD2B9E7722EDC10300FFCD3B /* Ikem */ = {
+		BD2B9E7722EDC10300FFCD3B /* Medicalc */ = {
 			isa = PBXGroup;
 			children = (
-				BD2B9E7822EDC11E00FFCD3B /* IkemNetworkManager.swift */,
-				BD2B9E8522EDCD0900FFCD3B /* IkemEndpoint.swift */,
+				BD2B9E7822EDC11E00FFCD3B /* MedicalcNetworkManager.swift */,
+				BD2B9E8522EDCD0900FFCD3B /* MedicalcEndpoint.swift */,
 				BD2B9E8222EDCBFD00FFCD3B /* Requests */,
 				BD2B9E7C22EDC1A000FFCD3B /* Model */,
 			);
-			path = Ikem;
+			path = Medicalc;
 			sourceTree = "<group>";
 		};
 		BD2B9E7C22EDC1A000FFCD3B /* Model */ = {
@@ -393,10 +393,10 @@
 				BDDA1270231408C10029A7DF /* SubmitPasswordRequest.swift */,
 				BD94413E231F1A540085BB4D /* GetStatusRequest.swift */,
 				BD2B9E8322EDCC2500FFCD3B /* DocumentTypesRequest.swift */,
-				BD406FDD22FF15260096693D /* FolderSearchRequest.swift */,
-				BD402E762300B99100049DF9 /* GetFolderRequest.swift */,
+				BD406FDD22FF15260096693D /* SearchFoldersRequest.swift */,
 				BDEA570A22FA2828004C48F0 /* SubmitRequest.swift */,
 				BD88F1582309537F00569D71 /* UploadPageRequest.swift */,
+				16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -551,7 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				BD2B9E7A22EDC15000FFCD3B /* NetworkManager.swift */,
-				BD2B9E7722EDC10300FFCD3B /* Ikem */,
+				BD2B9E7722EDC10300FFCD3B /* Medicalc */,
 				BD59A08322E36EF900FA9CD0 /* Reachability.swift */,
 				BD59A08B22E36EF900FA9CD0 /* RequestStatus.swift */,
 				BD59A08F22E36EF900FA9CD0 /* Endpoint.swift */,
@@ -881,19 +881,18 @@
 				BD389A2A22F7093B002F935F /* FolderDomainModel.swift in Sources */,
 				BD000CB222E3B38B001EE38A /* UITextField.swift in Sources */,
 				BD59A09122E36EF900FA9CD0 /* NetworkActivityIndicatorBehavior.swift in Sources */,
-				BD2B9E8622EDCD0900FFCD3B /* IkemEndpoint.swift in Sources */,
+				BD2B9E8622EDCD0900FFCD3B /* MedicalcEndpoint.swift in Sources */,
 				BD59A06D22E36D2A00FA9CD0 /* PluggableViewController.swift in Sources */,
-				BD406FDE22FF15260096693D /* FolderSearchRequest.swift in Sources */,
+				BD406FDE22FF15260096693D /* SearchFoldersRequest.swift in Sources */,
 				43C14A0C2300EF5A00F7C24E /* DrawerMenuButton.swift in Sources */,
 				BD59A06022E36AD100FA9CD0 /* BaseViewController.swift in Sources */,
 				BD406FDA22FF043C0096693D /* NewDocumentFolderViewModel.swift in Sources */,
 				BD59A07322E36DB000FA9CD0 /* String.swift in Sources */,
-				BD2B9E7922EDC11E00FFCD3B /* IkemNetworkManager.swift in Sources */,
+				BD2B9E7922EDC11E00FFCD3B /* MedicalcNetworkManager.swift in Sources */,
 				BD94413F231F1A540085BB4D /* GetStatusRequest.swift in Sources */,
 				BD59A06B22E36D2400FA9CD0 /* Closures.swift in Sources */,
 				BD1426902328351D0079465F /* PageUploadStatusDatabaseModel.swift in Sources */,
 				BDEA570D22FA2CD9004C48F0 /* DocumentNetworkModel.swift in Sources */,
-				BD402E772300B99100049DF9 /* GetFolderRequest.swift in Sources */,
 				BD8AA80F23003D530082441F /* FolderDatabaseModel.swift in Sources */,
 				BD2B9E8122EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift in Sources */,
 				BD59A09B22E36EF900FA9CD0 /* RequestStatus.swift in Sources */,
@@ -954,6 +953,7 @@
 				BD80224922F880F8009B8B69 /* ListItemSelectionViewController.swift in Sources */,
 				BD402E7B2300D60B00049DF9 /* FolderTableViewCell.swift in Sources */,
 				43C14A122300F07E00F7C24E /* DrawerViewController.swift in Sources */,
+				16B8D4BD23F7035D003DFD71 /* GetFolderRequest.swift in Sources */,
 				BDA25B2322EF9D7A006DA7E4 /* FirebaseAnalytics.swift in Sources */,
 				BD2F209422EBB49000534916 /* DocumentsCoordinator.swift in Sources */,
 				BD59A06C22E36D2A00FA9CD0 /* ViewControllerService.swift in Sources */,

@@ -11,7 +11,7 @@ import Foundation
 struct UploadPageReuest: Request, FileUploading {
     typealias DataType = EmptyResponse
     
-    var endpoint: Endpoint = IkemEndpoint.uploadPage
+    var endpoint: Endpoint = MedicalcEndpoint.uploadPage
     var method: HTTPMethod = .post
     var parameters: Parameters?
     var headers: HTTPHeaders = [:]

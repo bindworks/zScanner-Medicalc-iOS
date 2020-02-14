@@ -53,7 +53,7 @@ class NewDocumentCoordinator: Coordinator {
     
     // MARK: Helepers
     private let database: Database = try! RealmDatabase()
-    private let networkManager: NetworkManager = IkemNetworkManager(api: NativeAPI())
+    private let networkManager: NetworkManager = MedicalcNetworkManager(api: NativeAPI())
     private let tracker: Tracker = FirebaseAnalytics()
     
     private func showCurrentStep() {

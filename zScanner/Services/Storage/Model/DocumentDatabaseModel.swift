@@ -20,6 +20,7 @@ class DocumentDatabaseModel: Object {
     @objc dynamic var folder: FolderDatabaseModel?
     let pages = List<PageDatabaseModel>()
     
+    
     convenience init(document: DocumentDomainModel) {
         self.init()
         
