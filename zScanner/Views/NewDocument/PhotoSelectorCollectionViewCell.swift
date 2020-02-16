@@ -63,7 +63,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.height.equalTo(35)
-            make.width.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(4)
             make.bottom.equalToSuperview()
         }
         
@@ -88,7 +88,6 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         text.placeholder = "newDocumentPhotos.description.placeholder".localized
         text.adjustsFontSizeToFitWidth = true
         text.backgroundColor = UIColor.white
-        text.setPadding(padding: .left, size: 7)
         return text
     }()
     
@@ -103,7 +102,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
 
 extension PhotoSelectorCollectionViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.setBottomBorder(color: UIColor.red.cgColor, animated: true, duration: 0.6)
+        textField.setBottomBorder()
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
