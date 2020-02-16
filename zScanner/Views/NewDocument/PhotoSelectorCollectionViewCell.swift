@@ -9,16 +9,17 @@
 import UIKit
 
 protocol PhotoSelectorCellDelegate: class {
-    func delete(image: PageDomainModel)
+    func delete(page: Page)
 }
 
 // MARK: -
 class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     
     // MARK: Instance part
-    private var picture: PageDomainModel? {
+    private var page: Page? {
         didSet {
-            imageView.image = picture?.image
+            imageView.image = page?.image
+            textField.text = page?.description
         }
     }
     
@@ -36,12 +37,12 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        picture = nil
+        page = nil
     }
     
     // MARK: Interface
-    func setup(with picture: PageDomainModel, delegate: PhotoSelectorCellDelegate) {
-        self.picture = picture
+    func setup(with page: Page, delegate: PhotoSelectorCellDelegate) {
+        self.page = page
         self.delegate = delegate
     }
     
@@ -49,8 +50,8 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     private weak var delegate: PhotoSelectorCellDelegate?
     
     @objc private func deleteImage() {
-        guard let picture = picture else { return }
-        delegate?.delete(image: picture)
+        guard let page = page else { return }
+        delegate?.delete(page: page)
     }
     
     private func setupView() {

@@ -138,12 +138,13 @@ class NewDocumentCoordinator: Coordinator {
         pop()
     }
     
-    private func savePagesToDocument(_ pages: [PageDomainModel]) {
+    private func savePagesToDocument(_ pages: [Page]) {
 
         // Store images
         pages
             .enumerated()
             .forEach({ (index, page) in
+                let page = PageDomainModel(page: page, index: index, correlationId: newDocument.id)
                 newDocument.pages.append(page)
             })
         }
@@ -231,7 +232,7 @@ extension NewDocumentCoordinator: ListItemSelectionCoordinator {}
 
 // MARK: - ListItemSelectionCoordinator implementation
 extension NewDocumentCoordinator: NewDocumentPhotosCoordinator {
-    func savePhotos(_ photos: [PageDomainModel]) {
-        savePagesToDocument(photos)
+    func savePages(_ pages: [Page]) {
+        savePagesToDocument(pages)
     }
 }
