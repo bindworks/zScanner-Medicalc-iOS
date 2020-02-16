@@ -9,47 +9,17 @@
 import UIKit
 
 extension UITextField {
-    func setBottomBorder(show: Bool = true, color: CGColor = UIColor.white.cgColor, animated: Bool = false, duration: CFTimeInterval = 1) {
+    func setBottomBorder(show: Bool = true, animated: Bool = true, color: UIColor = .primary, duration: CFTimeInterval = 0.333) {
         borderStyle = .none
         
         layer.backgroundColor = UIColor.white.cgColor
         layer.masksToBounds = false
-        layer.shadowColor = show ? color : UIColor.clear.cgColor
-        layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        layer.shadowColor = show ? color.cgColor : UIColor.clear.cgColor
         layer.shadowRadius = 0.0
+        self.layer.shadowOffset = CGSize(width: 0, height: 1)
         
-        if animated {
-            let animation:CABasicAnimation = CABasicAnimation(keyPath: "shadowOpacity")
-            animation.fromValue = 0
-            animation.toValue = 1
-            animation.duration = duration
-            layer.add(animation, forKey: "Opacity")
-            layer.shadowOpacity = 1
-        }
-    }
-    
-    enum Padding {
-        case left
-        case right
-        case both
-    }
-    
-    func setPadding(padding: Padding, size: CGFloat, mode: UITextField.ViewMode = .always) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: size, height: self.frame.height))
-        
-        switch padding {
-        case .right:
-            self.rightView = paddingView
-            self.rightViewMode = mode
-        case .left:
-            self.leftView = paddingView
-            self.leftViewMode = mode
-        case .both:
-            self.leftView = paddingView
-            self.leftViewMode = mode
-            
-            self.rightView = paddingView
-            self.rightViewMode = mode
+        UIView.animate(withDuration: animated ? duration : 0) {
+            self.layer.shadowOpacity = show ? 1 : 0
         }
     }
 }
