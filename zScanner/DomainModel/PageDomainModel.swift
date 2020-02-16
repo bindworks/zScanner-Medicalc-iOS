@@ -41,8 +41,8 @@ struct PageDomainModel: Equatable {
 }
 
 extension PageDomainModel {
-    init(image: UIImage, index: Int, correlationId: String, description: String = "") {
-        self.init(id: UUID().uuidString, index: index, correlationId: correlationId, relativePath: "", description: description)
+    init(page: Page, index: Int, correlationId: String) {
+        self.init(id: UUID().uuidString, index: index, correlationId: correlationId, relativePath: "", description: page.description)
         
         self.image = image
     }

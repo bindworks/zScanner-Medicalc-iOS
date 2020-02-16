@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol NewDocumentPhotosCoordinator: BaseCoordinator {
-    func savePhotos(_ photos: [PageDomainModel])
+    func savePages(_ pages: [Page])
     func showNextStep()
 }
 
@@ -99,29 +99,29 @@ class NewDocumentPhotosViewController: BaseViewController {
     }
     
     private func setupBindings() {
-        viewModel.pictures
+        viewModel.pages
             .bind(
                 to: collectionView.rx.items(cellIdentifier: "PhotoSelectorCollectionViewCell", cellType: PhotoSelectorCollectionViewCell.self),
-                curriedArgument: { [unowned self] (row, image, cell) in
-                    cell.setup(with: image, delegate: self)
+                curriedArgument: { [unowned self] (row, page, cell) in
+                    cell.setup(with: page, delegate: self)
                 }
             )
             .disposed(by: disposeBag)
         
-        viewModel.pictures
+        viewModel.pages
             .subscribe(onNext: { [weak self] pictures in
                 self?.collectionView.backgroundView?.isHidden = pictures.count > 0
             })
             .disposed(by: disposeBag)
         
-        viewModel.pictures
+        viewModel.pages
             .map({ !$0.isEmpty })
             .bind(to: continueButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         continueButton.rx.tap
             .subscribe(onNext: { [unowned self] in
-                self.coordinator.savePhotos(self.viewModel.pictures.value)
+                self.coordinator.savePages(self.viewModel.pages.value)
                 self.coordinator.showNextStep()
             })
             .disposed(by: disposeBag)
@@ -212,9 +212,8 @@ class NewDocumentPhotosViewController: BaseViewController {
 extension NewDocumentPhotosViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            #warning("TODO Am I do it right here?")
-            let pickedPicture = PageDomainModel(image: pickedImage, index: 0, correlationId: "")
-            viewModel.addImage(pickedPicture, fromGallery: picker.sourceType == .photoLibrary)
+            let page = Page(image: pickedImage)
+            viewModel.addPage(page, fromGallery: picker.sourceType == .photoLibrary)
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -226,7 +225,7 @@ extension NewDocumentPhotosViewController: UIImagePickerControllerDelegate, UINa
 
 // MARK: - PhotoSelectorCellDelegate implementation
 extension NewDocumentPhotosViewController: PhotoSelectorCellDelegate {
-    func delete(image: PageDomainModel) {
-        viewModel.removeImage(image)
+    func delete(page: Page) {
+        viewModel.removePage(page)
     }
 }
