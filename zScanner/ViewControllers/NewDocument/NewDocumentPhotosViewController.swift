@@ -199,7 +199,8 @@ class NewDocumentPhotosViewController: BaseViewController {
     
     private lazy var flowLayout: UICollectionViewLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        let textFieldHeight: CGFloat = 40 // Including spacing
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth + textFieldHeight)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = margin
         layout.minimumLineSpacing = margin
