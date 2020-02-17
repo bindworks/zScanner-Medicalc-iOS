@@ -142,6 +142,7 @@ class LoginViewController: BaseViewController, ErrorHandling {
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
             make.right.left.equalToSuperview()
+            make.height.greaterThanOrEqualTo(30)
         }
 
         container.addSubview(passwordTextField)
@@ -149,6 +150,7 @@ class LoginViewController: BaseViewController, ErrorHandling {
             make.top.equalTo(usernameTextField.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
             make.left.right.equalToSuperview()
+            make.height.greaterThanOrEqualTo(30)
         }
         
         container.addSubview(loginButton)
@@ -187,7 +189,7 @@ class LoginViewController: BaseViewController, ErrorHandling {
     private lazy var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.textContentType = .username
-        textField.setBottomBorder()
+        textField.delegate = self
         textField.font = .body
         return textField
     }()
@@ -196,7 +198,7 @@ class LoginViewController: BaseViewController, ErrorHandling {
         let textField = PasswordTextField()
         textField.textContentType = .password
         textField.isSecureTextEntry = true
-        textField.setBottomBorder()
+        textField.delegate = self
         textField.font = .body
         return textField
     }()
@@ -217,4 +219,14 @@ class LoginViewController: BaseViewController, ErrorHandling {
         let view = UIView()
         return view
     }()
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.setBottomBorder()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.setBottomBorder(show: false)
+    }
 }

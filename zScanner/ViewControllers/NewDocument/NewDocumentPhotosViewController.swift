@@ -49,6 +49,7 @@ class NewDocumentPhotosViewController: BaseViewController {
     
     // MARK: Helpers
     let disposeBag = DisposeBag()
+    let bottomGradientOverlayHeight: CGFloat = 80
     
     @objc private func takeNewPicture() {
         showActionSheet()
@@ -139,7 +140,7 @@ class NewDocumentPhotosViewController: BaseViewController {
         
         view.addSubview(gradientView)
         gradientView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.bottom).offset(-80)
+            make.top.equalTo(safeArea.snp.bottom).offset(-bottomGradientOverlayHeight)
             make.right.bottom.left.equalToSuperview()
         }
         
@@ -163,6 +164,8 @@ class NewDocumentPhotosViewController: BaseViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = .white
+        let bottomInset = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) + self.bottomGradientOverlayHeight
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
         collectionView.register(PhotoSelectorCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoSelectorCollectionViewCell")
         return collectionView
     
@@ -199,7 +202,8 @@ class NewDocumentPhotosViewController: BaseViewController {
     
     private lazy var flowLayout: UICollectionViewLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        let textFieldHeight: CGFloat = 40 // Including spacing
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth + textFieldHeight)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = margin
         layout.minimumLineSpacing = margin
