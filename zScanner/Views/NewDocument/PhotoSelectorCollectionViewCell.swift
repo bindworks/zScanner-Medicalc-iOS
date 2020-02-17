@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol PhotoSelectorCellDelegate: class {
     func delete(page: Page)
@@ -19,7 +21,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     private var page: Page? {
         didSet {
             imageView.image = page?.image
-            textField.text = page?.description
+            textField.text = page?.description.value
         }
     }
     
@@ -44,9 +46,16 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     func setup(with page: Page, delegate: PhotoSelectorCellDelegate) {
         self.page = page
         self.delegate = delegate
+        
+        textField.rx.text
+            .orEmpty
+            .bind(to: page.description)
+            .disposed(by: disposeBag)
     }
     
     // MARK: Helpers
+    private let disposeBag = DisposeBag()
+    
     private weak var delegate: PhotoSelectorCellDelegate?
     
     @objc private func deleteImage() {
@@ -61,7 +70,6 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(imageView.snp.width)
         }
         
-        textField.delegate = self
         contentView.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(4)
@@ -86,14 +94,15 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    private var textField : UITextField = {
+    private lazy var textField : UITextField = {
         let text = UITextField()
         text.placeholder = "newDocumentPhotos.description.placeholder".localized
         text.adjustsFontSizeToFitWidth = true
         text.backgroundColor = .white
+        text.delegate = self
         return text
     }()
-    
+
     private var deleteButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "delete").withRenderingMode(.alwaysTemplate), for: .normal)

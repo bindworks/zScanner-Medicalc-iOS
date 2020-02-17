@@ -7,8 +7,21 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
 
-struct Page: Equatable {
+class Page {
+    
     var image: UIImage
-    var description: String = ""
+    let description = BehaviorRelay<String>(value: "")
+    
+    init(image: UIImage) {
+        self.image = image
+    }
+}
+
+extension Page: Equatable {
+    static func == (lhs: Page, rhs: Page) -> Bool {
+        return lhs.image == rhs.image
+    }
 }
