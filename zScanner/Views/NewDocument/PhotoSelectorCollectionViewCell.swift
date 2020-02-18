@@ -40,6 +40,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         
         page = nil
+        disposeBag = DisposeBag()
     }
     
     // MARK: Interface
@@ -54,7 +55,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: Helpers
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     private weak var delegate: PhotoSelectorCellDelegate?
     
