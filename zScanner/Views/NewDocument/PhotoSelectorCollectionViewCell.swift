@@ -71,7 +71,6 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(imageView.snp.width)
         }
         
-        textField.delegate = self
         contentView.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(4)
@@ -96,12 +95,13 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    private var textField : UITextField = {
-        let text = UITextField()
-        text.font = .body
-        text.placeholder = "newDocumentPhotos.description.placeholder".localized
-        text.backgroundColor = .white
-        return text
+    private lazy var textField : UITextField = {
+        let textField = UITextField()
+        textField.font = .body
+        textField.placeholder = "newDocumentPhotos.description.placeholder".localized
+        textField.backgroundColor = .white
+        textField.delegate = self
+        return textField
     }()
 
     private var deleteButton: UIButton = {
