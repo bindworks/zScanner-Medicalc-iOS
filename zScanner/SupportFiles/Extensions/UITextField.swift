@@ -9,14 +9,17 @@
 import UIKit
 
 extension UITextField {
-    func setBottomBorder() {
-        self.borderStyle = .none
-        self.layer.backgroundColor = UIColor.white.cgColor
+    func setBottomBorder(show: Bool = true, animated: Bool = true, color: UIColor = .primary, duration: CFTimeInterval = 0.333) {
+        borderStyle = .none
         
-        self.layer.masksToBounds = false
-        self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowRadius = 0.0
+        layer.backgroundColor = UIColor.white.cgColor
+        layer.masksToBounds = false
+        layer.shadowColor = show ? color.cgColor : UIColor.clear.cgColor
+        layer.shadowRadius = 0.0
+        self.layer.shadowOffset = CGSize(width: 0, height: 1)
+        
+        UIView.animate(withDuration: animated ? duration : 0) {
+            self.layer.shadowOpacity = show ? 1 : 0
+        }
     }
 }

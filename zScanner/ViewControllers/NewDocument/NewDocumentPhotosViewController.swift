@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol NewDocumentPhotosCoordinator: BaseCoordinator {
-    func savePhotos(_ photos: [UIImage])
+    func savePages(_ pages: [Page])
     func showNextStep()
 }
 
@@ -49,6 +49,7 @@ class NewDocumentPhotosViewController: BaseViewController {
     
     // MARK: Helpers
     let disposeBag = DisposeBag()
+    let bottomGradientOverlayHeight: CGFloat = 80
     
     @objc private func takeNewPicture() {
         showActionSheet()
@@ -87,36 +88,49 @@ class NewDocumentPhotosViewController: BaseViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
+    // Whenever user gonna tap somewhere else than the current view so it will dismiss the keyboard
+    private func setupKeyboardHandling() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     private func setupBindings() {
-        viewModel.pictures
+        viewModel.pages
             .bind(
                 to: collectionView.rx.items(cellIdentifier: "PhotoSelectorCollectionViewCell", cellType: PhotoSelectorCollectionViewCell.self),
-                curriedArgument: { [unowned self] (row, image, cell) in
-                    cell.setup(with: image, delegate: self)
+                curriedArgument: { [unowned self] (row, page, cell) in
+                    cell.setup(with: page, delegate: self)
                 }
             )
             .disposed(by: disposeBag)
         
-        viewModel.pictures
+        viewModel.pages
             .subscribe(onNext: { [weak self] pictures in
                 self?.collectionView.backgroundView?.isHidden = pictures.count > 0
             })
             .disposed(by: disposeBag)
         
-        viewModel.pictures
+        viewModel.pages
             .map({ !$0.isEmpty })
             .bind(to: continueButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         continueButton.rx.tap
             .subscribe(onNext: { [unowned self] in
-                self.coordinator.savePhotos(self.viewModel.pictures.value)
+                self.coordinator.savePages(self.viewModel.pages.value)
                 self.coordinator.showNextStep()
             })
             .disposed(by: disposeBag)
     }
     
     private func setupView() {
+        setupKeyboardHandling()
+        
         navigationItem.title = "newDocumentPhotos.screen.title".localized
 
         view.addSubview(collectionView)
@@ -126,7 +140,7 @@ class NewDocumentPhotosViewController: BaseViewController {
         
         view.addSubview(gradientView)
         gradientView.snp.makeConstraints { make in
-            make.top.equalTo(safeArea.snp.bottom).offset(-80)
+            make.top.equalTo(safeArea.snp.bottom).offset(-bottomGradientOverlayHeight)
             make.right.bottom.left.equalToSuperview()
         }
         
@@ -150,6 +164,8 @@ class NewDocumentPhotosViewController: BaseViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = .white
+        let bottomInset = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) + self.bottomGradientOverlayHeight
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
         collectionView.register(PhotoSelectorCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoSelectorCollectionViewCell")
         return collectionView
     
@@ -186,7 +202,8 @@ class NewDocumentPhotosViewController: BaseViewController {
     
     private lazy var flowLayout: UICollectionViewLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        let textFieldHeight: CGFloat = 40 // Including spacing
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth + textFieldHeight)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = margin
         layout.minimumLineSpacing = margin
@@ -199,7 +216,8 @@ class NewDocumentPhotosViewController: BaseViewController {
 extension NewDocumentPhotosViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            viewModel.addImage(pickedImage, fromGallery: picker.sourceType == .photoLibrary)
+            let page = Page(image: pickedImage)
+            viewModel.addPage(page, fromGallery: picker.sourceType == .photoLibrary)
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -211,7 +229,7 @@ extension NewDocumentPhotosViewController: UIImagePickerControllerDelegate, UINa
 
 // MARK: - PhotoSelectorCellDelegate implementation
 extension NewDocumentPhotosViewController: PhotoSelectorCellDelegate {
-    func delete(image: UIImage) {
-        viewModel.removeImage(image)
+    func delete(page: Page) {
+        viewModel.removePage(page)
     }
 }

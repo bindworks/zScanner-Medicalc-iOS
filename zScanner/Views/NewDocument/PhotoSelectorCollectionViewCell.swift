@@ -7,18 +7,21 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol PhotoSelectorCellDelegate: class {
-    func delete(image: UIImage)
+    func delete(page: Page)
 }
 
 // MARK: -
 class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     
     // MARK: Instance part
-    private var image: UIImage? {
+    private var page: Page? {
         didSet {
-            imageView.image = image
+            imageView.image = page?.image
+            textField.text = page?.description.value
         }
     }
     
@@ -36,27 +39,44 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        image = nil
+        page = nil
+        disposeBag = DisposeBag()
     }
     
     // MARK: Interface
-    func setup(with image: UIImage, delegate: PhotoSelectorCellDelegate) {
-        self.image = image
+    func setup(with page: Page, delegate: PhotoSelectorCellDelegate) {
+        self.page = page
         self.delegate = delegate
+        
+        textField.rx.text
+            .orEmpty
+            .bind(to: page.description)
+            .disposed(by: disposeBag)
     }
     
     // MARK: Helpers
+    private var disposeBag = DisposeBag()
+    
     private weak var delegate: PhotoSelectorCellDelegate?
     
     @objc private func deleteImage() {
-        guard let image = image else { return }
-        delegate?.delete(image: image)
+        guard let page = page else { return }
+        delegate?.delete(page: page)
     }
     
     private func setupView() {
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.trailing.leading.equalToSuperview()
+            make.height.equalTo(imageView.snp.width)
+        }
+        
+        contentView.addSubview(textField)
+        textField.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(4)
+            make.height.equalTo(36)
+            make.leading.trailing.equalToSuperview().inset(4)
+            make.bottom.equalToSuperview()
         }
         
         contentView.addSubview(deleteButton)
@@ -75,6 +95,15 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
+    private lazy var textField : UITextField = {
+        let textField = UITextField()
+        textField.font = .body
+        textField.placeholder = "newDocumentPhotos.description.placeholder".localized
+        textField.backgroundColor = .white
+        textField.delegate = self
+        return textField
+    }()
+
     private var deleteButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "delete").withRenderingMode(.alwaysTemplate), for: .normal)
@@ -84,3 +113,12 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     }()
 }
 
+extension PhotoSelectorCollectionViewCell: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.setBottomBorder()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.setBottomBorder(show: false)
+    }
+}

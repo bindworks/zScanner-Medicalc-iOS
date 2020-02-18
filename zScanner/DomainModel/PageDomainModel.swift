@@ -13,7 +13,8 @@ struct PageDomainModel: Equatable {
     var index: Int
     var correlationId: String
     var relativePath: String
-    
+    var description: String
+  
     var image: UIImage {
         get {
             let absoluteUrl = URL(documentsWith: relativePath)
@@ -23,25 +24,26 @@ struct PageDomainModel: Equatable {
             // Create folder for document
             let folderPath = "/" + correlationId
             let absolutePath = URL.documentsPath + folderPath
-            
+
             if !FileManager.default.fileExists(atPath: absolutePath) {
                 try! FileManager.default.createDirectory(atPath: absolutePath, withIntermediateDirectories: false, attributes: nil)
             }
-            
+
             // Convert image to data and store to folder
             let data = newValue.jpegData(compressionQuality: 0.8)!
             let filePath = folderPath + id + ".jpg"
             let absoluteUrl = URL(documentsWith: filePath)
             try! data.write(to: absoluteUrl)
-            
+
             self.relativePath = filePath
         }
     }
 }
 
 extension PageDomainModel {
-    init(image: UIImage, index: Int, correlationId: String) {
-        self.init(id: UUID().uuidString, index: index, correlationId: correlationId, relativePath: "")
+    init(page: Page, index: Int, correlationId: String) {
+        self.init(id: UUID().uuidString, index: index, correlationId: correlationId, relativePath: "", description: page.description.value)
+        
         self.image = image
     }
 }

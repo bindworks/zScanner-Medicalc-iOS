@@ -20,25 +20,25 @@ class NewDocumentPhotosViewModel {
     }
     
     // MARK: Interface
-    let pictures = BehaviorRelay<[UIImage]>(value: [])
+    let pages = BehaviorRelay<[Page]>(value: [])
     
-    func addImage(_ image: UIImage, fromGallery: Bool) {
+    func addPage(_ page: Page, fromGallery: Bool) {
         // Tracking
         tracker.track(.galleryUsed(fromGallery))
         
         // Add image
-        var newArray = pictures.value
-        newArray.append(image)
-        pictures.accept(newArray)
+        var newArray = pages.value
+        newArray.append(page)
+        pages.accept(newArray)
     }
     
-    func removeImage(_ image: UIImage) {
+    func removePage(_ page: Page) {
         // Tracking
         tracker.track(.deleteImage)
 
         // Remove image
-        var newArray = pictures.value
-        _ = newArray.remove(image)
-        pictures.accept(newArray)
+        var newArray = pages.value
+        _ = newArray.remove(page)
+        pages.accept(newArray)
     }
 }

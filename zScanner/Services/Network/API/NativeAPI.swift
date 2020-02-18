@@ -37,7 +37,7 @@ struct NativeAPI: API {
             urlRequest.httpBody = request.parameters?.toJSONData()
             urlRequest.addValue("application-json", forHTTPHeaderField: "Content-Type")
         }
-
+        
         let configuration = URLSessionConfiguration.default
 //        guard let configuration = SeaCatClient.getNSURLSessionConfiguration() else {
 //            callback(.error(RequestError(.seacatError)))
