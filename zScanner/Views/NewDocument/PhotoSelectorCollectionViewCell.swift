@@ -97,8 +97,8 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
     
     private lazy var textField : UITextField = {
         let text = UITextField()
+        text.font = .body
         text.placeholder = "newDocumentPhotos.description.placeholder".localized
-        text.adjustsFontSizeToFitWidth = true
         text.backgroundColor = .white
         text.delegate = self
         return text
