@@ -150,9 +150,7 @@ class NewDocumentCoordinator: Coordinator {
         }
     
     private static func steps(for mode: DocumentMode) -> [Step] {
-        #warning("TODO Remove after it will be done")
-//            return [.folder, .photos, .documentType]
-        return [.photos, .documentType]
+        return [.folder, .photos, .documentType]
     }
     
     // MARK: - BaseCordinator implementation
