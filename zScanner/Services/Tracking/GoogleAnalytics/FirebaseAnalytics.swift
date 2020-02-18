@@ -22,8 +22,6 @@ extension Event {
         case .login: return "login"
         case .logout: return "logout"
             
-        case .documentModeSelected: return "newDocument"
-            
         case .userFoundBy: return "userFound"
         case .userNotFound: return "userNotFound"
             
@@ -37,8 +35,6 @@ extension Event {
     
     var parameters: [String: Any] {
         switch self {
-        case .documentModeSelected(let mode):
-            return ["documentMode": mode.rawValue]
         case .userFoundBy(let mode):
             return ["searchType": mode.rawValue]
         case .numberOfDocumentsBeforeDelete(let sum):

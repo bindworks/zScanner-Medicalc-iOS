@@ -8,23 +8,10 @@
 
 import Foundation
 
-enum DocumentMode: String {
-    case ext = "ext"
-    case document = "doc"
-    case examination = "exam"
-    case photo = "photo"
-    case undefined = "undefined"
-    
-    var title: String {
-        return "documentMode.\(self.rawValue).name".localized
-    }
-}
-
 // MARK: -
 struct DocumentTypeDomainModel {
     var id: String
     var name: String
-    var mode: DocumentMode
 }
 
 // MARK: ListItem implementation
@@ -35,4 +22,4 @@ extension DocumentTypeDomainModel: ListItem {
 }
 
 // MARK: -
-typealias DocumentDict = [DocumentMode: [DocumentTypeDomainModel]]
+//typealias DocumentDict = [DocumentMode: [DocumentTypeDomainModel]]

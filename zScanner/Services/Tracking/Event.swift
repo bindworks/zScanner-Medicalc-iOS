@@ -12,8 +12,6 @@ enum Event {
     case login
     case logout
     
-    case documentModeSelected(DocumentMode)
-    
     case userFoundBy(SearchMode)
     case userNotFound
     

@@ -53,7 +53,6 @@ class DocumentTableViewCell: UITableViewCell {
         // Make sure the label will keep the space even when empty while respecting the dynamic font size
         titleLabel.text = String(format: "%@ %@", model.document.folder.externalId, model.document.folder.name)
         detailLabel.text = [
-            model.document.type.mode.title,
             model.document.type.name,
             String(format: "document.documentCell.numberOfPagesFormat".localized, model.document.pages.count),
         ]
