@@ -10,7 +10,7 @@ import Foundation
 
 enum Config {
     static let productionURL: String = "https://tempra.ikem.seacat/api-zscanner/v3"
-    static let testingURL: String = "https://desolate-meadow-62603.herokuapp.com/api-zscanner/v3"
+    static let testingURL: String = "https://private-anon-7cd588d2e4-skorepak.apiary-mock.com/medicalc/v3.1"
     static let authUrl: String = "http://auth.ikem.seacat"
     
     static let currentEnvironment: Environment = .testing

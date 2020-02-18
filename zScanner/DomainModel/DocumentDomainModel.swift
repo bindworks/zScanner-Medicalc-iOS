@@ -36,8 +36,7 @@ extension DocumentDomainModel {
             ),
             type: DocumentTypeDomainModel(
                 id: "",
-                name: "",
-                mode: .undefined
+                name: ""
             ),
             date: Date(),
             name: "",

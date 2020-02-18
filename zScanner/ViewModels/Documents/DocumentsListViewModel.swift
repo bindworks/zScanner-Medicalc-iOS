@@ -22,7 +22,6 @@ class DocumentsListViewModel {
     private let networkManager: NetworkManager
     
     private(set) var documents: [DocumentViewModel] = []
-    private(set) var documentModes: [DocumentMode] = []
     
     init(database: Database, ikemNetworkManager: NetworkManager) {
         self.database = database
@@ -81,10 +80,9 @@ class DocumentsListViewModel {
                     self?.documentModesState.onNext(.loading)
                     
                 case .success(data: let networkModel):
-                    let documents = networkModel.map({ $0.toDomainModel() })
+                    let documents = networkModel.type.map({ $0.toDomainModel() })
                     
                     self?.storeDocumentTypes(documents)
-                    self?.storeDocumentModes(from: documents)
                     
                     self?.documentModesState.onNext(.success)
 
@@ -93,11 +91,6 @@ class DocumentsListViewModel {
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-    private func storeDocumentModes(from documentTypes: [DocumentTypeDomainModel]) {
-        documentModes = Array(Set(documentTypes.map({ $0.mode })))
-        documentModes.append(.photo)
     }
     
     private func storeDocumentTypes(_ types: [DocumentTypeDomainModel]) {

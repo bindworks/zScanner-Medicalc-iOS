@@ -9,7 +9,7 @@
 import Foundation
 
 struct DocumentTypesRequest: Request {
-    typealias DataType = [DocumentTypeNetworkModel]
+    typealias DataType = TypeNetworkModel
     
     var endpoint: Endpoint = MedicalcEndpoint.documentTypes
     var method: HTTPMethod = .get

@@ -9,17 +9,26 @@
 import Foundation
 
 struct DocumentTypeNetworkModel: Decodable {
-    var mode: String
-    var display: String
-    var type: String
+    let id: String
+    let display: String
+    let subtypes: [DocumentTypeNetworkModel]?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case display
+        case subtypes = "sub-types"
+    }
+}
+
+struct TypeNetworkModel: Decodable {
+    let type: [DocumentTypeNetworkModel]
 }
 
 extension DocumentTypeNetworkModel {
     func toDomainModel() -> DocumentTypeDomainModel {
         return DocumentTypeDomainModel(
-            id: type,
-            name: display,
-            mode: DocumentMode(rawValue: mode) ?? .undefined
+            id: id,
+            name: display
         )
     }
 }
