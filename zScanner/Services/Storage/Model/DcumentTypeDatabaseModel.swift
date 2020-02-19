@@ -19,6 +19,10 @@ class DocumentTypeDatabaseModel: Object {
         self.id = documentType.id
         self.name = documentType.name
     }
+    
+    override class func primaryKey() -> String {
+        return "id"
+    }
 }
 
 //MARK: -
