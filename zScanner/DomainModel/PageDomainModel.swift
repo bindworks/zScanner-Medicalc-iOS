@@ -44,6 +44,6 @@ extension PageDomainModel {
     init(page: Page, index: Int, correlationId: String) {
         self.init(id: UUID().uuidString, index: index, correlationId: correlationId, relativePath: "", description: page.description.value)
         
-        self.image = image
+        self.image = page.image
     }
 }
