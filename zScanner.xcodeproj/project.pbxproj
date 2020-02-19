@@ -1137,6 +1137,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 17;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = B8FL52PVGW;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1153,7 +1154,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cz.medicalc.zScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = "cz.medicalc.zScanner-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "zScanner/SupportFiles/zScanner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1184,7 +1185,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cz.medicalc.zScanner;
+				PRODUCT_BUNDLE_IDENTIFIER = "cz.medicalc.zScanner-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "zScanner/SupportFiles/zScanner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
