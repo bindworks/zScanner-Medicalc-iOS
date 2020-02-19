@@ -16,7 +16,7 @@ class NewDocumentTypeViewModel {
     
     init(database: Database) {
         self.database = database
-//        self.fields = fields(for: mode)
+        self.fields = getFields()
         self.isValid = Observable
             .combineLatest(fields.map({ $0.isValid }))
             .map({ results in results.reduce(true, { $0 && $1 }) })
@@ -36,22 +36,16 @@ class NewDocumentTypeViewModel {
     }
     
     // MARK: Helpers
-//    private func fields(for mode: DocumentMode) -> [FormField] {
-//        var documentTypes: [DocumentTypeDomainModel] {
-//            return database.loadObjects(DocumentTypeDatabaseModel.self)
-//                .map({ $0.toDomainModel() })
-//                .filter({ $0.mode == mode })
-//                .sorted(by: { $0.name < $1.name })
-//        }
-//
-//        switch mode {
-//        case .document, .examination, .ext:
-//            return [
-//                ListPickerField<DocumentTypeDomainModel>(title: "form.listPicker.title".localized, list: documentTypes),
-//                TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
-//            ]
-//        case .photo, .undefined:
-//            return []
-//        }
-//    }
+    private func getFields() -> [FormField] {
+        var documentTypes: [DocumentTypeDomainModel] {
+            return database.loadObjects(DocumentTypeDatabaseModel.self)
+                .map({ $0.toDomainModel() })
+                .sorted(by: { $0.name < $1.name })
+        }
+
+        return [
+            ListPickerField<DocumentTypeDomainModel>(title: "form.listPicker.title".localized, list: documentTypes),
+            TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
+        ]
+    }
 }
