@@ -20,6 +20,3 @@ extension DocumentTypeDomainModel: ListItem {
         return name
     }
 }
-
-// MARK: -
-//typealias DocumentDict = [DocumentMode: [DocumentTypeDomainModel]]

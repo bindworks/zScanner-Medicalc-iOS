@@ -8,13 +8,7 @@
 
 import Foundation
 
-struct DepartmentDomainModel {
+struct DepartmentDomainModel: Equatable {
     var id: String
     var name: String
-}
-
-extension DepartmentDomainModel: Equatable {
-    static func == (lhs: DepartmentDomainModel, rhs: DepartmentDomainModel) -> Bool {
-        return lhs.id == rhs.id
-    }
 }

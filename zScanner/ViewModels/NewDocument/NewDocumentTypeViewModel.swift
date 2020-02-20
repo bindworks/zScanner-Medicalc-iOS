@@ -16,14 +16,24 @@ class NewDocumentTypeViewModel {
     
     init(database: Database) {
         self.database = database
-        self.fields = getFields()
         self.isValid = Observable
             .combineLatest(fields.map({ $0.isValid }))
             .map({ results in results.reduce(true, { $0 && $1 }) })
     }
     
     // MARK: Interface
-    private(set) var fields: [FormField] = []
+    private(set) lazy var fields: [FormField] = {
+        var documentTypes: [DocumentTypeDomainModel] {
+            return database.loadObjects(DocumentTypeDatabaseModel.self)
+                .map({ $0.toDomainModel() })
+                .sorted(by: { $0.name < $1.name })
+        }
+        
+        return [
+            ListPickerField<DocumentTypeDomainModel>(title: "form.listPicker.title".localized, list: documentTypes),
+            TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
+        ]
+    }()
     
     var isValid = Observable<Bool>.just(false)
     
@@ -35,17 +45,5 @@ class NewDocumentTypeViewModel {
         fields.removeAll(where: { $0 is DateTimePickerPlaceholder })
     }
     
-    // MARK: Helpers
-    private func getFields() -> [FormField] {
-        var documentTypes: [DocumentTypeDomainModel] {
-            return database.loadObjects(DocumentTypeDatabaseModel.self)
-                .map({ $0.toDomainModel() })
-                .sorted(by: { $0.name < $1.name })
-        }
 
-        return [
-            ListPickerField<DocumentTypeDomainModel>(title: "form.listPicker.title".localized, list: documentTypes),
-            TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
-        ]
-    }
 }
