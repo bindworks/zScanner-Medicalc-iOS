@@ -12,6 +12,8 @@ enum Event {
     case login
     case logout
     
+    case departmentSelected(String)
+    
     case userFoundBy(SearchMode)
     case userNotFound
     

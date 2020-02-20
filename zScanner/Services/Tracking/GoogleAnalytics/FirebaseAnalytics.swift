@@ -22,6 +22,8 @@ extension Event {
         case .login: return "login"
         case .logout: return "logout"
             
+        case .departmentSelected(let departmentId): return "DepartmentUsed(\(departmentId)"
+            
         case .userFoundBy: return "userFound"
         case .userNotFound: return "userNotFound"
             
