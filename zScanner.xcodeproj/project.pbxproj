@@ -37,7 +37,7 @@
 		BD2B9E8122EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8022EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift */; };
 		BD2B9E8422EDCC2500FFCD3B /* DocumentTypesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8322EDCC2500FFCD3B /* DocumentTypesRequest.swift */; };
 		BD2B9E8622EDCD0900FFCD3B /* MedicalcEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8522EDCD0900FFCD3B /* MedicalcEndpoint.swift */; };
-		BD2B9E8822EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8722EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift */; };
+		BD2B9E8822EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2B9E8722EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift */; };
 		BD2C5F8222F378A20023D097 /* NewDocumentTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2C5F8122F378A20023D097 /* NewDocumentTypeViewController.swift */; };
 		BD2F209022EBA33600534916 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F208F22EBA33600534916 /* Database.swift */; };
 		BD2F209222EBA7D300534916 /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2F209122EBA7D300534916 /* RealmDatabase.swift */; };
@@ -174,7 +174,7 @@
 		BD2B9E8022EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTypeDomainModel.swift; sourceTree = "<group>"; };
 		BD2B9E8322EDCC2500FFCD3B /* DocumentTypesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTypesRequest.swift; sourceTree = "<group>"; };
 		BD2B9E8522EDCD0900FFCD3B /* MedicalcEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalcEndpoint.swift; sourceTree = "<group>"; };
-		BD2B9E8722EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DcumentTypeDatabaseModel.swift; sourceTree = "<group>"; };
+		BD2B9E8722EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTypeDatabaseModel.swift; sourceTree = "<group>"; };
 		BD2C5F8122F378A20023D097 /* NewDocumentTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDocumentTypeViewController.swift; sourceTree = "<group>"; };
 		BD2F208F22EBA33600534916 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		BD2F209122EBA7D300534916 /* RealmDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDatabase.swift; sourceTree = "<group>"; };
@@ -629,7 +629,7 @@
 				BD44E279232703BC00A0B9E5 /* DocumentUploadStatusDatabaseModel.swift */,
 				BD7EAC3D23258A1A002C225A /* PageDatabaseModel.swift */,
 				BD14268F2328351D0079465F /* PageUploadStatusDatabaseModel.swift */,
-				BD2B9E8722EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift */,
+				BD2B9E8722EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift */,
 				BD8AA80E23003D530082441F /* FolderDatabaseModel.swift */,
 				16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */,
 			);
@@ -925,7 +925,7 @@
 				BDC4A3E322E5008800D1CF6A /* DocumentDomainModel.swift in Sources */,
 				BDA25B1C22EF979A006DA7E4 /* Tracker.swift in Sources */,
 				BD59A09922E36EF900FA9CD0 /* NativeAPI.swift in Sources */,
-				BD2B9E8822EDF0C900FFCD3B /* DcumentTypeDatabaseModel.swift in Sources */,
+				BD2B9E8822EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift in Sources */,
 				BDA25B2022EF9C33006DA7E4 /* Event.swift in Sources */,
 				BD59A0AD22E395AF00FA9CD0 /* UIColor.swift in Sources */,
 				BD59A09022E36EF900FA9CD0 /* RequestBehavior.swift in Sources */,
