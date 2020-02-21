@@ -626,14 +626,14 @@
 		BD8AA80D23003D1F0082441F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BDBF4E20232EED4C0078BF53 /* LoginDatabaseModel.swift */,
+				16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */,
 				BDFC478422E907F200F312F0 /* DocumentDatabaseModel.swift */,
+				BD2B9E8722EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift */,
 				BD44E279232703BC00A0B9E5 /* DocumentUploadStatusDatabaseModel.swift */,
+				BD8AA80E23003D530082441F /* FolderDatabaseModel.swift */,
+				BDBF4E20232EED4C0078BF53 /* LoginDatabaseModel.swift */,
 				BD7EAC3D23258A1A002C225A /* PageDatabaseModel.swift */,
 				BD14268F2328351D0079465F /* PageUploadStatusDatabaseModel.swift */,
-				BD2B9E8722EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift */,
-				BD8AA80E23003D530082441F /* FolderDatabaseModel.swift */,
-				16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
