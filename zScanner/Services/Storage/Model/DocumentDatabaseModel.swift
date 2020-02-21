@@ -47,12 +47,12 @@ extension DocumentDatabaseModel {
         return DocumentDomainModel(
             id: id,
             folder: folder!.toDomainModel(),
-            type: type!.toDomainModel(),
+            type: type?.toDomainModel() ?? DocumentTypeDomainModel(id: "", name: ""),
             date: date,
             name: name,
             notes: notes,
             pages: pages.map({ $0.toDomainModel() }),
-            department: department!.toDomainModel()
+            department: department?.toDomainModel() ?? DepartmentDomainModel(id: "", name: "")
         )
     }
 }
