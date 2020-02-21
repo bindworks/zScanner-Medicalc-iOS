@@ -117,7 +117,7 @@ class DocumentsListViewModel {
                     let departments = networkModel.map({ $0.toDomainModel() })
                     
                     self?.departments.onNext(departments)
-                case .error(let error): print("fetching Departments: ", error)
+                case .error(let error): print(error)
                 }
             }).disposed(by: disposeBag)
     }

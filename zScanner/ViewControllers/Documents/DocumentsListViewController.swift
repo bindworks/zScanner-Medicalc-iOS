@@ -187,9 +187,9 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
 extension DocumentsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if tableView == self.documentsTableView {
-            return "dokumenty"
+            return "documents.tableHeader".localized
         } else {
-            return "pracoviště"
+            return "departments.tableHeader".localized
         }
     }
     
@@ -197,16 +197,13 @@ extension DocumentsListViewController: UITableViewDataSource {
         if tableView == self.documentsTableView {
             let count = viewModel.documents.count
             tableView.backgroundView?.isHidden = count > 0
-            print("documents return ", count)
             return count
         } else {
             do {
                 let count = try viewModel.departments.value().count
-                print("departments return ", count)
                 return count
             } catch(let error) {
                 print(error)
-                print("departments return 0")
                 return 0
             }
         }
@@ -217,14 +214,12 @@ extension DocumentsListViewController: UITableViewDataSource {
             let document = viewModel.documents[indexPath.row]
             let cell = tableView.dequeueCell(DocumentTableViewCell.self)
             cell.setup(with: document, delegate: self)
-            print("document cell")
             return cell
         } else {
             let cell = tableView.dequeueCell(DepartmentTableViewCell.self)
             do {
                 let department = try viewModel.departments.value()[indexPath.row]
                 cell.setup(with: department)
-                print("department cell")
                 return cell
             } catch(let error) {
                 print(error)
