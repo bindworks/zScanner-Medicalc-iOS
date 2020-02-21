@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1658E76123FFF292005861C3 /* DepartmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1658E76023FFF292005861C3 /* DepartmentTableViewCell.swift */; };
 		16A2CAC323F70C85006E9577 /* DepartmentNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC223F70C85006E9577 /* DepartmentNetworkModel.swift */; };
 		16A2CAC523F70CDB006E9577 /* DepartmentsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */; };
 		16A2CAC723F70E2F006E9577 /* DepartmentDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */; };
@@ -145,6 +146,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1658E76023FFF292005861C3 /* DepartmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentTableViewCell.swift; sourceTree = "<group>"; };
 		16A2CAC223F70C85006E9577 /* DepartmentNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DepartmentNetworkModel.swift; path = zScanner/Services/Network/Medicalc/Model/DepartmentNetworkModel.swift; sourceTree = SOURCE_ROOT; };
 		16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsRequest.swift; sourceTree = "<group>"; };
 		16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDomainModel.swift; sourceTree = "<group>"; };
@@ -709,6 +711,7 @@
 			children = (
 				BDC4A3DF22E5004900D1CF6A /* DocumentTableViewCell.swift */,
 				435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */,
+				1658E76023FFF292005861C3 /* DepartmentTableViewCell.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -944,6 +947,7 @@
 				BD59A09A22E36EF900FA9CD0 /* API.swift in Sources */,
 				BD389A2522F70170002F935F /* NewDocumentTypeViewModel.swift in Sources */,
 				BD85C93822E502A3004DC76E /* DocumentViewModel.swift in Sources */,
+				1658E76123FFF292005861C3 /* DepartmentTableViewCell.swift in Sources */,
 				BD000CDE22E4CE6C001EE38A /* DocumentsListViewController.swift in Sources */,
 				16A2CAC923F71091006E9577 /* DepartmentDatabaseModel.swift in Sources */,
 				BD389A2722F70596002F935F /* FormField.swift in Sources */,

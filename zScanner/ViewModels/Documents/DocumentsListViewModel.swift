@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 
+
 class DocumentsListViewModel {
     enum DocumentModesState {
         case awaitingInteraction
@@ -22,6 +23,7 @@ class DocumentsListViewModel {
     private let networkManager: NetworkManager
     
     private(set) var documents: [DocumentViewModel] = []
+    private(set) var departments = BehaviorSubject<[DepartmentDomainModel]>(value: [])
     
     init(database: Database, ikemNetworkManager: NetworkManager) {
         self.database = database
@@ -29,6 +31,7 @@ class DocumentsListViewModel {
         
         loadDocuments()
         fetchDocumentTypes()
+        fetchDepartments()
     }
     
     //MARK: Interface
@@ -40,6 +43,7 @@ class DocumentsListViewModel {
     
     func updateDocumentTypes() {
         fetchDocumentTypes()
+        fetchDepartments()
     }
     
     func updateDocuments() {
@@ -100,5 +104,21 @@ class DocumentsListViewModel {
                 .map({ DocumentTypeDatabaseModel(documentType: $0) })
                 .forEach({ self.database.saveObject($0) })
         }
+    }
+    
+    func fetchDepartments() {
+        networkManager
+            .getDepartments()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] requestStatus in
+                switch requestStatus {
+                case .progress: break
+                case .success(data: let networkModel):
+                    let departments = networkModel.map({ $0.toDomainModel() })
+                    
+                    self?.departments.onNext(departments)
+                case .error(let error): print("fetching Departments: ", error)
+                }
+            }).disposed(by: disposeBag)
     }
 }

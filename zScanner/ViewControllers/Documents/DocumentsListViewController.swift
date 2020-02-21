@@ -44,7 +44,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         super.viewWillAppear(animated)
         
         viewModel.updateDocuments()
-        tableView.reloadSections([0], with: .fade)
+        documentsTableView.reloadSections([0], with: .fade)
     }
     
     override var leftBarButtonItems: [UIBarButtonItem] {
@@ -60,7 +60,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     // MARK: Interface
     func insertNewDocument(document: DocumentViewModel) {
         viewModel.insertNewDocument(document)
-        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+        documentsTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
     }
     
     // MARK: Helpers
@@ -91,6 +91,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 }
             })
             .disposed(by: disposeBag)
+        
+        viewModel.departments
+            .observeOn(MainScheduler.instance)
+            .subscribe({ [weak self] _ in
+                self?.departmentsTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc private func newDocument() {
@@ -108,19 +115,29 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     private func setupView() {
         navigationItem.title = "document.screen.title".localized
         
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        documentsTableView.dataSource = self
+        view.addSubview(documentsTableView)
+        documentsTableView.snp.makeConstraints { (make) in
+            make.top.greaterThanOrEqualToSuperview()
+            make.trailing.leading.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.66)
         }
         
-        tableView.backgroundView = emptyView
+        documentsTableView.backgroundView = emptyView
         
         emptyView.addSubview(emptyViewLabel)
         emptyViewLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.75)
             make.centerX.equalToSuperview()
-            make.top.greaterThanOrEqualTo(tableView.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(documentsTableView.sectionHeaderHeight)
             make.centerY.equalToSuperview().multipliedBy(0.666).priority(900)
+        }
+        
+        departmentsTableView.dataSource = self
+        view.addSubview(departmentsTableView)
+        departmentsTableView.snp.makeConstraints { (make) in
+            make.top.equalTo(documentsTableView.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
         }
     }
     
@@ -136,13 +153,20 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         return button
     }()
     
-    private lazy var tableView: UITableView = {
+    private lazy var documentsTableView: UITableView = {
         let tableView = UITableView()
         tableView.registerCell(DocumentTableViewCell.self)
-        tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
+        return tableView
+    }()
+
+    private lazy var departmentsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.registerCell(DepartmentTableViewCell.self)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 80
         return tableView
     }()
     
@@ -161,17 +185,52 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
 
 //MARK: - UITableViewDataSource implementation
 extension DocumentsListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if tableView == self.documentsTableView {
+            return "dokumenty"
+        } else {
+            return "pracoviště"
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = viewModel.documents.count
-        tableView.backgroundView?.isHidden = count > 0
-        return count
+        if tableView == self.documentsTableView {
+            let count = viewModel.documents.count
+            tableView.backgroundView?.isHidden = count > 0
+            print("documents return ", count)
+            return count
+        } else {
+            do {
+                let count = try viewModel.departments.value().count
+                print("departments return ", count)
+                return count
+            } catch(let error) {
+                print(error)
+                print("departments return 0")
+                return 0
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let document = viewModel.documents[indexPath.row]
-        let cell = tableView.dequeueCell(DocumentTableViewCell.self)
-        cell.setup(with: document, delegate: self)
-        return cell
+        if tableView == self.documentsTableView {
+            let document = viewModel.documents[indexPath.row]
+            let cell = tableView.dequeueCell(DocumentTableViewCell.self)
+            cell.setup(with: document, delegate: self)
+            print("document cell")
+            return cell
+        } else {
+            let cell = tableView.dequeueCell(DepartmentTableViewCell.self)
+            do {
+                let department = try viewModel.departments.value()[indexPath.row]
+                cell.setup(with: department)
+                print("department cell")
+                return cell
+            } catch(let error) {
+                print(error)
+                return cell
+            }
+        }
     }
 }
 
