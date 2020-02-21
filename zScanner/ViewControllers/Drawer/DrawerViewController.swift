@@ -96,10 +96,10 @@ class DrawerViewController: BaseViewController {
     
     private lazy var logo: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "ikemLogo")
+        imageView.image = #imageLiteral(resourceName: "medicalcLogo")
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .white
-        imageView.backgroundColor = .primary
+//        imageView.backgroundColor = .primary
         return imageView
     }()
 

@@ -52,10 +52,10 @@ class AboutViewController: BaseViewController {
     
     private lazy var drawerLogo: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "ikemLogo")
+        imageView.image = #imageLiteral(resourceName: "medicalcLogo")
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .white
-        imageView.backgroundColor = .primary
+//        imageView.backgroundColor = .white
         return imageView
     }()
     
