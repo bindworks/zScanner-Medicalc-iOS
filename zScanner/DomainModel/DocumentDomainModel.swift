@@ -16,6 +16,7 @@ struct DocumentDomainModel {
     var name: String
     var notes: String
     var pages: [PageDomainModel]
+    var department: DepartmentDomainModel
 }
 
 extension DocumentDomainModel: Equatable {
@@ -35,13 +36,16 @@ extension DocumentDomainModel {
             ),
             type: DocumentTypeDomainModel(
                 id: "",
-                name: "",
-                mode: .undefined
+                name: ""
             ),
             date: Date(),
             name: "",
             notes: "",
-            pages: []
+            pages: [],
+            department: DepartmentDomainModel(
+                id: "",
+                name: ""
+            )
         )
     }
 }

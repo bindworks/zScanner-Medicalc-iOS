@@ -11,9 +11,10 @@ import Foundation
 enum Config {
     static let productionURL: String = "https://tempra.ikem.seacat/api-zscanner/v3"
     static let testingURL: String = "https://desolate-meadow-62603.herokuapp.com/api-zscanner/v3"
-    static let authUrl: String = "http://auth.ikem.seacat"
+    static let apiaryURL: String = "https://private-anon-7cd588d2e4-skorepak.apiary-mock.com/medicalc/v3.1"
+    static let authURL: String = "http://auth.ikem.seacat"
     
-    static let currentEnvironment: Environment = .testing
+    static let currentEnvironment: Environment = .apiary
     static let folderUsageHistoryCount = 3
     static let maximumNumberOfConcurentUploads = 4
     static let realmSchemaVersion: UInt64 = 1
@@ -23,18 +24,21 @@ enum Config {
 enum Environment {
     case production
     case testing
+    case apiary
 
     var baseUrl: String {
         switch self {
             case .production: return Config.productionURL
             case .testing: return Config.testingURL
+            case .apiary: return Config.apiaryURL
         }
     }
 
     var authUrl: String {
         switch self {
-            case .production: return Config.authUrl
+            case .production: return Config.authURL
             case .testing: return ""
+            case .apiary: return ""
         }
     }
 }

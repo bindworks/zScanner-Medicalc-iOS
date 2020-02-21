@@ -23,7 +23,7 @@ class DocumentsCoordinator: Coordinator {
     init(userSession: UserSession, flowDelegate: DocumentsFlowDelegate, window: UIWindow) {
         self.userSession = userSession
         self.flowDelegate = flowDelegate
-        self.networkManager = IkemNetworkManager(api: api)
+        self.networkManager = MedicalcNetworkManager(api: api)
         
         super.init(window: window)
         
@@ -52,7 +52,7 @@ class DocumentsCoordinator: Coordinator {
         menuCoordinator.begin()
     }
     
-    private func runNewDocumentFlow(with mode: DocumentMode) {
+    private func runNewDocumentFlow() {
         // Tracking
         if documentCreatedInThisSession {
             tracker.track(.createDocumentAgain)
@@ -61,7 +61,7 @@ class DocumentsCoordinator: Coordinator {
         }
         
         // Start new-document flow
-        guard let coordinator = NewDocumentCoordinator(for: mode, flowDelegate: self, window: window, navigationController: navigationController) else { return }
+        guard let coordinator = NewDocumentCoordinator(flowDelegate: self, window: window, navigationController: navigationController) else { return }
         addChildCoordinator(coordinator)
         coordinator.begin()
     }
@@ -89,9 +89,8 @@ class DocumentsCoordinator: Coordinator {
 
 // MARK: - DocumentsListCoordinator implementation
 extension DocumentsCoordinator: DocumentsListCoordinator {
-    func createNewDocument(with mode: DocumentMode) {
-        tracker.track(.documentModeSelected(mode))
-        runNewDocumentFlow(with: mode)
+    func createNewDocument() {
+        runNewDocumentFlow()
     }
     func openMenu() {
         menuCoordinator.openMenu()

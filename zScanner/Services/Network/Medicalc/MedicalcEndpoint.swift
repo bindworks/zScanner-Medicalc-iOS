@@ -8,7 +8,8 @@
 
 import Foundation
 
-enum IkemEndpoint: String, Endpoint {
+enum MedicalcEndpoint: String, Endpoint {
+    case departments = "/departments"
     case documentTypes = "/documenttypes"
     case submitDocument = "/documents/summary"
     case uploadPage = "/documents/page"

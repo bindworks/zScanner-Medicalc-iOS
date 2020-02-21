@@ -9,7 +9,8 @@
 import Foundation
 import RxSwift
 
-class IkemNetworkManager: NetworkManager {
+class MedicalcNetworkManager: NetworkManager {
+    
     
     // MARK: Instance part
     private let api: API
@@ -31,8 +32,13 @@ class IkemNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func getDocumentTypes() -> Observable<RequestStatus<[DocumentTypeNetworkModel]>> {
+    func getDocumentTypes() -> Observable<RequestStatus<TypeNetworkModel>> {
         let request = DocumentTypesRequest()
+        return observe(request)
+    }
+    
+    func getDepartments() -> Observable<RequestStatus<[DepartmentNetworkModel]>> {
+        let request = DepartmentsRequest()
         return observe(request)
     }
     

@@ -11,7 +11,7 @@ import Foundation
 struct GetStatusRequest: Request, ParametersJsonEncoded {
     typealias DataType = StatusResponseNetworkModel
     
-    var endpoint: Endpoint = IkemEndpoint.seaCatStatus
+    var endpoint: Endpoint = MedicalcEndpoint.seaCatStatus
     var method: HTTPMethod = .post
     var parameters: Parameters?
     var headers: HTTPHeaders = [:]

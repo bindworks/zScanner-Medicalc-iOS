@@ -22,23 +22,13 @@ class NewDocumentCoordinator: Coordinator {
     // MARK: Instance part
     unowned private let flowDelegate: NewDocumentFlowDelegate
     private var newDocument = DocumentDomainModel.emptyDocument
-    private let mode: DocumentMode
     private let steps: [Step]
     private var currentStep: Step
     
-    init?(for mode: DocumentMode, flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
-        guard mode != .undefined else { return nil }
-
+    init?(flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
         self.flowDelegate = flowDelegate
         
-        self.mode = mode
-        self.steps = NewDocumentCoordinator.steps(for: mode)
-        
-        // If mode is .photo the step for setting documentType is skipped, but the documentMode is needed later.
-        // The documentMode is set now to prevent unexpected behavior.
-        if mode == .photo {
-            newDocument.type.mode = .photo
-        }
+        self.steps = NewDocumentCoordinator.steps()
         
         guard let firstStep = steps.first else { return nil }
         self.currentStep = firstStep
@@ -53,7 +43,7 @@ class NewDocumentCoordinator: Coordinator {
     
     // MARK: Helepers
     private let database: Database = try! RealmDatabase()
-    private let networkManager: NetworkManager = IkemNetworkManager(api: NativeAPI())
+    private let networkManager: NetworkManager = MedicalcNetworkManager(api: NativeAPI())
     private let tracker: Tracker = FirebaseAnalytics()
     
     private func showCurrentStep() {
@@ -74,7 +64,7 @@ class NewDocumentCoordinator: Coordinator {
     }
     
     private func showDocumentTypeSelectionScreen() {
-        let viewModel = NewDocumentTypeViewModel(documentMode: mode, database: database)
+        let viewModel = NewDocumentTypeViewModel(database: database)
         let viewController = NewDocumentTypeViewController(viewModel: viewModel, coordinator: self)
         push(viewController)
     }
@@ -139,7 +129,6 @@ class NewDocumentCoordinator: Coordinator {
     }
     
     private func savePagesToDocument(_ pages: [Page]) {
-
         // Store images
         pages
             .enumerated()
@@ -149,7 +138,7 @@ class NewDocumentCoordinator: Coordinator {
             })
         }
     
-    private static func steps(for mode: DocumentMode) -> [Step] {
+    private static func steps() -> [Step] {
         return [.folder, .photos, .documentType]
     }
     

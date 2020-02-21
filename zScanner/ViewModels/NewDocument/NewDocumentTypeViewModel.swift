@@ -13,19 +13,27 @@ class NewDocumentTypeViewModel {
     
     // MARK: Instance part
     private let database: Database
-    private let mode: DocumentMode
     
-    init(documentMode: DocumentMode, database: Database) {
+    init(database: Database) {
         self.database = database
-        self.mode = documentMode
-        self.fields = fields(for: mode)
         self.isValid = Observable
             .combineLatest(fields.map({ $0.isValid }))
             .map({ results in results.reduce(true, { $0 && $1 }) })
     }
     
     // MARK: Interface
-    private(set) var fields: [FormField] = []
+    private(set) lazy var fields: [FormField] = {
+        var documentTypes: [DocumentTypeDomainModel] {
+            return database.loadObjects(DocumentTypeDatabaseModel.self)
+                .map({ $0.toDomainModel() })
+                .sorted(by: { $0.name < $1.name })
+        }
+        
+        return [
+            ListPickerField<DocumentTypeDomainModel>(title: "form.listPicker.title".localized, list: documentTypes),
+            TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
+        ]
+    }()
     
     var isValid = Observable<Bool>.just(false)
     
@@ -37,23 +45,5 @@ class NewDocumentTypeViewModel {
         fields.removeAll(where: { $0 is DateTimePickerPlaceholder })
     }
     
-    // MARK: Helpers
-    private func fields(for mode: DocumentMode) -> [FormField] {
-        var documentTypes: [DocumentTypeDomainModel] {
-            return database.loadObjects(DocumentTypeDatabaseModel.self)
-                .map({ $0.toDomainModel() })
-                .filter({ $0.mode == mode })
-                .sorted(by: { $0.name < $1.name })
-        }
-        
-        switch mode {
-        case .document, .examination, .ext:
-            return [
-                ListPickerField<DocumentTypeDomainModel>(title: "form.listPicker.title".localized, list: documentTypes),
-                TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
-            ]
-        case .photo, .undefined:
-            return []
-        }
-    }
+
 }

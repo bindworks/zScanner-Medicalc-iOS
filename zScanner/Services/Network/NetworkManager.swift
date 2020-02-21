@@ -10,11 +10,15 @@ import Foundation
 import RxSwift
 
 protocol NetworkManager {
-
     /// Fetch all document subtypes
     ///
     /// - Returns: Observable request status
-    func getDocumentTypes() -> Observable<RequestStatus<[DocumentTypeNetworkModel]>>
+    func getDocumentTypes() -> Observable<RequestStatus<TypeNetworkModel>>
+    
+    /// Fetch all departments
+    ///
+    /// - Returns: Observable request status
+    func getDepartments() -> Observable<RequestStatus<[DepartmentNetworkModel]>>
     
     /// Upload document to server
     ///

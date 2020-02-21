@@ -37,7 +37,7 @@ class LoginCoordinator: Coordinator {
     
     // MARK: Helpers
     private lazy var api: API = NativeAPI()
-    private lazy var networkManager: NetworkManager = IkemNetworkManager(api: api)
+    private lazy var networkManager: NetworkManager = MedicalcNetworkManager(api: api)
 }
 
 //MARK: - LoginViewDelegate implementation

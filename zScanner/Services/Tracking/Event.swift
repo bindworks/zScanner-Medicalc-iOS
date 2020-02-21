@@ -12,7 +12,7 @@ enum Event {
     case login
     case logout
     
-    case documentModeSelected(DocumentMode)
+    case departmentSelected(String)
     
     case userFoundBy(SearchMode)
     case userNotFound
