@@ -32,7 +32,7 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func getDocumentTypes() -> Observable<RequestStatus<TypeNetworkModel>> {
+    func getDocumentTypes() -> Observable<RequestStatus<DocumentTypesNetworkModel>> {
         let request = DocumentTypesRequest()
         return observe(request)
     }

@@ -20,7 +20,7 @@ struct DocumentTypeNetworkModel: Decodable {
     }
 }
 
-struct TypeNetworkModel: Decodable {
+struct DocumentTypesNetworkModel: Decodable {
     let type: [DocumentTypeNetworkModel]
 }
 

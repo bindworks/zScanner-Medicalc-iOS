@@ -72,19 +72,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     }
     
     private func setupBindings() {
-        viewModel.isDepartmentSelected
-            .observeOn(MainScheduler.instance)
-            .subscribe { (isSelected) in
-                guard let isSelected = isSelected.element else { return }
-                if isSelected {
-                    self.viewModel.documentModesState.onNext(.success)
-                } else {
-                    self.viewModel.documentModesState.onNext(.awaitingInteraction)
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.documentModesState
+        viewModel.documentTypesState
             .asObserver()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [unowned self] status in
@@ -104,12 +92,21 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             })
             .disposed(by: disposeBag)
         
-        viewModel.departments
-            .observeOn(MainScheduler.instance)
-            .subscribe({ [weak self] _ in
-                self?.departmentsTableView.reloadData()
-            })
-            .disposed(by: disposeBag)
+//        viewModel.documentTypesState
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] departments in
+//                self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+//                departments
+//                    .map({
+//                        let view = DepartmentView()
+//                        view.setup(with: $0)
+//                        return view
+//                    })
+//                    .forEach({
+//                        self?.departmentsStackView.addArrangedSubview($0)
+//                    })
+//                })
+//            .disposed(by: disposeBag)
     }
     
     @objc private func newDocument() {
@@ -130,9 +127,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         documentsTableView.dataSource = self
         view.addSubview(documentsTableView)
         documentsTableView.snp.makeConstraints { (make) in
-            make.top.greaterThanOrEqualToSuperview()
-            make.trailing.leading.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.66)
+            make.top.trailing.leading.equalToSuperview()
         }
         
         documentsTableView.backgroundView = emptyView
@@ -145,12 +140,12 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             make.centerY.equalToSuperview().multipliedBy(0.666).priority(900)
         }
         
-        departmentsTableView.dataSource = self
-        departmentsTableView.delegate = self
-        view.addSubview(departmentsTableView)
-        departmentsTableView.snp.makeConstraints { (make) in
+        view.addSubview(departmentsStackView)
+        departmentsStackView.snp.makeConstraints { (make) in
             make.top.equalTo(documentsTableView.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
+            make.left.right.bottom.equalTo(safeArea)
+            make.height.equalTo(0).priority(100)
+            make.height.lessThanOrEqualTo(view.snp.height).multipliedBy(0.666)
         }
     }
     
@@ -174,13 +169,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         tableView.tableFooterView = UIView()
         return tableView
     }()
-
-    private lazy var departmentsTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.registerCell(DepartmentTableViewCell.self)
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 80
-        return tableView
+    
+    private lazy var departmentsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
+        stackView.axis = .vertical
+        return stackView
     }()
     
     private lazy var emptyView = UIView()
@@ -198,53 +193,17 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
 
 //MARK: - UITableViewDataSource implementation
 extension DocumentsListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if tableView == self.documentsTableView {
-            return "documents.tableHeader".localized
-        } else {
-            return "departments.tableHeader".localized
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == self.documentsTableView {
-            let count = viewModel.documents.count
-            tableView.backgroundView?.isHidden = count > 0
-            return count
-        } else {
-            do {
-                let count = try viewModel.departments.value().count
-                return count
-            } catch(let error) {
-                print(error)
-                return 0
-            }
-        }
+        let count = viewModel.documents.count
+        tableView.backgroundView?.isHidden = count > 0
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == self.documentsTableView {
-            let document = viewModel.documents[indexPath.row]
-            let cell = tableView.dequeueCell(DocumentTableViewCell.self)
-            cell.setup(with: document, delegate: self)
-            return cell
-        } else {
-            let cell = tableView.dequeueCell(DepartmentTableViewCell.self)
-            do {
-                let department = try viewModel.departments.value()[indexPath.row]
-                cell.setup(with: department)
-                return cell
-            } catch(let error) {
-                print(error)
-                return cell
-            }
-        }
-    }
-}
-
-extension DocumentsListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.isDepartmentSelected.accept(true)
+        let document = viewModel.documents[indexPath.row]
+        let cell = tableView.dequeueCell(DocumentTableViewCell.self)
+        cell.setup(with: document, delegate: self)
+        return cell
     }
 }
 

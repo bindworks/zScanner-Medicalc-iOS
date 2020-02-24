@@ -11,7 +11,7 @@ import RxSwift
 import RxRelay
 
 class DocumentsListViewModel {
-    enum DocumentModesState {
+    enum DocumentTypesState {
         case awaitingInteraction
         case loading
         case success
@@ -23,9 +23,9 @@ class DocumentsListViewModel {
     private let networkManager: NetworkManager
     
     private(set) var documents: [DocumentViewModel] = []
-    private(set) var departments = BehaviorSubject<[DepartmentDomainModel]>(value: [])
+    private(set) var departments: [DepartmentViewModel] = []
     
-    let isDepartmentSelected = BehaviorRelay<Bool>(value: false)
+    var selectedDepartment: Observable<DepartmentViewModel>!
     
     init(database: Database, ikemNetworkManager: NetworkManager) {
         self.database = database
@@ -34,10 +34,11 @@ class DocumentsListViewModel {
         loadDocuments()
         fetchDocumentTypes()
         fetchDepartments()
+        setupObservables()
     }
     
     //MARK: Interface
-    let documentModesState = BehaviorSubject<DocumentModesState>(value: .awaitingInteraction)
+    let documentTypesState = BehaviorSubject<DocumentTypesState>(value: .awaitingInteraction)
     
     func insertNewDocument(_ document: DocumentViewModel) {
         documents.insert(document, at: 0)
@@ -83,15 +84,16 @@ class DocumentsListViewModel {
             .subscribe(onNext: { [weak self] requestStatus in
                 switch requestStatus {
                 case .progress:
-                    self?.documentModesState.onNext(.loading)
+                    self?.documentTypesState.onNext(.loading)
                     
                 case .success(data: let networkModel):
                     let documents = networkModel.type.map({ $0.toDomainModel() })
                     
                     self?.storeDocumentTypes(documents)
+                    self?.documentTypesState.onNext(.success)
 
                 case .error(let error):
-                    self?.documentModesState.onNext(.error(error))
+                    self?.documentTypesState.onNext(.error(error))
                 }
             })
             .disposed(by: disposeBag)
@@ -113,14 +115,28 @@ class DocumentsListViewModel {
             .subscribe(onNext: { [weak self] requestStatus in
                 switch requestStatus {
                 case .progress:
-                    self?.documentModesState.onNext(.loading)
-                case .success(data: let networkModel):
-                    let departments = networkModel.map({ $0.toDomainModel() })
+                    self?.documentTypesState.onNext(.loading)
                     
-                    self?.departments.onNext(departments)
+                case .success(data: let networkModel):
+                    self?.departments = networkModel.map({ $0.toDomainModel() }).map({ DepartmentViewModel(department: $0) })
+                    self?.documentTypesState.onNext(.success)
+                    
                 case .error(let error):
-                     self?.documentModesState.onNext(.error(error))
+                    self?.documentTypesState.onNext(.error(error))
+                    
                 }
             }).disposed(by: disposeBag)
+    }
+    
+    private func setupObservables() {
+        selectedDepartment = Observable.from(
+            self.departments.map({ department in department.isSelected.map({ _ in department }) })
+        ).merge()
+        
+        departments.reduce(Disposables.create()) { disposable, department in
+            let subscription = selectedDepartment.map({ (a: DepartmentViewModel) -> Bool in a === department }).subscribe(onNext: { department.isSelected.accept($0) })
+            return Disposables.create(disposable, subscription)
+        }
+        .disposed(by: disposeBag)
     }
 }
