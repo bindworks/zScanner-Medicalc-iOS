@@ -8,7 +8,7 @@
 
 import Foundation
 import RxSwift
-
+import RxRelay
 
 class DocumentsListViewModel {
     enum DocumentModesState {
@@ -24,6 +24,8 @@ class DocumentsListViewModel {
     
     private(set) var documents: [DocumentViewModel] = []
     private(set) var departments = BehaviorSubject<[DepartmentDomainModel]>(value: [])
+    
+    let isDepartmentSelected = BehaviorRelay<Bool>(value: false)
     
     init(database: Database, ikemNetworkManager: NetworkManager) {
         self.database = database
@@ -87,8 +89,6 @@ class DocumentsListViewModel {
                     let documents = networkModel.type.map({ $0.toDomainModel() })
                     
                     self?.storeDocumentTypes(documents)
-                    
-                    self?.documentModesState.onNext(.success)
 
                 case .error(let error):
                     self?.documentModesState.onNext(.error(error))
@@ -112,12 +112,14 @@ class DocumentsListViewModel {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] requestStatus in
                 switch requestStatus {
-                case .progress: break
+                case .progress:
+                    self?.documentModesState.onNext(.loading)
                 case .success(data: let networkModel):
                     let departments = networkModel.map({ $0.toDomainModel() })
                     
                     self?.departments.onNext(departments)
-                case .error(let error): print(error)
+                case .error(let error):
+                     self?.documentModesState.onNext(.error(error))
                 }
             }).disposed(by: disposeBag)
     }

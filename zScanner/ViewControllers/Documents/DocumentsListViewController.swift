@@ -72,6 +72,18 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     }
     
     private func setupBindings() {
+        viewModel.isDepartmentSelected
+            .observeOn(MainScheduler.instance)
+            .subscribe { (isSelected) in
+                guard let isSelected = isSelected.element else { return }
+                if isSelected {
+                    self.viewModel.documentModesState.onNext(.success)
+                } else {
+                    self.viewModel.documentModesState.onNext(.awaitingInteraction)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         viewModel.documentModesState
             .asObserver()
             .observeOn(MainScheduler.instance)
@@ -134,6 +146,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         }
         
         departmentsTableView.dataSource = self
+        departmentsTableView.delegate = self
         view.addSubview(departmentsTableView)
         departmentsTableView.snp.makeConstraints { (make) in
             make.top.equalTo(documentsTableView.snp.bottom)
@@ -226,6 +239,12 @@ extension DocumentsListViewController: UITableViewDataSource {
                 return cell
             }
         }
+    }
+}
+
+extension DocumentsListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.isDepartmentSelected.accept(true)
     }
 }
 
