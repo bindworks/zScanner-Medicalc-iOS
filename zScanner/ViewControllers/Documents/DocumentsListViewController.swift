@@ -121,9 +121,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     
                     self?.departmentsViewModel.departmentState.onNext(.awaitingInteraction)
                     
-                case .selected:
-                    self?.documentsViewModel.fetchDocumentTypes()
-                    
                 case .error(let error):
                     //show error
                     print(error)
@@ -144,7 +141,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     }
     
     @objc private func reloadDocumentTypes() {
-        documentsViewModel.fetchDocumentTypes()
+        #warning("Fix reloading document types")
+//        documentsViewModel.fetchDocumentTypes()
     }
     
     private func setupView() {

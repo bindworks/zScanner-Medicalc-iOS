@@ -32,8 +32,8 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func getDocumentTypes() -> Observable<RequestStatus<DocumentTypesNetworkModel>> {
-        let request = DocumentTypesRequest()
+    func getDocumentTypes(department: DepartmentDomainModel) -> Observable<RequestStatus<DocumentTypesNetworkModel>> {
+        let request = DocumentTypesRequest(departmentCode: department.id)
         return observe(request)
     }
     

@@ -13,8 +13,10 @@ struct DocumentTypesRequest: Request {
     
     var endpoint: Endpoint = MedicalcEndpoint.documentTypes
     var method: HTTPMethod = .get
-    var parameters: Parameters? = nil
+    var parameters: Parameters?
     var headers: HTTPHeaders = [:]
     
-    init() {}
+    init(departmentCode: String) {
+        parameters = ["department": departmentCode]
+    }
 }
