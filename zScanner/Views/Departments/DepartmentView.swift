@@ -30,7 +30,8 @@ class DepartmentView: UIView {
     func setup(with model: DepartmentViewModel) {
         self.model = model
         
-        titleLabel.text = model.department.name
+        titleLabel.text = String(format: "%@ - %@", model.department.id, model.department.name)
+        
         model.isSelected
             .observeOn(MainScheduler.instance)
             .map({ !$0 })
