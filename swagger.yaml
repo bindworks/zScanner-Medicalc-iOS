@@ -20,7 +20,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
+                  type: objectdepartments
                   properties:
                     code:
                       type: string
@@ -29,10 +29,10 @@ paths:
                         
               example: 
                 [
-                  { "id": "photo", "display": "Fotografie" },
-                  { "id": "infconsent", "display": "Informovaný souhlas" },
-                  { "id": "revers", "display": "Revers" },
-                  { "id": "sono", "display": "Sonografické vyšetření" }
+                  { "id": "kardiologie", "display": "Kardiologie" },
+                  { "id": "diabetologie", "display": "Diabetologie" },
+                  { "id": "orl", "display": "ORL" },
+                  { "id": "nefrologie", "display": "Nefrologie" }
                 ]
       
   /medicalc/v3.1/documenttypes:
