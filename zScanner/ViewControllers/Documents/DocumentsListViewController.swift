@@ -18,11 +18,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     
     // MARK: Instance part
     private unowned let coordinator: DocumentsListCoordinator
-    private let viewModel: DocumentsListViewModel
+    private let documentsViewModel: DocumentsListViewModel
+    private let departmentsViewModel: DepartmentsListViewModel
         
-    init(viewModel: DocumentsListViewModel, coordinator: DocumentsListCoordinator) {
+    init(documentsViewModel: DocumentsListViewModel, departmentsViewModel: DepartmentsListViewModel, coordinator: DocumentsListCoordinator) {
         self.coordinator = coordinator
-        self.viewModel = viewModel
+        self.documentsViewModel = documentsViewModel
+        self.departmentsViewModel = departmentsViewModel
         
         super.init(coordinator: coordinator)
     }
@@ -43,7 +45,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.updateDocuments()
+        documentsViewModel.updateDocuments()
         documentsTableView.reloadSections([0], with: .fade)
     }
     
@@ -59,7 +61,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     
     // MARK: Interface
     func insertNewDocument(document: DocumentViewModel) {
-        viewModel.insertNewDocument(document)
+        documentsViewModel.insertNewDocument(document)
         documentsTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
     }
     
@@ -72,7 +74,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     }
     
     private func setupBindings() {
-        viewModel.documentTypesState
+        documentsViewModel.documentTypesState
             .asObserver()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [unowned self] status in
@@ -92,21 +94,34 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             })
             .disposed(by: disposeBag)
         
-//        viewModel.documentTypesState
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { [weak self] departments in
-//                self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
-//                departments
-//                    .map({
-//                        let view = DepartmentView()
-//                        view.setup(with: $0)
-//                        return view
-//                    })
-//                    .forEach({
-//                        self?.departmentsStackView.addArrangedSubview($0)
-//                    })
-//                })
-//            .disposed(by: disposeBag)
+        departmentsViewModel.departmentState
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] departmentState in
+                switch departmentState {
+                case .awaitingInteraction:
+                    self?.documentsViewModel.documentTypesState.onNext(.awaitingInteraction)
+                case .loading:
+                    //show loading
+                    self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    break
+                case .success:
+                    self?.departmentsViewModel.departments
+                        .map({
+                            let view = DepartmentView()
+                            view.setup(with: $0)
+                            return view
+                        })
+                        .forEach({
+                            self?.departmentsStackView.addArrangedSubview($0)
+                        })
+                case .error(let error):
+                    //show error
+                    print(error)
+                    self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    break
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc private func newDocument() {
@@ -118,7 +133,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     }
     
     @objc private func reloadDocumentTypes() {
-        viewModel.updateDocumentTypes()
+        documentsViewModel.fetchDocumentTypes()
     }
     
     private func setupView() {
@@ -194,13 +209,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
 //MARK: - UITableViewDataSource implementation
 extension DocumentsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = viewModel.documents.count
+        let count = documentsViewModel.documents.count
         tableView.backgroundView?.isHidden = count > 0
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let document = viewModel.documents[indexPath.row]
+        let document = documentsViewModel.documents[indexPath.row]
         let cell = tableView.dequeueCell(DocumentTableViewCell.self)
         cell.setup(with: document, delegate: self)
         return cell

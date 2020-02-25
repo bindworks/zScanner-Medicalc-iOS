@@ -23,9 +23,6 @@ class DocumentsListViewModel {
     private let networkManager: NetworkManager
     
     private(set) var documents: [DocumentViewModel] = []
-    private(set) var departments: [DepartmentViewModel] = []
-    
-    var selectedDepartment: Observable<DepartmentViewModel>!
     
     init(database: Database, ikemNetworkManager: NetworkManager) {
         self.database = database
@@ -33,8 +30,6 @@ class DocumentsListViewModel {
         
         loadDocuments()
         fetchDocumentTypes()
-        fetchDepartments()
-        setupObservables()
     }
     
     //MARK: Interface
@@ -42,11 +37,6 @@ class DocumentsListViewModel {
     
     func insertNewDocument(_ document: DocumentViewModel) {
         documents.insert(document, at: 0)
-    }
-    
-    func updateDocumentTypes() {
-        fetchDocumentTypes()
-        fetchDepartments()
     }
     
     func updateDocuments() {
@@ -106,37 +96,5 @@ class DocumentsListViewModel {
                 .map({ DocumentTypeDatabaseModel(documentType: $0) })
                 .forEach({ self.database.saveObject($0) })
         }
-    }
-    
-    func fetchDepartments() {
-        networkManager
-            .getDepartments()
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] requestStatus in
-                switch requestStatus {
-                case .progress:
-                    self?.documentTypesState.onNext(.loading)
-                    
-                case .success(data: let networkModel):
-                    self?.departments = networkModel.map({ $0.toDomainModel() }).map({ DepartmentViewModel(department: $0) })
-                    self?.documentTypesState.onNext(.success)
-                    
-                case .error(let error):
-                    self?.documentTypesState.onNext(.error(error))
-                    
-                }
-            }).disposed(by: disposeBag)
-    }
-    
-    private func setupObservables() {
-        selectedDepartment = Observable.from(
-            self.departments.map({ department in department.isSelected.map({ _ in department }) })
-        ).merge()
-        
-        departments.reduce(Disposables.create()) { disposable, department in
-            let subscription = selectedDepartment.map({ (a: DepartmentViewModel) -> Bool in a === department }).subscribe(onNext: { department.isSelected.accept($0) })
-            return Disposables.create(disposable, subscription)
-        }
-        .disposed(by: disposeBag)
     }
 }
