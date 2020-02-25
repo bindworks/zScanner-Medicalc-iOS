@@ -29,7 +29,6 @@ class DocumentsListViewModel {
         self.networkManager = ikemNetworkManager
         
         loadDocuments()
-        fetchDocumentTypes()
     }
     
     //MARK: Interface
