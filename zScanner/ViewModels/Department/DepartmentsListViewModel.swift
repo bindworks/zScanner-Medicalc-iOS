@@ -15,6 +15,7 @@ class DepartmentsListViewModel {
         case awaitingInteraction
         case loading
         case success
+        case selected
         case error(RequestError)
     }
     
@@ -64,7 +65,11 @@ class DepartmentsListViewModel {
     private func setupObservables() {
         selectedDepartment = Observable.from(
             self.departments.map({ department in department.isSelected.map({ _ in department }) })
-        ).merge()
+        )
+        .do(onNext: { _ in
+            self.departmentState.onNext(.selected)
+        })
+        .merge()
         
         departments.reduce(Disposables.create()) { disposable, department in
             let subscription = selectedDepartment.map({ (a: DepartmentViewModel) -> Bool in a === department }).subscribe(onNext: { department.isSelected.accept($0) })

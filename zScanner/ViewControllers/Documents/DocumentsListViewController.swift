@@ -100,10 +100,12 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 switch departmentState {
                 case .awaitingInteraction:
                     self?.documentsViewModel.documentTypesState.onNext(.awaitingInteraction)
+                    
                 case .loading:
                     //show loading
                     let loadingView = LoadingView()
                     self?.departmentsStackView.addSubview(loadingView)
+                    
                 case .success:
                     self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     
@@ -118,11 +120,16 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                         })
                     
                     self?.departmentsViewModel.departmentState.onNext(.awaitingInteraction)
+                    
+                case .selected:
+                    self?.documentsViewModel.fetchDocumentTypes()
+                    
                 case .error(let error):
                     //show error
                     print(error)
                     self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     break
+                    
                 }
             })
             .disposed(by: disposeBag)
