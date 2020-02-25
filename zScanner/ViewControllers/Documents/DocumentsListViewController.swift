@@ -102,9 +102,11 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     self?.documentsViewModel.documentTypesState.onNext(.awaitingInteraction)
                 case .loading:
                     //show loading
-                    self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
-                    break
+                    let loadingView = LoadingView()
+                    self?.departmentsStackView.addSubview(loadingView)
                 case .success:
+                    self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    
                     self?.departmentsViewModel.departments
                         .map({
                             let view = DepartmentView()
@@ -114,6 +116,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                         .forEach({
                             self?.departmentsStackView.addArrangedSubview($0)
                         })
+                    
+                    self?.departmentsViewModel.departmentState.onNext(.awaitingInteraction)
                 case .error(let error):
                     //show error
                     print(error)
