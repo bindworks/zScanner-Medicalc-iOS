@@ -13,11 +13,15 @@ import RxGesture
 
 class DepartmentView: UIView {
     
-    private var model: DepartmentViewModel?
+    private let model: DepartmentDomainModel
+    private let onClickHandler: ((DepartmentDomainModel) -> Void)?
     
     //MARK: Instance part
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(model: DepartmentDomainModel, onClickHandler: ((DepartmentDomainModel) -> Void)? = nil) {
+        self.model = model
+        self.onClickHandler = onClickHandler
+        
+        super.init(frame: .zero)
         
         setup()
     }
@@ -26,26 +30,17 @@ class DepartmentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Interface
-    func setup(with model: DepartmentViewModel) {
-        self.model = model
-        
-        titleLabel.text = String(format: "%@ - %@", model.department.id, model.department.name)
-        
-        model.isSelected
-            .observeOn(MainScheduler.instance)
-            .map({ !$0 })
-            .bind(to: selectionView.rx.isHidden)
-            .disposed(by: disposeBag)
-    }
-    
     // MARK: Helpers
     private let disposeBag = DisposeBag()
     
     private func setup() {
-        rx.tapGesture()
+        titleLabel.text = model.name
+        
+        self.rx.tapGesture()
+            .asObservable()
             .subscribe(onNext: { [weak self] _ in
-                self?.model?.toggleSelection()
+                guard let self = self else { return }
+                self.onClickHandler?(self.model)
             })
             .disposed(by: disposeBag)
 

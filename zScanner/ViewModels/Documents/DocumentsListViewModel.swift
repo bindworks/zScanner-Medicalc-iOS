@@ -67,9 +67,9 @@ class DocumentsListViewModel {
             .reversed()
     }
     
-    func fetchDocumentTypes(department: DepartmentDomainModel) {
+    func fetchDocumentTypes(for departmentCode: String) {
         networkManager
-            .getDocumentTypes(department: department)
+            .getDocumentTypes(for: departmentCode)
             .subscribe(onNext: { [weak self] requestStatus in
                 switch requestStatus {
                 case .progress:

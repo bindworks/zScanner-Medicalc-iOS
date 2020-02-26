@@ -13,7 +13,7 @@ protocol NetworkManager {
     /// Fetch all document subtypes
     ///
     /// - Returns: Observable request status
-    func getDocumentTypes(department: DepartmentDomainModel) -> Observable<RequestStatus<DocumentTypesNetworkModel>>
+    func getDocumentTypes(for departmentCode: String) -> Observable<RequestStatus<DocumentTypesNetworkModel>>
     
     /// Fetch all departments
     ///

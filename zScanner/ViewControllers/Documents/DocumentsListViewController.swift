@@ -86,46 +86,46 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 case .success:
                     self.rightBarButtons = [self.addButton]
                 case .error(let error):
-                    self.rightBarButtons = [self.reloadButton]
-                    self.handleError(error, okCallback: nil) {
-                        self.reloadDocumentTypes()
-                    }
+                    break
+                    
                 }
             })
             .disposed(by: disposeBag)
         
         departmentsViewModel.departmentState
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] departmentState in
-                switch departmentState {
+            .subscribe(onNext: { [weak self] status in
+                guard let self = self else { return }
+                
+                switch status {
                 case .awaitingInteraction:
-                    self?.documentsViewModel.documentTypesState.onNext(.awaitingInteraction)
+                    self.departmentsViewModel.fetchDepartments()
+//                    self?.documentsViewModel.documentTypesState.onNext(.awaitingInteraction)
+                    break
                     
                 case .loading:
-                    //show loading
-                    let loadingView = LoadingView()
-                    self?.departmentsStackView.addSubview(loadingView)
+                    self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    self.departmentsStackView.addArrangedSubview(self.departmentsLoadingView)
                     
                 case .success:
-                    self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     
-                    self?.departmentsViewModel.departments
+                    self.departmentsViewModel.departments.value
                         .map({
-                            let view = DepartmentView()
-                            view.setup(with: $0)
-                            return view
+                            DepartmentView(
+                                model: $0,
+                                onClickHandler: { [weak self] in
+                                    self?.loadDocumentTypes(departmentCode: $0.id)
+                                }
+                            )
                         })
                         .forEach({
-                            self?.departmentsStackView.addArrangedSubview($0)
+                            self.departmentsStackView.addArrangedSubview($0)
                         })
                     
-                    self?.departmentsViewModel.departmentState.onNext(.awaitingInteraction)
-                    
                 case .error(let error):
-                    //show error
-                    print(error)
-                    self?.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
-                    break
+                    self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    // TODO: Add error view and retry button to the stack view
                     
                 }
             })
@@ -139,10 +139,9 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     @objc private func openMenu() {
         coordinator.openMenu()
     }
-    
-    @objc private func reloadDocumentTypes() {
-        #warning("Fix reloading document types")
-//        documentsViewModel.fetchDocumentTypes()
+
+    private func loadDocumentTypes(departmentCode: String) {
+        documentsViewModel.fetchDocumentTypes(for: departmentCode)
     }
     
     private func setupView() {
@@ -175,8 +174,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     
     private lazy var addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newDocument))
     
-    private lazy var reloadButton = UIBarButtonItem(image: #imageLiteral(resourceName: "refresh"), style: .plain, target: self, action: #selector(reloadDocumentTypes))
-    
     private lazy var loadingItem: UIBarButtonItem = {
         let loading = UIActivityIndicatorView(style: .gray)
         loading.startAnimating()
@@ -199,10 +196,15 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         stackView.alignment = .fill
         stackView.distribution = .fillProportionally
         stackView.axis = .vertical
+        stackView.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        // Temporary background color until UI is improved
+        stackView.backgroundColor = UIColor.gray //.withAlphaComponent(0.333)
         return stackView
     }()
     
     private lazy var emptyView = UIView()
+    
+    private lazy var departmentsLoadingView = LoadingView()
     
     private lazy var emptyViewLabel: UILabel = {
         let label = UILabel()
