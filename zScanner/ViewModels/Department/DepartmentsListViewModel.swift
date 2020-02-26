@@ -24,8 +24,6 @@ class DepartmentsListViewModel {
     
     let departments = BehaviorRelay<[DepartmentDomainModel]>(value: [])
     
-    var selectedDepartment: String?
-    
     init(database: Database, ikemNetworkManager: NetworkManager) {
         self.database = database
         self.networkManager = ikemNetworkManager
@@ -36,7 +34,6 @@ class DepartmentsListViewModel {
     
     //MARK: Helpers
     let disposeBag = DisposeBag()
-    var departmentsDisposeBag = DisposeBag()
     
     func fetchDepartments() {
         networkManager

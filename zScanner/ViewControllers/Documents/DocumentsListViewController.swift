@@ -45,9 +45,11 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //reset values when user is going to return from new document flow
+        self.departmentsViewModel.departmentState.onNext(.awaitingInteraction)
+        
         documentsViewModel.updateDocuments()
         documentsTableView.reloadSections([0], with: .fade)
-        clearDepartmentSelections()
     }
     
     override var leftBarButtonItems: [UIBarButtonItem] {
@@ -85,8 +87,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 case .loading:
                     self.rightBarButtons = [self.loadingItem]
                 case .success:
-                    self.rightBarButtons = [self.addButton]
-                case .error(let error):
+                    self.coordinator.createNewDocument()
+                case .error( _):
                     break
                     
                 }
@@ -101,8 +103,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 switch status {
                 case .awaitingInteraction:
                     self.departmentsViewModel.fetchDepartments()
-//                    self?.documentsViewModel.documentTypesState.onNext(.awaitingInteraction)
-                    break
+                    self.documentsViewModel.documentTypesState.onNext(.awaitingInteraction)
                     
                 case .loading:
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
@@ -112,25 +113,22 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     
                     self.departmentsStackView.addArrangedSubview(TitleView(title: "departments.tableHeader".localized))
-                    
+           
                     self.departmentsViewModel.departments.value
                         .map({
-                            DepartmentView(
-                                model: $0,
-                                onClickHandler: { [weak self] in
-                                    if $0.id != self?.departmentsViewModel.selectedDepartment {
-                                        self?.loadDocumentTypes(departmentCode: $0.id)
-                                        self?.departmentsViewModel.selectedDepartment = $0.id
-                                        self?.handleDepartmentsSinglePick()
-                                    }
-                                }
-                            )
+                            DepartmentButton(model: $0)
                         })
-                        .forEach({
-                            self.departmentsStackView.addArrangedSubview($0)
+                        .forEach({ (button) in
+                            button.rx.tap
+                                .subscribe({ [weak self] _ in
+                                    self?.loadDocumentTypes(departmentCode: button.model.id)
+                                })
+                                .disposed(by: self.disposeBag)
+
+                            self.departmentsStackView.addArrangedSubview(button)
                         })
                     
-                case .error(let error):
+                case .error( _):
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     // TODO: Add error view and retry button to the stack view
                     
@@ -139,33 +137,12 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             .disposed(by: disposeBag)
     }
     
-    @objc private func newDocument() {
-        self.coordinator.createNewDocument()
-    }
-    
     @objc private func openMenu() {
         coordinator.openMenu()
     }
 
     private func loadDocumentTypes(departmentCode: String) {
         documentsViewModel.fetchDocumentTypes(for: departmentCode)
-    }
-    
-    private func handleDepartmentsSinglePick() {
-        departmentsStackView.subviews.forEach { (view) in
-            guard let departmentView = view as? DepartmentView else { return }
-        
-            if departmentView.model.id != self.departmentsViewModel.selectedDepartment {
-                departmentView.isSelected.accept(false)
-            }
-        }
-    }
-    
-    private func clearDepartmentSelections() {
-        departmentsStackView.subviews.forEach { (view) in
-            guard let departmentView = view as? DepartmentView else { return }
-            departmentView.isSelected.accept(false)
-        }
     }
     
     private func setupView() {
@@ -190,13 +167,12 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         view.addSubview(departmentsStackView)
         departmentsStackView.snp.makeConstraints { (make) in
             make.top.equalTo(documentsTableView.snp.bottom)
-            make.left.right.bottom.equalTo(safeArea)
+            make.left.right.equalTo(safeArea).inset(8)
+            make.bottom.equalTo(safeArea)
             make.height.equalTo(0).priority(100)
             make.height.lessThanOrEqualTo(view.snp.height).multipliedBy(0.666)
         }
     }
-    
-    private lazy var addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newDocument))
     
     private lazy var loadingItem: UIBarButtonItem = {
         let loading = UIActivityIndicatorView(style: .gray)
@@ -217,6 +193,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     
     private lazy var departmentsStackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.spacing = 4
         stackView.alignment = .fill
         stackView.distribution = .fillProportionally
         stackView.axis = .vertical
