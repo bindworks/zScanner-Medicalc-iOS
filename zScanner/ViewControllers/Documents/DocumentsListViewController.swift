@@ -112,8 +112,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 case .success:
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     
-                    self.departmentsStackView.addArrangedSubview(TitleView(title: "departments.tableHeader".localized))
-           
+                    self.departmentsStackView.addArrangedSubview(self.departmentsHeaderView)
                     self.departmentsViewModel.departments.value
                         .map({
                             DepartmentButton(model: $0)
@@ -130,7 +129,9 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     
                 case .error( _):
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
-                    // TODO: Add error view and retry button to the stack view
+                    
+                    self.departmentsStackView.addArrangedSubview(self.departmentsHeaderView)
+                    self.departmentsStackView.addArrangedSubview(self.departmentsErrorView)
                     
                 }
             })
@@ -203,9 +204,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         return stackView
     }()
     
-    private lazy var emptyView = UIView()
+    private lazy var departmentsHeaderView = TitleView(title: "departments.tableHeader".localized)
     
     private lazy var departmentsLoadingView = LoadingView()
+    
+    private lazy var departmentsErrorView = ErrorView()
+    
+    private lazy var emptyView = UIView()
     
     private lazy var emptyViewLabel: UILabel = {
         let label = UILabel()
