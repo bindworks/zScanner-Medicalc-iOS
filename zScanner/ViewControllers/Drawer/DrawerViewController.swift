@@ -62,6 +62,13 @@ class DrawerViewController: BaseViewController {
         topView.addSubview(drawerTopLabel)
         topView.addSubview(usernameLabel)
         
+        view.addSubview(separateView)
+        separateView.snp.makeConstraints { (make) in
+            make.top.equalTo(topView.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(2)
+        }
+        
         view.addSubview(menuStackView)
         menuStackView.addArrangedSubview(logoutButton)
         menuStackView.addArrangedSubview(deleteHistoryButton)
@@ -89,7 +96,7 @@ class DrawerViewController: BaseViewController {
         }
         
         menuStackView.snp.makeConstraints { make in
-            make.top.equalTo(topView.snp.bottom).offset(15)
+            make.top.equalTo(separateView.snp.bottom).offset(15)
             make.left.right.equalToSuperview().inset(20)
         }
     }
@@ -98,15 +105,14 @@ class DrawerViewController: BaseViewController {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "medicalcLogo")
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .white
-//        imageView.backgroundColor = .primary
+        imageView.tintColor = .primary
         return imageView
     }()
 
     private lazy var drawerTopLabel: UILabel = {
         let label = UILabel()
         label.text = "drawer.header.title".localized
-        label.textColor = .white
+        label.textColor = .primary
         label.font = .headline
         return label
     }()
@@ -115,15 +121,21 @@ class DrawerViewController: BaseViewController {
         let label = UILabel()
         label.text = String(format: "drawer.header.usernameFormat".localized, login.username)
         label.numberOfLines = 0
-        label.textColor = .white
+        label.textColor = .primary
         label.font = .body
         return label
     }()
 
     private lazy var topView: UIView = {
         let topView = UIView()
-        topView.backgroundColor = .primary
+        topView.backgroundColor = .white
         return topView
+    }()
+    
+    private lazy var separateView: UIView = {
+        let separateView = UIView()
+        separateView.backgroundColor = .black
+        return separateView
     }()
 
     private lazy var logoutButton: DrawerMenuButton = {
