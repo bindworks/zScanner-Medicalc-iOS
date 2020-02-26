@@ -15,6 +15,7 @@ class DepartmentView: UIView {
     
     private let model: DepartmentDomainModel
     private let onClickHandler: ((DepartmentDomainModel) -> Void)?
+    private let isSelected = BehaviorRelay<Bool>(value: true)
     
     //MARK: Instance part
     init(model: DepartmentDomainModel, onClickHandler: ((DepartmentDomainModel) -> Void)? = nil) {
@@ -41,7 +42,14 @@ class DepartmentView: UIView {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.onClickHandler?(self.model)
+                self.isSelected.toggle()
             })
+            .disposed(by: disposeBag)
+        
+        isSelected
+            .observeOn(MainScheduler.instance)
+            .map({ !$0 })
+            .bind(to: selectionView.rx.isHidden)
             .disposed(by: disposeBag)
 
         addSubview(selectionView)
