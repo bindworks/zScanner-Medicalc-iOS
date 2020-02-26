@@ -111,6 +111,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 case .success:
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     
+                    self.departmentsStackView.addArrangedSubview(TitleView(title: "departments.tableHeader".localized))
+                    
                     self.departmentsViewModel.departments.value
                         .map({
                             DepartmentView(
