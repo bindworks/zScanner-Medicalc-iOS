@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import RxSwift
 
 class ErrorView: UIView {
+
+    let buttonTap: Observable<Void>
+    
     init() {
+        buttonTap = reloadButton.rx.tap.asObservable()
         super.init(frame: .zero)
         
         setup()
@@ -19,7 +24,7 @@ class ErrorView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    private func setup() {
         addSubview(textContainer)
         textContainer.snp.makeConstraints { make in
             make.top.equalToSuperview()

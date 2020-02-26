@@ -45,9 +45,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //reset values when user is going to return from new document flow
-        self.departmentsViewModel.departmentState.onNext(.awaitingInteraction)
-        
         documentsViewModel.updateDocuments()
         documentsTableView.reloadSections([0], with: .fade)
     }
@@ -84,12 +81,17 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 switch status {
                 case .awaitingInteraction:
                     self.rightBarButtons = []
+                    
                 case .loading:
                     self.rightBarButtons = [self.loadingItem]
+                    
                 case .success:
+                    self.rightBarButtons = []
                     self.coordinator.createNewDocument()
-                case .error( _):
-                    break
+                    
+                case .error(let error):
+                    self.rightBarButtons = []
+                    self.handleError(error)
                     
                 }
             })
@@ -103,7 +105,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 switch status {
                 case .awaitingInteraction:
                     self.departmentsViewModel.fetchDepartments()
-                    self.documentsViewModel.documentTypesState.onNext(.awaitingInteraction)
                     
                 case .loading:
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
@@ -112,7 +113,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 case .success:
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     
-                    self.departmentsStackView.addArrangedSubview(self.departmentsHeaderView)
                     self.departmentsViewModel.departments.value
                         .map({
                             DepartmentButton(model: $0)
@@ -130,12 +130,17 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 case .error( _):
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
                     
-                    self.departmentsStackView.addArrangedSubview(self.departmentsHeaderView)
                     self.departmentsStackView.addArrangedSubview(self.departmentsErrorView)
                     
                 }
             })
             .disposed(by: disposeBag)
+        
+        departmentsErrorView.buttonTap
+            .subscribe(onNext: { [weak self] _ in
+                self?.departmentsViewModel.fetchDepartments()
+            })
+        .disposed(by: disposeBag)
     }
     
     @objc private func openMenu() {
@@ -165,13 +170,26 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             make.centerY.equalToSuperview().multipliedBy(0.666).priority(900)
         }
         
-        view.addSubview(departmentsStackView)
-        departmentsStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(documentsTableView.snp.bottom)
-            make.left.right.equalTo(safeArea).inset(8)
-            make.bottom.equalTo(safeArea)
+        view.addSubview(departmentsContainerView)
+        departmentsContainerView.snp.makeConstraints { (make) in
+            make.top.equalTo(documentsTableView.snp.bottom).offset(16)
+            make.left.right.bottom.equalToSuperview()
             make.height.equalTo(0).priority(100)
             make.height.lessThanOrEqualTo(view.snp.height).multipliedBy(0.666)
+        }
+        
+        departmentsContainerView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        
+        departmentsContainerView.addSubview(departmentsHeaderView)
+        departmentsHeaderView.snp.makeConstraints { make in
+            make.top.trailing.leading.equalToSuperview()
+        }
+        
+        departmentsContainerView.addSubview(departmentsStackView)
+        departmentsStackView.snp.makeConstraints { make in
+            make.top.equalTo(departmentsHeaderView.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(8)
+            make.bottom.equalTo(safeArea).inset(8)
         }
     }
     
@@ -194,15 +212,14 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     
     private lazy var departmentsStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.spacing = 4
+        stackView.spacing = 8
         stackView.alignment = .fill
         stackView.distribution = .fillProportionally
         stackView.axis = .vertical
-        stackView.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
-        // Temporary background color until UI is improved
-        stackView.backgroundColor = UIColor.gray //.withAlphaComponent(0.333)
         return stackView
     }()
+    
+    private lazy var departmentsContainerView = UIView()
     
     private lazy var departmentsHeaderView = TitleView(title: "departments.tableHeader".localized)
     

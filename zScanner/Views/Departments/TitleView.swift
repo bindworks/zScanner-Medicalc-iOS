@@ -38,7 +38,7 @@ class TitleView: UIView {
         let label = UILabel()
         label.font = .headline
         label.textColor = .black
-        label.textAlignment = .center
+        label.textAlignment = .left
         return label
     }()
 }

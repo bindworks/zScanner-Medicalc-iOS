@@ -23,8 +23,10 @@ class LoadingView: UIView {
     
     //MARK: Interface
     func setup() {
-        self.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-            
+        snp.makeConstraints { make in
+            make.height.equalTo(100)
+        }
+        
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { (make) in
             make.centerX.centerY.equalToSuperview()
@@ -32,8 +34,8 @@ class LoadingView: UIView {
     }
     
     private var activityIndicator: UIActivityIndicatorView = {
-        let ai = UIActivityIndicatorView.init(style: .whiteLarge)
-        ai.startAnimating()
-        return ai
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        activityIndicator.startAnimating()
+        return activityIndicator
     }()
 }

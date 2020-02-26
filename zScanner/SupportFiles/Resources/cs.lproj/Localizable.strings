@@ -34,7 +34,7 @@
 "document.modeSelector.cancel" = "Zrušit";
 "document.modeSelector.title" = "Zvolte typ záznamu";
 "document.emptyView.title" = "Nemáte žádné nahrané dokumenty, dokument vytvoříte klepnutím na tlačítko plus.";
-"departments.tableHeader" = "pracoviště";
+"departments.tableHeader" = "Pracoviště";
 "departments.fetchError" = "Chyba komunikace se serverem.";
 "departments.reloadButton" = "Zkusit znovu";
 
@@ -96,4 +96,3 @@
 "dialog.requestError.message[dataCorruptedError]" = "Data nelze zpracovat, zkuste to prosím znovu.";
 "dialog.requestError.message[seacatError]" = "Nelze ověřit vaši identitu, prosím obraťte se na podporu.";
 "dialog.requestError.message[timeout]" = "Časový limit vypršel, zkuste to prosím znovu.";
-"dialog.requestError.message[timeout]" = "";
