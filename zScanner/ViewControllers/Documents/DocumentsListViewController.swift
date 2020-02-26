@@ -47,6 +47,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         
         documentsViewModel.updateDocuments()
         documentsTableView.reloadSections([0], with: .fade)
+        clearDepartmentSelections()
     }
     
     override var leftBarButtonItems: [UIBarButtonItem] {
@@ -155,6 +156,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             if departmentView.model.id != self.departmentsViewModel.selectedDepartment {
                 departmentView.isSelected.accept(false)
             }
+        }
+    }
+    
+    private func clearDepartmentSelections() {
+        departmentsStackView.subviews.forEach { (view) in
+            guard let departmentView = view as? DepartmentView else { return }
+            departmentView.isSelected.accept(false)
         }
     }
     
