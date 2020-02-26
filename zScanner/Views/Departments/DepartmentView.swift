@@ -13,9 +13,10 @@ import RxGesture
 
 class DepartmentView: UIView {
     
-    private let model: DepartmentDomainModel
     private let onClickHandler: ((DepartmentDomainModel) -> Void)?
-    private let isSelected = BehaviorRelay<Bool>(value: true)
+    
+    let model: DepartmentDomainModel
+    let isSelected = BehaviorRelay<Bool>(value: true)
     
     //MARK: Instance part
     init(model: DepartmentDomainModel, onClickHandler: ((DepartmentDomainModel) -> Void)? = nil) {

@@ -115,7 +115,11 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                             DepartmentView(
                                 model: $0,
                                 onClickHandler: { [weak self] in
-                                    self?.loadDocumentTypes(departmentCode: $0.id)
+                                    if $0.id != self?.departmentsViewModel.selectedDepartment {
+                                        self?.loadDocumentTypes(departmentCode: $0.id)
+                                        self?.departmentsViewModel.selectedDepartment = $0.id
+                                        self?.handleDepartmentsSinglePick()
+                                    }
                                 }
                             )
                         })
@@ -142,6 +146,16 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
 
     private func loadDocumentTypes(departmentCode: String) {
         documentsViewModel.fetchDocumentTypes(for: departmentCode)
+    }
+    
+    private func handleDepartmentsSinglePick() {
+        departmentsStackView.subviews.forEach { (view) in
+            guard let departmentView = view as? DepartmentView else { return }
+        
+            if departmentView.model.id != self.departmentsViewModel.selectedDepartment {
+                departmentView.isSelected.accept(false)
+            }
+        }
     }
     
     private func setupView() {

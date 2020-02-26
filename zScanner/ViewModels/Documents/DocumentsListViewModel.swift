@@ -73,7 +73,6 @@ class DocumentsListViewModel {
             .subscribe(onNext: { [weak self] requestStatus in
                 switch requestStatus {
                 case .progress:
-                    print("progress")
                     self?.documentTypesState.onNext(.loading)
                     
                 case .success(data: let networkModel):
@@ -81,9 +80,8 @@ class DocumentsListViewModel {
                     
                     self?.storeDocumentTypes(documents)
                     self?.documentTypesState.onNext(.success)
-                     print("success")
+
                 case .error(let error):
-                    print("error")
                     self?.documentTypesState.onNext(.error(error))
                 }
             })
