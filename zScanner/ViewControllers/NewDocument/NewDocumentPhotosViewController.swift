@@ -131,7 +131,7 @@ class NewDocumentPhotosViewController: BaseViewController {
     private func setupView() {
         setupKeyboardHandling()
         
-        navigationItem.title = "newDocumentPhotos.screen.title".localized
+        navigationItem.title = viewModel.folderName
 
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
