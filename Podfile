@@ -6,7 +6,6 @@ def common_pods
     pod 'SnapKit'            # Easy constraints handling
     pod 'RxSwift', '~> 5'    # RxSwift
     pod 'RxCocoa', '~> 5'    # RxSwift
-    pod 'RxGesture'          # RxSwift
     pod 'RealmSwift'         # Database
     pod 'Fabric'             # Analytics
     pod 'Crashlytics'        # Crash reporting
