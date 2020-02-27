@@ -60,6 +60,8 @@ class DocumentsListViewModel {
     //MARK: Helpers
     let disposeBag = DisposeBag()
     
+    private var lastDepartmentSelected: String?
+    
     private func loadDocuments() {
         documents = database
             .loadObjects(DocumentDatabaseModel.self)
@@ -68,6 +70,11 @@ class DocumentsListViewModel {
     }
     
     func fetchDocumentTypes(for departmentCode: String) {
+        if departmentCode == lastDepartmentSelected {
+            self.documentTypesState.onNext(.success)
+            return
+        }
+        
         networkManager
             .getDocumentTypes(for: departmentCode)
             .subscribe(onNext: { [weak self] requestStatus in
@@ -79,6 +86,8 @@ class DocumentsListViewModel {
                     let documents = networkModel.type.map({ $0.toDomainModel() })
                     
                     self?.storeDocumentTypes(documents)
+                    
+                    self?.lastDepartmentSelected = departmentCode
                     self?.documentTypesState.onNext(.success)
 
                 case .error(let error):
