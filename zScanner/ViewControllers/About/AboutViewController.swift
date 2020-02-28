@@ -55,7 +55,6 @@ class AboutViewController: BaseViewController {
         imageView.image = #imageLiteral(resourceName: "medicalcLogo")
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .white
-//        imageView.backgroundColor = .white
         return imageView
     }()
     
