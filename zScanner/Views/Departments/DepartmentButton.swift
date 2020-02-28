@@ -32,7 +32,8 @@ class DepartmentButton: PrimaryButton {
         setTitle(model.name, for: .normal)
         
         rx.tap
-            .subscribe(onNext: { [weak self]
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
                 self.isSelected.toggle()
                 self.backgroundColor = self.isSelected ? UIColor.primaryDark : UIColor.primary
             })
