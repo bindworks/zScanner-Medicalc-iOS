@@ -18,11 +18,24 @@ class DepartmentButton: PrimaryButton {
         self.model = model
         
         super.init(frame: .zero)
-        
-        setTitle(model.name, for: .normal)
+
+        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    let disposedBag = DisposeBag()
+    
+    func setup() {
+        setTitle(model.name, for: .normal)
+        
+        rx.tap
+            .subscribe(onNext: {
+                self.isSelected.toggle()
+                self.backgroundColor = self.isSelected ? UIColor.primaryDark : UIColor.primary
+            })
+            .disposed(by: disposedBag)
     }
 }
