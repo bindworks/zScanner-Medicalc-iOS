@@ -19,13 +19,11 @@ class DepartmentsListViewModel {
     }
     
     //MARK: Instance part
-    private let database: Database
     private let networkManager: NetworkManager
     
     let departments = BehaviorRelay<[DepartmentDomainModel]>(value: [])
     
-    init(database: Database, ikemNetworkManager: NetworkManager) {
-        self.database = database
+    init(ikemNetworkManager: NetworkManager) {
         self.networkManager = ikemNetworkManager
     }
     

@@ -154,9 +154,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     private func setupView() {
         navigationItem.title = "document.screen.title".localized
         
-        documentsTableView.dataSource = self
         view.addSubview(documentsTableView)
-        documentsTableView.snp.makeConstraints { (make) in
+        documentsTableView.snp.makeConstraints { make in
             make.top.trailing.leading.equalToSuperview()
         }
         
@@ -171,14 +170,12 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         }
         
         view.addSubview(departmentsContainerView)
-        departmentsContainerView.snp.makeConstraints { (make) in
+        departmentsContainerView.snp.makeConstraints { make in
             make.top.equalTo(documentsTableView.snp.bottom).offset(16)
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(0).priority(100)
             make.height.lessThanOrEqualTo(view.snp.height).multipliedBy(0.666)
         }
-        
-        departmentsContainerView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         
         departmentsContainerView.addSubview(departmentsHeaderView)
         departmentsHeaderView.snp.makeConstraints { make in
@@ -204,6 +201,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     private lazy var documentsTableView: UITableView = {
         let tableView = UITableView()
         tableView.registerCell(DocumentTableViewCell.self)
+        tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
@@ -219,7 +217,11 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         return stackView
     }()
     
-    private lazy var departmentsContainerView = UIView()
+    private lazy var departmentsContainerView: UIView = {
+        let departmentsContainerView = UIView()
+        departmentsContainerView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        return departmentsContainerView
+    }()
     
     private lazy var departmentsHeaderView = TitleView(title: "departments.tableHeader".localized)
     

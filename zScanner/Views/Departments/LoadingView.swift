@@ -28,7 +28,7 @@ class LoadingView: UIView {
         }
         
         addSubview(activityIndicator)
-        activityIndicator.snp.makeConstraints { (make) in
+        activityIndicator.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
     }

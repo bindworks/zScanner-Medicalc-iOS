@@ -33,12 +33,12 @@ class ErrorView: UIView {
         }
         
         textContainer.addSubview(messageLabel)
-        messageLabel.snp.makeConstraints { (make) in
+        messageLabel.snp.makeConstraints { make in
             make.top.bottom.left.right.equalToSuperview()
         }
         
         addSubview(reloadButton)
-        reloadButton.snp.makeConstraints { (make) in
+        reloadButton.snp.makeConstraints { make in
             make.top.equalTo(messageLabel.snp.bottom).offset(8)
             make.trailing.leading.equalToSuperview().inset(64)
             make.bottom.equalToSuperview()
