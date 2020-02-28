@@ -52,11 +52,11 @@ class NewDocumentPhotosViewController: BaseViewController {
     let bottomGradientOverlayHeight: CGFloat = 80
     
     @objc private func takeNewPicture() {
-        #if targetEnvironment(simulator)
-            self.openGallery()
-        #else
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
             self.openCamera()
-        #endif
+        } else {
+            self.openGallery()
+        }
     }
     
     private func showActionSheet() {
