@@ -11,7 +11,8 @@ import RealmSwift
 
 class DocumentDatabaseModel: Object {
     @objc dynamic var id = ""
-    @objc dynamic var date = Date()
+    @objc dynamic var created = Date()
+    @objc dynamic var sent: Date?
     @objc dynamic var name = ""
     @objc dynamic var notes = ""
     @objc dynamic var type: DocumentTypeDatabaseModel?
@@ -24,7 +25,8 @@ class DocumentDatabaseModel: Object {
         self.init()
         
         self.id = document.id
-        self.date = document.date
+        self.created = document.created
+        self.sent = document.sent
         self.name = document.name
         self.notes = document.notes
         
@@ -48,7 +50,8 @@ extension DocumentDatabaseModel {
             id: id,
             folder: folder!.toDomainModel(),
             type: type!.toDomainModel(),
-            date: date,
+            created: created,
+            sent: sent,
             name: name,
             notes: notes,
             pages: pages.map({ $0.toDomainModel() }),
