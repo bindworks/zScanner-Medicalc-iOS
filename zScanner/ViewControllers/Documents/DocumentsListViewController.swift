@@ -223,7 +223,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         return departmentsContainerView
     }()
     
-    private lazy var departmentsHeaderView = TitleView(title: "departments.tableHeader".localized)
+    private lazy var departmentsHeaderView = TitleView(title: "departments.tableHeader.title".localized)
     
     private lazy var departmentsLoadingView = LoadingView()
     

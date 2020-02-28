@@ -49,7 +49,7 @@ class ErrorView: UIView {
     
     private var messageLabel: UILabel = {
         let messageLabel = UILabel()
-        messageLabel.text = "departments.fetchError".localized
+        messageLabel.text = "departments.fetchError.title".localized
         messageLabel.font = .body
         messageLabel.textColor = .black
         messageLabel.textAlignment = .center
@@ -59,7 +59,7 @@ class ErrorView: UIView {
 
     private var reloadButton: PrimaryButton = {
         let reloadButton = PrimaryButton()
-        reloadButton.setTitle("departments.reloadButton".localized, for: .normal)
+        reloadButton.setTitle("departments.reloadButton.title".localized, for: .normal)
         return reloadButton
     }()
 }
