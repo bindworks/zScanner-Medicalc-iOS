@@ -52,7 +52,11 @@ class NewDocumentPhotosViewController: BaseViewController {
     let bottomGradientOverlayHeight: CGFloat = 80
     
     @objc private func takeNewPicture() {
-        showActionSheet()
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            self.openCamera()
+        } else {
+            self.openGallery()
+        }
     }
     
     private func showActionSheet() {
@@ -131,7 +135,7 @@ class NewDocumentPhotosViewController: BaseViewController {
     private func setupView() {
         setupKeyboardHandling()
         
-        navigationItem.title = "newDocumentPhotos.screen.title".localized
+        navigationItem.title = viewModel.folderName
 
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in

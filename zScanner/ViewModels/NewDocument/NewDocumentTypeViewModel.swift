@@ -13,9 +13,11 @@ class NewDocumentTypeViewModel {
     
     // MARK: Instance part
     private let database: Database
+    let folderName: String
     
-    init(database: Database) {
+    init(database: Database, folderName: String) {
         self.database = database
+        self.folderName = folderName
         self.isValid = Observable
             .combineLatest(fields.map({ $0.isValid }))
             .map({ results in results.reduce(true, { $0 && $1 }) })

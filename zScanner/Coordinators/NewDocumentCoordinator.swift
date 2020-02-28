@@ -64,13 +64,13 @@ class NewDocumentCoordinator: Coordinator {
     }
     
     private func showDocumentTypeSelectionScreen() {
-        let viewModel = NewDocumentTypeViewModel(database: database)
+        let viewModel = NewDocumentTypeViewModel(database: database, folderName: newDocument.folder.name)
         let viewController = NewDocumentTypeViewController(viewModel: viewModel, coordinator: self)
         push(viewController)
     }
     
     private func showPhotosSelectionScreen() {
-        let viewModel = NewDocumentPhotosViewModel(tracker: tracker)
+        let viewModel = NewDocumentPhotosViewModel(tracker: tracker, folderName: newDocument.folder.name)
         let viewController = NewDocumentPhotosViewController(viewModel: viewModel, coordinator: self)
         push(viewController)
     }

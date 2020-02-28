@@ -86,7 +86,7 @@ class NewDocumentTypeViewController: BaseViewController {
     }
     
     private func setupView() {
-        navigationItem.title = "newDocumentType.screen.title".localized
+        navigationItem.title = viewModel.folderName
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
