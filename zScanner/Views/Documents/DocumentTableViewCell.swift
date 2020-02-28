@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-protocol DocumentViewDelegate {
+protocol DocumentViewDelegate: class {
     func handleError(_ error: RequestError)
 }
 
@@ -17,7 +17,7 @@ class DocumentTableViewCell: UITableViewCell {
     
     //MARK: Instance part
     private var viewModel: DocumentViewModel?
-    private var delegate: DocumentViewDelegate?
+    private weak var delegate: DocumentViewDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

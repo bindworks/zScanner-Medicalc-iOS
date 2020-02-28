@@ -9,12 +9,14 @@
 import Foundation
 
 struct DocumentTypesRequest: Request {
-    typealias DataType = TypeNetworkModel
+    typealias DataType = DocumentTypesNetworkModel
     
     var endpoint: Endpoint = MedicalcEndpoint.documentTypes
     var method: HTTPMethod = .get
-    var parameters: Parameters? = nil
+    var parameters: Parameters?
     var headers: HTTPHeaders = [:]
     
-    init() {}
+    init(departmentCode: String) {
+        parameters = ["department": departmentCode]
+    }
 }

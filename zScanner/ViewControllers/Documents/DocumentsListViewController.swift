@@ -18,11 +18,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     
     // MARK: Instance part
     private unowned let coordinator: DocumentsListCoordinator
-    private let viewModel: DocumentsListViewModel
+    private let documentsViewModel: DocumentsListViewModel
+    private let departmentsViewModel: DepartmentsListViewModel
         
-    init(viewModel: DocumentsListViewModel, coordinator: DocumentsListCoordinator) {
+    init(documentsViewModel: DocumentsListViewModel, departmentsViewModel: DepartmentsListViewModel, coordinator: DocumentsListCoordinator) {
         self.coordinator = coordinator
-        self.viewModel = viewModel
+        self.documentsViewModel = documentsViewModel
+        self.departmentsViewModel = departmentsViewModel
         
         super.init(coordinator: coordinator)
     }
@@ -43,8 +45,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.updateDocuments()
-        tableView.reloadSections([0], with: .fade)
+        documentsViewModel.updateDocuments()
+        documentsTableView.reloadSections([0], with: .fade)
     }
     
     override var leftBarButtonItems: [UIBarButtonItem] {
@@ -59,8 +61,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     
     // MARK: Interface
     func insertNewDocument(document: DocumentViewModel) {
-        viewModel.insertNewDocument(document)
-        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+        documentsViewModel.insertNewDocument(document)
+        documentsTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
     }
     
     // MARK: Helpers
@@ -72,61 +74,121 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     }
     
     private func setupBindings() {
-        viewModel.documentModesState
+        documentsViewModel.documentTypesState
             .asObserver()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [unowned self] status in
                 switch status {
                 case .awaitingInteraction:
                     self.rightBarButtons = []
+                    
                 case .loading:
                     self.rightBarButtons = [self.loadingItem]
+                    
                 case .success:
-                    self.rightBarButtons = [self.addButton]
+                    self.rightBarButtons = []
+                    self.coordinator.createNewDocument()
+                    
                 case .error(let error):
-                    self.rightBarButtons = [self.reloadButton]
-                    self.handleError(error, okCallback: nil) {
-                        self.reloadDocumentTypes()
-                    }
+                    self.rightBarButtons = []
+                    self.handleError(error)
+                    
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-    @objc private func newDocument() {
-        self.coordinator.createNewDocument()
+        
+        departmentsViewModel.departmentState
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] status in
+                guard let self = self else { return }
+                
+                switch status {
+                case .awaitingInteraction:
+                    self.departmentsViewModel.fetchDepartments()
+                    
+                case .loading:
+                    self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    self.departmentsStackView.addArrangedSubview(self.departmentsLoadingView)
+                    
+                case .success:
+                    self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    
+                    self.departmentsViewModel.departments.value
+                        .map({
+                            DepartmentButton(model: $0)
+                        })
+                        .forEach({ (button) in
+                            button.rx.tap
+                                .subscribe({ [weak self] _ in
+                                    self?.loadDocumentTypes(departmentCode: button.model.id)
+                                })
+                                .disposed(by: self.disposeBag)
+
+                            self.departmentsStackView.addArrangedSubview(button)
+                        })
+                    
+                case .error( _):
+                    self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
+                    
+                    self.departmentsStackView.addArrangedSubview(self.departmentsErrorView)
+                    
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        departmentsErrorView.buttonTap
+            .subscribe(onNext: { [weak self] _ in
+                self?.departmentsViewModel.fetchDepartments()
+            })
+        .disposed(by: disposeBag)
     }
     
     @objc private func openMenu() {
         coordinator.openMenu()
     }
-    
-    @objc private func reloadDocumentTypes() {
-        viewModel.updateDocumentTypes()
+
+    private func loadDocumentTypes(departmentCode: String) {
+        documentsViewModel.fetchDocumentTypes(for: departmentCode)
     }
     
     private func setupView() {
         navigationItem.title = "document.screen.title".localized
         
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        view.addSubview(documentsTableView)
+        documentsTableView.snp.makeConstraints { make in
+            make.top.trailing.leading.equalToSuperview()
         }
         
-        tableView.backgroundView = emptyView
+        documentsTableView.backgroundView = emptyView
         
         emptyView.addSubview(emptyViewLabel)
         emptyViewLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.75)
             make.centerX.equalToSuperview()
-            make.top.greaterThanOrEqualTo(tableView.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(documentsTableView.sectionHeaderHeight)
             make.centerY.equalToSuperview().multipliedBy(0.666).priority(900)
         }
+        
+        view.addSubview(departmentsContainerView)
+        departmentsContainerView.snp.makeConstraints { make in
+            make.top.equalTo(documentsTableView.snp.bottom).offset(16)
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(0).priority(100)
+            make.height.lessThanOrEqualTo(view.snp.height).multipliedBy(0.666)
+        }
+        
+        departmentsContainerView.addSubview(departmentsHeaderView)
+        departmentsHeaderView.snp.makeConstraints { make in
+            make.top.trailing.leading.equalToSuperview()
+        }
+        
+        departmentsContainerView.addSubview(departmentsStackView)
+        departmentsStackView.snp.makeConstraints { make in
+            make.top.equalTo(departmentsHeaderView.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(8)
+            make.bottom.equalTo(safeArea).inset(8)
+        }
     }
-    
-    private lazy var addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newDocument))
-    
-    private lazy var reloadButton = UIBarButtonItem(image: #imageLiteral(resourceName: "refresh"), style: .plain, target: self, action: #selector(reloadDocumentTypes))
     
     private lazy var loadingItem: UIBarButtonItem = {
         let loading = UIActivityIndicatorView(style: .gray)
@@ -136,7 +198,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         return button
     }()
     
-    private lazy var tableView: UITableView = {
+    private lazy var documentsTableView: UITableView = {
         let tableView = UITableView()
         tableView.registerCell(DocumentTableViewCell.self)
         tableView.dataSource = self
@@ -145,6 +207,27 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         tableView.tableFooterView = UIView()
         return tableView
     }()
+    
+    private lazy var departmentsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 8
+        stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    private lazy var departmentsContainerView: UIView = {
+        let departmentsContainerView = UIView()
+        departmentsContainerView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        return departmentsContainerView
+    }()
+    
+    private lazy var departmentsHeaderView = TitleView(title: "departments.tableHeader.title".localized)
+    
+    private lazy var departmentsLoadingView = LoadingView()
+    
+    private lazy var departmentsErrorView = ErrorView()
     
     private lazy var emptyView = UIView()
     
@@ -162,13 +245,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
 //MARK: - UITableViewDataSource implementation
 extension DocumentsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = viewModel.documents.count
+        let count = documentsViewModel.documents.count
         tableView.backgroundView?.isHidden = count > 0
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let document = viewModel.documents[indexPath.row]
+        let document = documentsViewModel.documents[indexPath.row]
         let cell = tableView.dequeueCell(DocumentTableViewCell.self)
         cell.setup(with: document, delegate: self)
         return cell

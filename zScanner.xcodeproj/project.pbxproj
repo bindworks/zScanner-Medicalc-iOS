@@ -12,6 +12,10 @@
 		16A2CAC723F70E2F006E9577 /* DepartmentDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */; };
 		16A2CAC923F71091006E9577 /* DepartmentDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */; };
 		16B8D4BD23F7035D003DFD71 /* GetFolderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */; };
+		16DD55DC2406A1C30096BBEB /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DD55DB2406A1C30096BBEB /* TitleView.swift */; };
+		16DD55DE2406F3D40096BBEB /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DD55DD2406F3D40096BBEB /* ErrorView.swift */; };
+		16E4BD5024051A8B003AE138 /* DepartmentsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E4BD4F24051A8B003AE138 /* DepartmentsListViewModel.swift */; };
+		16E4BD52240521BB003AE138 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E4BD51240521BB003AE138 /* LoadingView.swift */; };
 		434027612302212C0038A40C /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434027602302212C0038A40C /* MenuCoordinator.swift */; };
 		435A3AF82309AE5000BF2D9C /* LoadingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */; };
 		4386045E230626B7009ED8D5 /* BehaviorRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386045D230626B7009ED8D5 /* BehaviorRelay.swift */; };
@@ -112,6 +116,7 @@
 		BDBE340622FA3A50000F8498 /* Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBE340522FA3A50000F8498 /* Encodable.swift */; };
 		BDBF4E1F232CE9180078BF53 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBF4E1E232CE9180078BF53 /* UserSession.swift */; };
 		BDBF4E21232EED4C0078BF53 /* LoginDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBF4E20232EED4C0078BF53 /* LoginDatabaseModel.swift */; };
+		BDC3E76D240471AB00575A2A /* DepartmentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC3E76C240471AB00575A2A /* DepartmentButton.swift */; };
 		BDC4A3E022E5004900D1CF6A /* DocumentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC4A3DF22E5004900D1CF6A /* DocumentTableViewCell.swift */; };
 		BDC4A3E322E5008800D1CF6A /* DocumentDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC4A3E222E5008800D1CF6A /* DocumentDomainModel.swift */; };
 		BDD3C0F122F8CBAF008406EA /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD3C0F022F8CBAF008406EA /* Date.swift */; };
@@ -150,6 +155,10 @@
 		16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDomainModel.swift; sourceTree = "<group>"; };
 		16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDatabaseModel.swift; sourceTree = "<group>"; };
 		16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFolderRequest.swift; sourceTree = "<group>"; };
+		16DD55DB2406A1C30096BBEB /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		16DD55DD2406F3D40096BBEB /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		16E4BD4F24051A8B003AE138 /* DepartmentsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsListViewModel.swift; sourceTree = "<group>"; };
+		16E4BD51240521BB003AE138 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		434027602302212C0038A40C /* MenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCoordinator.swift; sourceTree = "<group>"; };
 		435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCircle.swift; sourceTree = "<group>"; };
 		4386045D230626B7009ED8D5 /* BehaviorRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorRelay.swift; sourceTree = "<group>"; };
@@ -251,6 +260,7 @@
 		BDBE340522FA3A50000F8498 /* Encodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encodable.swift; sourceTree = "<group>"; };
 		BDBF4E1E232CE9180078BF53 /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		BDBF4E20232EED4C0078BF53 /* LoginDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDatabaseModel.swift; sourceTree = "<group>"; };
+		BDC3E76C240471AB00575A2A /* DepartmentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentButton.swift; sourceTree = "<group>"; };
 		BDC4A3DF22E5004900D1CF6A /* DocumentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTableViewCell.swift; sourceTree = "<group>"; };
 		BDC4A3E222E5008800D1CF6A /* DocumentDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDomainModel.swift; sourceTree = "<group>"; };
 		BDD3C0F022F8CBAF008406EA /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -467,6 +477,7 @@
 				BD59A06222E36C9300FA9CD0 /* Buttons */,
 				BDC4A3DE22E5003400D1CF6A /* Documents */,
 				BD80224322F825B5009B8B69 /* NewDocument */,
+				BDC3E76B2404719500575A2A /* Departments */,
 				BD88F1512308990300569D71 /* GradientView.swift */,
 			);
 			path = Views;
@@ -605,6 +616,7 @@
 				BD000CD222E497EF001EE38A /* Login */,
 				BD000CDF22E4FB3F001EE38A /* Documents */,
 				BD389A2322F70148002F935F /* NewDocument */,
+				BDC3E76E240476C800575A2A /* Department */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -624,14 +636,14 @@
 		BD8AA80D23003D1F0082441F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BDBF4E20232EED4C0078BF53 /* LoginDatabaseModel.swift */,
+				16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */,
 				BDFC478422E907F200F312F0 /* DocumentDatabaseModel.swift */,
+				BD2B9E8722EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift */,
 				BD44E279232703BC00A0B9E5 /* DocumentUploadStatusDatabaseModel.swift */,
+				BD8AA80E23003D530082441F /* FolderDatabaseModel.swift */,
+				BDBF4E20232EED4C0078BF53 /* LoginDatabaseModel.swift */,
 				BD7EAC3D23258A1A002C225A /* PageDatabaseModel.swift */,
 				BD14268F2328351D0079465F /* PageUploadStatusDatabaseModel.swift */,
-				BD2B9E8722EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift */,
-				BD8AA80E23003D530082441F /* FolderDatabaseModel.swift */,
-				16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -702,6 +714,25 @@
 				BD59A06522E36CFC00FA9CD0 /* SupportFiles */,
 			);
 			path = zScanner;
+			sourceTree = "<group>";
+		};
+		BDC3E76B2404719500575A2A /* Departments */ = {
+			isa = PBXGroup;
+			children = (
+				BDC3E76C240471AB00575A2A /* DepartmentButton.swift */,
+				16E4BD51240521BB003AE138 /* LoadingView.swift */,
+				16DD55DB2406A1C30096BBEB /* TitleView.swift */,
+				16DD55DD2406F3D40096BBEB /* ErrorView.swift */,
+			);
+			path = Departments;
+			sourceTree = "<group>";
+		};
+		BDC3E76E240476C800575A2A /* Department */ = {
+			isa = PBXGroup;
+			children = (
+				16E4BD4F24051A8B003AE138 /* DepartmentsListViewModel.swift */,
+			);
+			path = Department;
 			sourceTree = "<group>";
 		};
 		BDC4A3DE22E5003400D1CF6A /* Documents */ = {
@@ -878,6 +909,7 @@
 				BD59A0AB22E3819600FA9CD0 /* LoginViewModel.swift in Sources */,
 				BDEA570B22FA2828004C48F0 /* SubmitRequest.swift in Sources */,
 				BDC4A3E022E5004900D1CF6A /* DocumentTableViewCell.swift in Sources */,
+				16E4BD52240521BB003AE138 /* LoadingView.swift in Sources */,
 				BD2B9E8422EDCC2500FFCD3B /* DocumentTypesRequest.swift in Sources */,
 				BD2B9E7B22EDC15000FFCD3B /* NetworkManager.swift in Sources */,
 				43CD63F923061E110086033C /* PasswordTextField.swift in Sources */,
@@ -890,6 +922,8 @@
 				BD59A06422E36CB200FA9CD0 /* BackButton.swift in Sources */,
 				BD70566F23301D7E0074184A /* URL.swift in Sources */,
 				BD7EAC3E23258A1A002C225A /* PageDatabaseModel.swift in Sources */,
+				16E4BD5024051A8B003AE138 /* DepartmentsListViewModel.swift in Sources */,
+				16DD55DC2406A1C30096BBEB /* TitleView.swift in Sources */,
 				BD389A2A22F7093B002F935F /* FolderDomainModel.swift in Sources */,
 				BD000CB222E3B38B001EE38A /* UITextField.swift in Sources */,
 				BD59A09122E36EF900FA9CD0 /* NetworkActivityIndicatorBehavior.swift in Sources */,
@@ -946,6 +980,8 @@
 				BD85C93822E502A3004DC76E /* DocumentViewModel.swift in Sources */,
 				BD000CDE22E4CE6C001EE38A /* DocumentsListViewController.swift in Sources */,
 				16A2CAC923F71091006E9577 /* DepartmentDatabaseModel.swift in Sources */,
+				16DD55DE2406F3D40096BBEB /* ErrorView.swift in Sources */,
+				BDC3E76D240471AB00575A2A /* DepartmentButton.swift in Sources */,
 				BD389A2722F70596002F935F /* FormField.swift in Sources */,
 				BDBE340622FA3A50000F8498 /* Encodable.swift in Sources */,
 				BD2B9E7E22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift in Sources */,
@@ -1136,7 +1172,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = B8FL52PVGW;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1168,7 +1204,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = B8FL52PVGW;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

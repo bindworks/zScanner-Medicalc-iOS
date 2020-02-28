@@ -8,9 +8,10 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 class DocumentsListViewModel {
-    enum DocumentModesState {
+    enum DocumentTypesState {
         case awaitingInteraction
         case loading
         case success
@@ -28,18 +29,13 @@ class DocumentsListViewModel {
         self.networkManager = ikemNetworkManager
         
         loadDocuments()
-        fetchDocumentTypes()
     }
     
     //MARK: Interface
-    let documentModesState = BehaviorSubject<DocumentModesState>(value: .awaitingInteraction)
+    let documentTypesState = BehaviorSubject<DocumentTypesState>(value: .awaitingInteraction)
     
     func insertNewDocument(_ document: DocumentViewModel) {
         documents.insert(document, at: 0)
-    }
-    
-    func updateDocumentTypes() {
-        fetchDocumentTypes()
     }
     
     func updateDocuments() {
@@ -64,6 +60,8 @@ class DocumentsListViewModel {
     //MARK: Helpers
     let disposeBag = DisposeBag()
     
+    private var lastDepartmentSelected: String?
+    
     private func loadDocuments() {
         documents = database
             .loadObjects(DocumentDatabaseModel.self)
@@ -71,23 +69,29 @@ class DocumentsListViewModel {
             .reversed()
     }
     
-    func fetchDocumentTypes() {
+    func fetchDocumentTypes(for departmentCode: String) {
+        if departmentCode == lastDepartmentSelected {
+            self.documentTypesState.onNext(.success)
+            return
+        }
+        
         networkManager
-            .getDocumentTypes()
+            .getDocumentTypes(for: departmentCode)
             .subscribe(onNext: { [weak self] requestStatus in
                 switch requestStatus {
                 case .progress:
-                    self?.documentModesState.onNext(.loading)
+                    self?.documentTypesState.onNext(.loading)
                     
                 case .success(data: let networkModel):
                     let documents = networkModel.type.map({ $0.toDomainModel() })
                     
                     self?.storeDocumentTypes(documents)
                     
-                    self?.documentModesState.onNext(.success)
+                    self?.lastDepartmentSelected = departmentCode
+                    self?.documentTypesState.onNext(.success)
 
                 case .error(let error):
-                    self?.documentModesState.onNext(.error(error))
+                    self?.documentTypesState.onNext(.error(error))
                 }
             })
             .disposed(by: disposeBag)

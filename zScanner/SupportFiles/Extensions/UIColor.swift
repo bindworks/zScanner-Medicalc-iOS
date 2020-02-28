@@ -27,4 +27,8 @@ extension UIColor {
     static var onPrimary: UIColor {
         return UIColor(hex: 0xffffff)
     }
+    
+    static var primaryDark: UIColor {
+        return UIColor(hex: 0x75000e)
+    }
 }
