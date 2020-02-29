@@ -125,6 +125,7 @@
 		DBD2E4DC240A643000A023F1 /* SeaCat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD2E4DB240A643000A023F1 /* SeaCat.framework */; };
 		DBD2E4E0240A885200A023F1 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2E4DF240A885200A023F1 /* LoginRequest.swift */; };
 		DBD2E4E2240A88AE00A023F1 /* SeaCatPKIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2E4E1240A88AE00A023F1 /* SeaCatPKIEndpoint.swift */; };
+		DBD2E4E4240ACB6700A023F1 /* LogoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2E4E3240ACB6700A023F1 /* LogoutRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -260,6 +261,7 @@
 		DBD2E4DB240A643000A023F1 /* SeaCat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaCat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBD2E4DF240A885200A023F1 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		DBD2E4E1240A88AE00A023F1 /* SeaCatPKIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeaCatPKIEndpoint.swift; sourceTree = "<group>"; };
+		DBD2E4E3240ACB6700A023F1 /* LogoutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutRequest.swift; sourceTree = "<group>"; };
 		EA0AB6A19E0BFFBACC7952B9 /* Pods_zScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88012237377830FF8D3A234 /* Pods-zScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zScanner.release.xcconfig"; path = "Target Support Files/Pods-zScanner/Pods-zScanner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -399,6 +401,7 @@
 				16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */,
 				16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */,
 				DBD2E4DF240A885200A023F1 /* LoginRequest.swift */,
+				DBD2E4E3240ACB6700A023F1 /* LogoutRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -892,6 +895,7 @@
 				BD59A06422E36CB200FA9CD0 /* BackButton.swift in Sources */,
 				BD70566F23301D7E0074184A /* URL.swift in Sources */,
 				BD7EAC3E23258A1A002C225A /* PageDatabaseModel.swift in Sources */,
+				DBD2E4E4240ACB6700A023F1 /* LogoutRequest.swift in Sources */,
 				16E4BD5024051A8B003AE138 /* DepartmentsListViewModel.swift in Sources */,
 				16DD55DC2406A1C30096BBEB /* TitleView.swift in Sources */,
 				BD389A2A22F7093B002F935F /* FolderDomainModel.swift in Sources */,

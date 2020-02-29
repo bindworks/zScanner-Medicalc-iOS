@@ -46,4 +46,8 @@ protocol NetworkManager {
     
     // User login
     func login(with username:String, password:String) -> Observable<RequestStatus<EmptyResponse>>
+
+    // User logout
+    func logout(with access_token:Data) -> Observable<RequestStatus<EmptyResponse>>
+
 }

@@ -58,6 +58,11 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
 
+    func logout(with access_token: Data) -> Observable<RequestStatus<EmptyResponse>> {
+        let request = LogoutRequest(access_token: access_token)
+        return observe(request)
+    }
+
     private func observe<T: Request, U: Decodable>(_ request: T) -> Observable<RequestStatus<U>> where T.DataType == U {
         return Observable.create { [weak self] observer -> Disposable in
             guard let `self` = self else { return Disposables.create() }
