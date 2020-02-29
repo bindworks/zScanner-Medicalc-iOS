@@ -17,6 +17,6 @@ enum SeaCatPKIEndpoint: String, Endpoint {
     }
     
     private var baseUrl: String {
-        return Config.currentEnvironment.baseUrl + "/seacat"
+        return Config.currentEnvironment.baseUrl + "medicalc/v3.1"
     }
 }
