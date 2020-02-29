@@ -22,16 +22,7 @@ class MedicalcNetworkManager: NetworkManager {
     }
     
     // MARK: Interface
-    func submitPassword(_ auth: AuthNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
-        let request = SubmitPasswordRequest(auth: auth)
-        return observe(request)
-    }
-    
-    func getStatus(_ token: TokenNetworkModel) -> Observable<RequestStatus<StatusResponseNetworkModel>> {
-        let request = GetStatusRequest(token: token)
-        return observe(request)
-    }
-    
+        
     func getDocumentTypes(for departmentCode: String) -> Observable<RequestStatus<DocumentTypesNetworkModel>> {
         let request = DocumentTypesRequest(departmentCode: departmentCode)
         return observe(request)

@@ -6,4 +6,3 @@
 //  Copyright © 2019 Institut klinické a experimentální medicíny. All rights reserved.
 //
 
-#import "SeaCatClient.h"

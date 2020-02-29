@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import SeaCat
 
 class AppCoordinator: Coordinator {
-
+    
     //MARK: - Instance part
     init() {
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -18,8 +19,15 @@ class AppCoordinator: Coordinator {
 
     // MARK: Inteface
     func begin() {
-        //        showSplashScreen()
-        startDocumentsCoordinator(with: UserSession(login: LoginDomainModel(username: "Test")))
+        // If we don't have a SeaCat identity, go to a splash screen to wait to get one
+        showSplashScreen()
+//        if (SeaCat.ready == nil) {
+//            showSplashScreen()
+//        } else if (false /*TODO: User is not logging*/) {
+//            runLoginFlow()
+//        } else {
+//            startDocumentsCoordinator(with: UserSession(login: LoginDomainModel(username: "Test")))
+//        }
     }
 
     // MARK: Navigation methods
@@ -64,15 +72,12 @@ class AppCoordinator: Coordinator {
 // MARK: - SeaCatSplashCoordinator implementation
 extension AppCoordinator: SeaCatSplashCoordinator {
     func seaCatInitialized() {
-
-        // It's not about SeaCat is ready but more about certificate exists.
-        // In this case we are creating certificate with credentials on login.
-        // Therefore is more like credentials exists -> is logged in
-        if let userSession = restoredUserSession, SeaCatClient.isReady() {
-            startDocumentsCoordinator(with: userSession)
-        } else {
+        
+//        if let userSession = restoredUserSession, SeaCat.ready {
+//            startDocumentsCoordinator(with: userSession)
+//        } else {
             self.runLoginFlow()
-        }
+//        }
     }
 }
 
@@ -89,7 +94,6 @@ extension AppCoordinator: LoginFlowDelegate {
 extension AppCoordinator: DocumentsFlowDelegate {
     func logout() {
         removeUserSession()
-        SeaCatClient.reset()
         tracker.track(.logout)
         runLoginFlow()
     }

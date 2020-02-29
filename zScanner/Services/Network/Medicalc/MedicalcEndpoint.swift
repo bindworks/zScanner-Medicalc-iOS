@@ -15,23 +15,12 @@ enum MedicalcEndpoint: String, Endpoint {
     case uploadPage = "/documents/page"
     case folderSearch = "/folders/search"
     case folderDecode = "/folders/decode"
-    case submitPassword = "/password"
-    case seaCatStatus = "/status"
     
     var url: String {
-        switch self {
-        case .submitPassword, .seaCatStatus:
-            return authUrl + self.rawValue
-        default:
-            return baseUrl + self.rawValue
-        }
+        return baseUrl + self.rawValue
     }
     
     private var baseUrl: String {
         return Config.currentEnvironment.baseUrl
-    }
-    
-    private var authUrl: String {
-        return Config.currentEnvironment.authUrl
     }
 }
