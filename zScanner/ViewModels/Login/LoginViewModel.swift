@@ -48,7 +48,7 @@ class LoginViewModel {
 
         // Call to https://zscanner.seacat.io/login, get the access token, store it in the local storage
         networkManager
-            .login()
+            .login(with: loginModel.username, password: passwordField.text.value)
             .subscribe(onNext: { [weak self] requestStatus in
                 switch requestStatus {
 

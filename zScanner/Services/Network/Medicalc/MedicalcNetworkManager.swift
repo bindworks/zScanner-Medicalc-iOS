@@ -53,8 +53,8 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func login() -> Observable<RequestStatus<EmptyResponse>> {
-        let request = LoginRequest()
+    func login(with username:String, password:String) -> Observable<RequestStatus<EmptyResponse>> {
+        let request = LoginRequest(username: username, password: password)
         return observe(request)
     }
 
