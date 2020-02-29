@@ -44,4 +44,6 @@ protocol NetworkManager {
     /// - Returns: Observable request status
     func uploadPage(_ page: PageNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
     
+    // User login
+    func login() -> Observable<RequestStatus<EmptyResponse>>
 }
