@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SeaCat
 
 struct NativeAPI: API {
 
@@ -39,10 +40,6 @@ struct NativeAPI: API {
         }
         
         let configuration = URLSessionConfiguration.default
-//        guard let configuration = SeaCatClient.getNSURLSessionConfiguration() else {
-//            callback(.error(RequestError(.seacatError)))
-//            return
-//        }
 
         let completionHandler: (Data?, URLResponse?, Error?) -> Void = { (data, response, error) in
             if let error = error {
@@ -97,15 +94,22 @@ struct NativeAPI: API {
 
             configuration.timeoutIntervalForRequest = 300
             configuration.timeoutIntervalForResource = 300
-            let session = URLSession(configuration: configuration, delegate: uploadDelegate, delegateQueue: .main)
-
+            let session = URLSession(
+                configuration: configuration,
+                delegate: uploadDelegate,
+                delegateQueue: .main
+            )
             task = session.uploadTask(
                 with: urlRequest as URLRequest,
                 from: requestBody,
                 completionHandler: completionHandler
             )
         } else {
-            let session = URLSession(configuration: configuration)
+            let session = URLSession(
+                configuration: configuration,
+                delegate: SeaCatURLSessionDelegate(seacat: SeaCat.main!),
+                delegateQueue: .main
+            )
             task = session.dataTask(
                 with: urlRequest as URLRequest,
                 completionHandler: completionHandler
@@ -151,7 +155,7 @@ struct NativeAPI: API {
 }
 
 // MARK: -
-private class UploadDelegate: NSObject, URLSessionDelegate, URLSessionTaskDelegate {
+private class UploadDelegate: SeaCatURLSessionDelegate, URLSessionTaskDelegate {
 
     // TODO: Debug lifecyle of UploadDelegate (when is called deinit = released from the memory)
     // TODO: Put class to separated file
@@ -160,6 +164,7 @@ private class UploadDelegate: NSObject, URLSessionDelegate, URLSessionTaskDelega
 
     init(callback: @escaping (RequestStatus<EmptyResponse>) -> Void) {
         self.callback = callback
+        super.init(seacat: SeaCat.main!)
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SeaCat
 
 protocol SeaCatSplashCoordinator: BaseCoordinator {
     func seaCatInitialized()
@@ -40,7 +41,6 @@ class SeaCatSplashViewController: BaseViewController, ErrorHandling {
     
     // MARK: SeaCat
     private var seaCatTimer: Timer?
-    private var timeoutTimer: Timer?
     private let reachability = try! Reachability()
     
     private func checkInternetConnection() {
@@ -69,34 +69,22 @@ class SeaCatSplashViewController: BaseViewController, ErrorHandling {
     }
    
     private func initializeSeaCat() {
-        SeaCatClient.configure(with: nil)
-        
         infoLabel.text = "splash.waitingForSeaCat.message".localized
         
-        SeaCatClient.addObserver(self, selector: #selector(seaCatStateChanged), name: SeaCat_Notification_StateChanged)
         seaCatTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(seaCatStateChanged), userInfo: nil, repeats: true)
-        timeoutTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(timeout), userInfo: nil, repeats: false)
         seaCatStateChanged()
     }
 
     @objc private func seaCatStateChanged() {
-        guard let state = SeaCatClient.getState() else { return }
-       
-        if state[1] == "C" || SeaCatClient.isReady() {
+        if SeaCat.ready {
             seaCatTimer?.invalidate()
-            timeoutTimer?.invalidate()
-            SeaCatClient.removeObserver(self)
-            
+
             DispatchQueue.main.async {
                 self.coordinator.seaCatInitialized()
             }
         }
     }
 
-    @objc private func timeout() {
-        SeaCatClient.reset()
-    }
-    
     private func setupView() {
         guard let copyright = view.subviews.last(where: { $0 is UILabel }) else { return }
         

@@ -171,7 +171,7 @@ class LoginViewController: BaseViewController, ErrorHandling {
     
     private lazy var logoView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "ikemLogo")
+        imageView.image = .none
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .white
         imageView.backgroundColor = .primary

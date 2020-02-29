@@ -44,15 +44,4 @@ protocol NetworkManager {
     /// - Returns: Observable request status
     func uploadPage(_ page: PageNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
     
-    /// Send password as part os SeaCat authentification
-    ///
-    /// - Parameter auth: user password
-    /// - Returns: Observable request status
-    func submitPassword(_ auth: AuthNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
-    
-    /// Get SeaCat login status
-    ///
-    /// - Parameter token: token used when submitting password
-    /// - Returns: Observable request status
-    func getStatus(_ token: TokenNetworkModel) -> Observable<RequestStatus<StatusResponseNetworkModel>>
 }

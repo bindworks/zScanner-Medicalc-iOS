@@ -11,8 +11,7 @@ import Foundation
 enum Config {
     static let productionURL: String = "https://tempra.ikem.seacat/api-zscanner/v3"
     static let testingURL: String = "https://desolate-meadow-62603.herokuapp.com/api-zscanner/v3"
-    static let apiaryURL: String = "https://private-c4072-zscannermedicalc.apiary-mock.com/medicalc/v3.1"
-    static let authURL: String = "http://auth.ikem.seacat"
+    static let apiaryURL: String = "https://zscanner.seacat.io/medicalc/v3.1"
     
     static let currentEnvironment: Environment = .apiary
     static let folderUsageHistoryCount = 3
@@ -31,14 +30,6 @@ enum Environment {
             case .production: return Config.productionURL
             case .testing: return Config.testingURL
             case .apiary: return Config.apiaryURL
-        }
-    }
-
-    var authUrl: String {
-        switch self {
-            case .production: return Config.authURL
-            case .testing: return ""
-            case .apiary: return ""
         }
     }
 }
