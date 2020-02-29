@@ -12,7 +12,7 @@ struct LoginRequest: Request {
     typealias DataType = EmptyResponse
     
     var endpoint: Endpoint = SeaCatPKIEndpoint.login
-    var method: HTTPMethod = .get
+    var method: HTTPMethod = .post
     var parameters: Parameters? = nil
     var headers: HTTPHeaders = [:]
     
