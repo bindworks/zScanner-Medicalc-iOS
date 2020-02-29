@@ -16,5 +16,11 @@ struct LoginRequest: Request {
     var parameters: Parameters? = nil
     var headers: HTTPHeaders = [:]
     
-    init() {}
+    init(username: String, password: String) {
+        //This has to go in the body!!! of the POST request
+        parameters = [
+            "username": username,
+            "password": password // Eventually protect this by encryption/bcrypt/anything
+        ]
+    }
 }
