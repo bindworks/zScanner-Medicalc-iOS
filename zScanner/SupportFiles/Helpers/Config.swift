@@ -11,7 +11,7 @@ import Foundation
 enum Config {
     static let productionURL: String = "https://tempra.ikem.seacat/api-zscanner/v3"
     static let testingURL: String = "https://desolate-meadow-62603.herokuapp.com/api-zscanner/v3"
-    static let apiaryURL: String = "https://zscanner.seacat.io/medicalc/v3.1"
+    static let apiaryURL: String = "https://zscanner.seacat.io/"
     
     static let currentEnvironment: Environment = .apiary
     static let folderUsageHistoryCount = 3

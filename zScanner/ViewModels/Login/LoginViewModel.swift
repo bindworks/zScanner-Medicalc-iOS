@@ -46,9 +46,24 @@ class LoginViewModel {
 
         loginModel.username = usernameField.text.value
 
-        //TODO: Call to https://zscanner.seacat.io/login, get the access token, store it in the local storage
-        
-        success()
+        // Call to https://zscanner.seacat.io/login, get the access token, store it in the local storage
+        networkManager
+            .login()
+            .subscribe(onNext: { [weak self] requestStatus in
+                switch requestStatus {
+
+                    case .progress(_):
+                        print("Progres ...")
+
+                    case .success(data: let networkModel):
+                        self?.success()
+                        
+                    case .error(let error):
+                        self?.error(error)
+
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     // MAKR: Helpers

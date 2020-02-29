@@ -126,6 +126,8 @@
 		BDEA570D22FA2CD9004C48F0 /* DocumentNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA570C22FA2CD9004C48F0 /* DocumentNetworkModel.swift */; };
 		BDFC478522E907F200F312F0 /* DocumentDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC478422E907F200F312F0 /* DocumentDatabaseModel.swift */; };
 		DBD2E4DC240A643000A023F1 /* SeaCat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD2E4DB240A643000A023F1 /* SeaCat.framework */; };
+		DBD2E4E0240A885200A023F1 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2E4DF240A885200A023F1 /* LoginRequest.swift */; };
+		DBD2E4E2240A88AE00A023F1 /* SeaCatPKIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2E4E1240A88AE00A023F1 /* SeaCatPKIEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -262,6 +264,8 @@
 		BDEA570C22FA2CD9004C48F0 /* DocumentNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentNetworkModel.swift; sourceTree = "<group>"; };
 		BDFC478422E907F200F312F0 /* DocumentDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDatabaseModel.swift; sourceTree = "<group>"; };
 		DBD2E4DB240A643000A023F1 /* SeaCat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SeaCat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBD2E4DF240A885200A023F1 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		DBD2E4E1240A88AE00A023F1 /* SeaCatPKIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeaCatPKIEndpoint.swift; sourceTree = "<group>"; };
 		EA0AB6A19E0BFFBACC7952B9 /* Pods_zScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_zScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88012237377830FF8D3A234 /* Pods-zScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-zScanner.release.xcconfig"; path = "Target Support Files/Pods-zScanner/Pods-zScanner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -372,6 +376,7 @@
 			children = (
 				BD2B9E7822EDC11E00FFCD3B /* MedicalcNetworkManager.swift */,
 				BD2B9E8522EDCD0900FFCD3B /* MedicalcEndpoint.swift */,
+				DBD2E4E1240A88AE00A023F1 /* SeaCatPKIEndpoint.swift */,
 				BD2B9E8222EDCBFD00FFCD3B /* Requests */,
 				BD2B9E7C22EDC1A000FFCD3B /* Model */,
 			);
@@ -401,6 +406,7 @@
 				BD88F1582309537F00569D71 /* UploadPageRequest.swift */,
 				16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */,
 				16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */,
+				DBD2E4DF240A885200A023F1 /* LoginRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -880,6 +886,7 @@
 				BD88F15023087F1300569D71 /* UIView.swift in Sources */,
 				BD59A0AB22E3819600FA9CD0 /* LoginViewModel.swift in Sources */,
 				BDEA570B22FA2828004C48F0 /* SubmitRequest.swift in Sources */,
+				DBD2E4E2240A88AE00A023F1 /* SeaCatPKIEndpoint.swift in Sources */,
 				BDC4A3E022E5004900D1CF6A /* DocumentTableViewCell.swift in Sources */,
 				16E4BD52240521BB003AE138 /* LoadingView.swift in Sources */,
 				BD2B9E8422EDCC2500FFCD3B /* DocumentTypesRequest.swift in Sources */,
@@ -953,6 +960,7 @@
 				16DD55DE2406F3D40096BBEB /* ErrorView.swift in Sources */,
 				BDC3E76D240471AB00575A2A /* DepartmentButton.swift in Sources */,
 				BD389A2722F70596002F935F /* FormField.swift in Sources */,
+				DBD2E4E0240A885200A023F1 /* LoginRequest.swift in Sources */,
 				BDBE340622FA3A50000F8498 /* Encodable.swift in Sources */,
 				BD2B9E7E22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift in Sources */,
 				BD678DA3230489DF00AE5B15 /* NewDocumentPhotosViewController.swift in Sources */,
