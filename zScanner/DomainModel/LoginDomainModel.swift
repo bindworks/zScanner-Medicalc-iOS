@@ -10,4 +10,5 @@ import Foundation
 
 struct LoginDomainModel {
     var username: String
+    var access_code: String
 }

@@ -19,17 +19,30 @@ class AppCoordinator: Coordinator {
 
     // MARK: Inteface
     func begin() {
-        // If we don't have a SeaCat identity, go to a splash screen to wait to get one
-        showSplashScreen()
-//        if (SeaCat.ready == nil) {
-//            showSplashScreen()
-//        } else if (false /*TODO: User is not logging*/) {
-//            runLoginFlow()
-//        } else {
-//            startDocumentsCoordinator(with: UserSession(login: LoginDomainModel(username: "Test")))
-//        }
+        progress()
     }
 
+    func progress() {
+        if (!SeaCat.ready) {
+            // If we don't have a SeaCat identity, go to a splash screen to wait to get one
+            showSplashScreen()
+            return
+        }
+        
+        guard let userSession = restoredUserSession else {
+            self.runLoginFlow()
+            return
+        }
+
+        // We need to have a proper access code
+        if userSession.login.access_code == "" {
+            self.runLoginFlow()
+            return
+        }
+        
+        startDocumentsCoordinator(with: userSession)
+    }
+    
     // MARK: Navigation methods
     private func showSplashScreen() {
         let viewController = SeaCatSplashViewController(coordinator: self)
@@ -53,6 +66,7 @@ class AppCoordinator: Coordinator {
     private let tracker: Tracker = FirebaseAnalytics()
 
     private func storeUserSession(_ userSession: UserSession) {
+        database.deleteAll(of: LoginDatabaseModel.self)
         let databaseLogin = LoginDatabaseModel(login: userSession.login)
         database.saveObject(databaseLogin)
     }
@@ -67,17 +81,13 @@ class AppCoordinator: Coordinator {
     private func removeUserSession() {
         database.deleteAll(of: LoginDatabaseModel.self)
     }
+
 }
 
 // MARK: - SeaCatSplashCoordinator implementation
 extension AppCoordinator: SeaCatSplashCoordinator {
     func seaCatInitialized() {
-        
-//        if let userSession = restoredUserSession, SeaCat.ready {
-//            startDocumentsCoordinator(with: userSession)
-//        } else {
-            self.runLoginFlow()
-//        }
+        progress()
     }
 }
 
@@ -86,7 +96,7 @@ extension AppCoordinator: LoginFlowDelegate {
     func successfulLogin(userSession: UserSession) {
         tracker.track(.login)
         storeUserSession(userSession)
-        startDocumentsCoordinator(with: userSession)
+        progress()
     }
 }
 
@@ -95,6 +105,6 @@ extension AppCoordinator: DocumentsFlowDelegate {
     func logout() {
         removeUserSession()
         tracker.track(.logout)
-        runLoginFlow()
+        progress()
     }
 }

@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct LoginRequest: Request {
-    typealias DataType = EmptyResponse
+struct LoginRequest: Request, ParametersQSEncoded {
+    typealias DataType = RawResponse
     
     var endpoint: Endpoint = SeaCatPKIEndpoint.login
     var method: HTTPMethod = .post

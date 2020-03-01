@@ -38,6 +38,18 @@ struct NativeAPI: API {
             urlRequest.httpBody = request.parameters?.toJSONData()
             urlRequest.addValue("application-json", forHTTPHeaderField: "Content-Type")
         }
+
+        else if request is ParametersQSEncoded {
+            var urlcomponents = URLComponents()
+            if let params = request.parameters {
+                for i in params.properties() {
+                    urlcomponents.queryItems?.append(URLQueryItem(name: i.name, value: i.value as? String))
+                }
+            }
+            urlRequest.httpBody = urlcomponents.query?.data(using: .utf8)
+            urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        }
+
         
         let configuration = URLSessionConfiguration.default
 
@@ -67,6 +79,11 @@ struct NativeAPI: API {
                 return
             }
 
+            if D.self is RawResponse.Type {
+                callback(.success(data: RawResponse(data: data) as! D))
+                return
+            }
+            
             do {
                 let decoder = JSONDecoder()
                 let objects = try decoder.decode(D.self, from: data)

@@ -32,7 +32,7 @@ class LoginViewModel {
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        self.loginModel = LoginDomainModel(username: "")
+        self.loginModel = LoginDomainModel(username: "", access_code: "")
         isValid = Observable<Bool>.combineLatest(usernameField.isValid, passwordField.isValid) { (username, password) -> Bool in
             return username && password
         }
@@ -53,10 +53,10 @@ class LoginViewModel {
                 switch requestStatus {
 
                     case .progress(_):
-                        print("Progres ...")
+                        break
 
                     case .success(data: let networkModel):
-                        self?.success()
+                        self?.success(access_token: networkModel.data)
                         
                     case .error(let error):
                         self?.error(error)
@@ -73,9 +73,10 @@ class LoginViewModel {
         disposeBag = DisposeBag()
     }
     
-    private func success() {
+    private func success(access_token: Data) {
         guard (try? status.value()) == .loading else { return }
         
+        self.loginModel.access_code = String(decoding: access_token, as: UTF8.self)
         cleanUp()
         
         status.onNext(.success)
