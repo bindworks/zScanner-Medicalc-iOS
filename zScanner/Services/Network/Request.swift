@@ -20,6 +20,15 @@ protocol Request {
 // MARK: -
 struct EmptyResponse: Decodable {}
 
+// MARK: -
+struct RawResponse: Decodable {
+    let data: Data
+    
+    init(data: Data) {
+        self.data = data
+    }
+}
+
 //MARK: -
 protocol ParametersURLEncoded {
     var encodedUrl: String { get }
@@ -45,6 +54,11 @@ extension ParametersURLEncoded where Self: Request {
 
 // MARK: -
 protocol ParametersJsonEncoded {}
+
+// MARK: -
+// Query string encoded POST body (aka `application/x-www-form-urlencoded`)
+protocol ParametersQSEncoded {}
+
 
 // MARK: -
 protocol FileUploading {

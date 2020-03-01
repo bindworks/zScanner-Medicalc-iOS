@@ -25,13 +25,16 @@ class NewDocumentCoordinator: Coordinator {
     private let steps: [Step]
     private var currentStep: Step
     
-    init?(flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
+    init?(userSession: UserSession, flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
         self.flowDelegate = flowDelegate
         
         self.steps = NewDocumentCoordinator.steps()
         
         guard let firstStep = steps.first else { return nil }
         self.currentStep = firstStep
+        
+        let api: API = NativeAPI()
+        self.networkManager = MedicalcNetworkManager(api: api, access_token: userSession.login.access_code)
         
         super.init(window: window, navigationController: navigationController)
     }
@@ -43,7 +46,7 @@ class NewDocumentCoordinator: Coordinator {
     
     // MARK: Helepers
     private let database: Database = try! RealmDatabase()
-    private let networkManager: NetworkManager = MedicalcNetworkManager(api: NativeAPI())
+    private let networkManager: NetworkManager
     private let tracker: Tracker = FirebaseAnalytics()
     
     private func showCurrentStep() {

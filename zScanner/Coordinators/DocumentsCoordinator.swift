@@ -23,7 +23,7 @@ class DocumentsCoordinator: Coordinator {
     init(userSession: UserSession, flowDelegate: DocumentsFlowDelegate, window: UIWindow) {
         self.userSession = userSession
         self.flowDelegate = flowDelegate
-        self.networkManager = MedicalcNetworkManager(api: api)
+        self.networkManager = MedicalcNetworkManager(api: api, access_token: userSession.login.access_code)
         
         super.init(window: window)
         
@@ -62,7 +62,7 @@ class DocumentsCoordinator: Coordinator {
         }
         
         // Start new-document flow
-        guard let coordinator = NewDocumentCoordinator(flowDelegate: self, window: window, navigationController: navigationController) else { return }
+        guard let coordinator = NewDocumentCoordinator(userSession: userSession, flowDelegate: self, window: window, navigationController: navigationController) else { return }
         addChildCoordinator(coordinator)
         coordinator.begin()
     }
@@ -128,6 +128,25 @@ extension DocumentsCoordinator: MenuFlowDelegate {
     
     func logout() {
         deleteHistory()
+        
+        networkManager
+            .logout(with: userSession.login.access_code.data(using: .utf8) ?? Data())
+            .subscribe(onNext: { [weak self] requestStatus in
+                // We care only a little about the result of the network call to /logout
+                switch requestStatus {
+
+                    case .progress(_):
+                        break
+
+                    case .success(data: let networkModel):
+                        break
+                        
+                    case .error(let error):
+                        break
+
+                }
+            })
+
         flowDelegate.logout()
         flowDelegate.coordinatorDidFinish(self)
     }

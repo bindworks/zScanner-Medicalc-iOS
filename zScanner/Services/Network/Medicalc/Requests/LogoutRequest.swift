@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LogoutRequest: Request {
+struct LogoutRequest: Request, ParametersJsonEncoded {
     typealias DataType = EmptyResponse
     
     var endpoint: Endpoint = SeaCatPKIEndpoint.logout
@@ -17,9 +17,8 @@ struct LogoutRequest: Request {
     var headers: HTTPHeaders = [:]
     
     init(access_token: Data) {
-        //This has to go in the body!!! of the POST request
         parameters = [
-            "x": access_token
+            "access_token": access_token
         ]
     }
 }
