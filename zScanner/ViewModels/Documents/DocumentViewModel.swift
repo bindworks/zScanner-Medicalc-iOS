@@ -89,14 +89,13 @@ class DocumentViewModel {
             .subscribe(onNext: { [weak self]  status in
                 guard let `self` = self else { return }
                 
-                switch status {
-                case .success:
+                let databaseUploadStatus = DocumentUploadStatusDatabaseModel(documentId: self.document.id, status: status)
+                self.database.saveObject(databaseUploadStatus)
+                
+                if status == .success {
                     self.saveTimeOfSeding()
-                default:
-                    let databaseUploadStatus = DocumentUploadStatusDatabaseModel(documentId: self.document.id, status: status)
-                    self.database.saveObject(databaseUploadStatus)
                 }
-
+        
             })
             .disposed(by: disposeBag)
     }
