@@ -28,7 +28,6 @@ class DocumentsListViewModel {
         self.database = database
         self.networkManager = ikemNetworkManager
         
-        deleteExpiredDocuments()
         loadDocuments()
     }
     
@@ -63,10 +62,20 @@ class DocumentsListViewModel {
     private var lastSelectedDepartment: DepartmentDomainModel?
     
     private func loadDocuments() {
+        deleteExpiredDocuments()
+        
         documents = database
             .loadObjects(DocumentDatabaseModel.self)
             .map({ DocumentViewModel(document: $0.toDomainModel(), networkManager: networkManager, database: database) })
             .reversed()
+    }
+    
+    func deleteExpiredDocuments() {
+       database
+           .loadObjects(DocumentUploadStatusDatabaseModel.self)
+           .filter({ $0.isExpired })
+           .compactMap({ database.loadObject(DocumentDatabaseModel.self, withId: $0.documentId) })
+           .forEach({ database.deleteObject($0) })
     }
     
     func fetchDocumentTypes(for department: DepartmentDomainModel) {
@@ -105,18 +114,10 @@ class DocumentsListViewModel {
                 .forEach({ self.database.saveObject($0) })
         }
     }
-    
-    func deleteExpiredDocuments() {
-        database
-            .loadObjects(DocumentUploadStatusDatabaseModel.self)
-            .filter({ $0.isExpired })
-            .compactMap({ database.loadObject(DocumentDatabaseModel.self, withId: $0.documentId) })
-            .forEach({ database.deleteObject($0) })
-    }
 }
 
 private extension DocumentUploadStatusDatabaseModel {
     var isExpired: Bool {
-        return uploadStatus == .success && -timestamp.timeIntervalSinceNow > Config.documentExpirationTime
+        return uploadStatus == .success && Date().timeIntervalSince(timestamp) > Config.documentExpirationTime
     }
 }

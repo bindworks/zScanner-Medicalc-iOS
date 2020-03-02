@@ -121,8 +121,6 @@ class DocumentViewModel {
             .disposed(by: disposeBag)
     }
     
-    private let realm = try! RealmDatabase()
-    
     private var tasks: [Observable<UploadStatus>] {
         var tasks: [Observable<UploadStatus>] = pages.map({ $0.pageUploadStatus.asObservable() })
         tasks.append(internalUploadStatus.asObservable())

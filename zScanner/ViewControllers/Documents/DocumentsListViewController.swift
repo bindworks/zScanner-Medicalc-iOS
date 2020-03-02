@@ -46,7 +46,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         super.viewWillAppear(animated)
         
         documentsViewModel.updateDocuments()
-        documentsViewModel.deleteExpiredDocuments()
         documentsTableView.reloadSections([0], with: .fade)
     }
     
