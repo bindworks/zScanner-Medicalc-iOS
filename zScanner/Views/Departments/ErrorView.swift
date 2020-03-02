@@ -39,9 +39,9 @@ class ErrorView: UIView {
         
         addSubview(reloadButton)
         reloadButton.snp.makeConstraints { make in
-            make.top.equalTo(messageLabel.snp.bottom).offset(8)
-            make.trailing.leading.equalToSuperview().inset(64)
-            make.bottom.equalToSuperview()
+            make.top.equalTo(messageLabel.snp.bottom).offset(16)
+            make.trailing.leading.equalToSuperview().inset(120)
+            make.bottom.equalToSuperview().inset(36)
         }
     }
     
