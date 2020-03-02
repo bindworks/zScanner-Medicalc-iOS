@@ -81,7 +81,6 @@ class NewDocumentCoordinator: Coordinator {
     }
     
     private func finish() {
-        #warning("TODO What we gonna do with the date?")
         newDocument.created = Date()
 
         let databaseDocument = DocumentDatabaseModel(document: newDocument)

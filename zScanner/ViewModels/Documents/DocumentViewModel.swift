@@ -88,8 +88,15 @@ class DocumentViewModel {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self]  status in
                 guard let `self` = self else { return }
-                let databaseUploadStatus = DocumentUploadStatusDatabaseModel(documentId: self.document.id, status: status)
-                self.database.saveObject(databaseUploadStatus)
+                
+                switch status {
+                case .success:
+                    self.saveTimeOfSeding()
+                default:
+                    let databaseUploadStatus = DocumentUploadStatusDatabaseModel(documentId: self.document.id, status: status)
+                    self.database.saveObject(databaseUploadStatus)
+                }
+
             })
             .disposed(by: disposeBag)
     }
@@ -118,6 +125,17 @@ class DocumentViewModel {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private let realm = try! RealmDatabase()
+    
+    func saveTimeOfSeding() {
+        let documentModel = database.loadObject(DocumentDatabaseModel.self, withId: self.document.id)
+        guard let document = documentModel else { return }
+        try! realm.write {
+            document.sent = Date()
+         }
+        database.saveObject(document)
     }
     
     private var tasks: [Observable<UploadStatus>] {

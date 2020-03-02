@@ -28,6 +28,7 @@ class DocumentsListViewModel {
         self.database = database
         self.networkManager = ikemNetworkManager
         
+        deleteOldSentDocuments()
         loadDocuments()
     }
     
@@ -39,7 +40,6 @@ class DocumentsListViewModel {
     }
     
     func updateDocuments() {
-        
         // Find all documents with active upload
         let activeUploadDocuments = documents.filter({
             var currentStatus: DocumentViewModel.UploadStatus?
@@ -104,5 +104,22 @@ class DocumentsListViewModel {
                 .map({ DocumentTypeDatabaseModel(documentType: $0) })
                 .forEach({ self.database.saveObject($0) })
         }
+    }
+    
+    func deleteOldSentDocuments() {
+        let docs = database
+            .loadObjects(DocumentDatabaseModel.self)
+            .filter({ isOld(doc: $0) })
+        
+        docs.forEach { (doc) in
+            database.deleteObject(doc)
+        }
+    }
+    
+    func isOld(doc: DocumentDatabaseModel) -> Bool {
+        guard let sent = doc.sent else { return false }
+            
+        let timeInterval = -Int(sent.timeIntervalSinceNow)
+        return timeInterval < Config.timeToDeleteSentDocuments ? false : true
     }
 }

@@ -18,6 +18,8 @@ enum Config {
     static let folderUsageHistoryCount = 3
     static let maximumNumberOfConcurentUploads = 4
     static let realmSchemaVersion: UInt64 = 1
+    // the time converted to seconds, when success sent document, will be deleted from history
+    static let timeToDeleteSentDocuments = 48 * 3600
 }
 
 //MARK: -
