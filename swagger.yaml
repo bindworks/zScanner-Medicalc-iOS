@@ -72,7 +72,9 @@ paths:
                     ]},
                     { "id": "infconsent", "display": "Informovaný souhlas" },
                     { "id": "revers", "display": "Revers" },
-                    { "id": "sono", "display": "Sonografické vyšetření" }
+                    { "id": "sono", "display": "Sonografické vyšetření",  sub-types: [
+                      { "id": "Scan", "display": "Scan" },
+                    ]}, 
                   ]
                 }
                 
