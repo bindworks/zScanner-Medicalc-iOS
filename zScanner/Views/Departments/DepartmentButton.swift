@@ -26,6 +26,12 @@ class DepartmentButton: PrimaryButton {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var isSelected: Bool {
+        didSet {
+            backgroundColor = isSelected ? .primaryDark : .primary
+        }
+    }
+    
     let disposedBag = DisposeBag()
     
     private func setup() {
@@ -33,14 +39,8 @@ class DepartmentButton: PrimaryButton {
         
         rx.tap
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.select()
+                self?.isSelected.toggle()
             })
             .disposed(by: disposedBag)
-    }
-    
-    func select() {
-        isSelected.toggle()
-        backgroundColor = self.isSelected ? .primaryDark : .primary
     }
 }
