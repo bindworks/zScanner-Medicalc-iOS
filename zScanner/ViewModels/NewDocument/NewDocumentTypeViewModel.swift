@@ -38,8 +38,13 @@ class NewDocumentTypeViewModel {
 
     var isValid = Observable<Bool>.just(false)
     
-    func addSubTypesField(documentType: DocumentTypeDomainModel) {
+    func addSubTypesField(of documentType: DocumentTypeDomainModel) {
         let listPicker = ListPickerField<DocumentSubTypeDomainModel>(title: "form.listPicker.docSubType.title".localized, list: documentType.subtypes)
+        
+        if let _ = fields.last as? ListPickerField<DocumentSubTypeDomainModel> {
+            fields.remove(at: fields.count - 1)
+        }
+        
         fields.append(listPicker)
     }
     

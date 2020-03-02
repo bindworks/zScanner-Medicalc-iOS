@@ -46,6 +46,19 @@ class NewDocumentTypeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private var pickerIndexPath: IndexPath?
     
+    private func updateTablevView() {
+        tableView.beginUpdates()
+        
+        let lastRowIndex = self.viewModel.fields.count - 1
+        if tableView.numberOfRows(inSection: 0) == 3 {
+            tableView.reloadRows(at: [IndexPath(row: lastRowIndex, section: 0)], with: .fade)
+        } else {
+            tableView.insertRows(at: [IndexPath(row: lastRowIndex, section: 0)], with: .fade)
+        }
+        
+        tableView.endUpdates()
+    }
+ 
     private func showDateTimePicker(for indexPath: IndexPath, date: DateTimePickerField) {
         tableView.beginUpdates()
         let newIndex = indexPath.row + 1
@@ -125,33 +138,44 @@ class NewDocumentTypeViewController: BaseViewController {
 // MARK: - UITableViewDataSource implementation
 extension NewDocumentTypeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-          return viewModel.fields.count
-      }
+        return viewModel.fields.count
+    }
       
-      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-          let item = viewModel.fields[indexPath.row]
-          
-          switch item {
-          case let list as ListPickerField<DocumentTypeDomainModel>:
-              let cell = tableView.dequeueCell(FormFieldTableViewCell.self)
-              cell.setup(with: list)
-              return cell
-          case let text as TextInputField:
-              let cell = tableView.dequeueCell(TextInputTableViewCell.self)
-              cell.setup(with: text)
-              return cell
-          case let date as DateTimePickerField:
-              let cell = tableView.dequeueCell(FormFieldTableViewCell.self)
-              cell.setup(with: date)
-              return cell
-          case let datePicker as DateTimePickerPlaceholder:
-              let cell = tableView.dequeueCell(DateTimePickerTableViewCell.self)
-              cell.setup(with: datePicker)
-              return cell
-          default:
-              return UITableViewCell()
-          }
-      }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = viewModel.fields[indexPath.row]
+        
+        switch item {
+        case let list as ListPickerField<DocumentTypeDomainModel>:
+            let cell = tableView.dequeueCell(FormFieldTableViewCell.self)
+            cell.setup(with: list)
+            list.selected
+                .subscribe(onNext: { [weak self] docType in
+                    guard let docType = docType else { return }
+                    self?.viewModel.addSubTypesField(of: docType)
+                    self?.updateTablevView()
+                })
+                .disposed(by: disposeBag)
+            return cell
+        case let list as ListPickerField<DocumentSubTypeDomainModel>:
+            let cell = tableView.dequeueCell(FormFieldTableViewCell.self)
+            cell.setup(with: list)
+            return cell
+        case let text as TextInputField:
+            let cell = tableView.dequeueCell(TextInputTableViewCell.self)
+            cell.setup(with: text)
+            return cell
+        case let date as DateTimePickerField:
+            let cell = tableView.dequeueCell(FormFieldTableViewCell.self)
+            cell.setup(with: date)
+            return cell
+        case let datePicker as DateTimePickerPlaceholder:
+            let cell = tableView.dequeueCell(DateTimePickerTableViewCell.self)
+            cell.setup(with: datePicker)
+            return cell
+        default:
+            return UITableViewCell()
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate implementation
@@ -169,6 +193,8 @@ extension NewDocumentTypeViewController: UITableViewDelegate {
         
         switch item {
         case let list as ListPickerField<DocumentTypeDomainModel>:
+            coordinator.showSelector(for: list)
+        case let list as ListPickerField<DocumentSubTypeDomainModel>:
             coordinator.showSelector(for: list)
         case let date as DateTimePickerField:
             if pickerIndexPath == nil {
