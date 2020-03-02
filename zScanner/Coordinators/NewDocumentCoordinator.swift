@@ -201,8 +201,14 @@ extension NewDocumentCoordinator: NewDocumentTypeCoordinator {
                 newDocument.notes = textField.text.value
             case let listPicker as ListPickerField<DocumentTypeDomainModel>:
                 if let type = listPicker.selected.value {
-                    newDocument.type.subtypes = [type]
+                    newDocument.type = type
                 }
+                
+            case let listPicker as ListPickerField<DocumentSubTypeDomainModel>:
+                if let subType = listPicker.selected.value {
+                    newDocument.subType = subType
+                }
+                
             default:
                 break
             }

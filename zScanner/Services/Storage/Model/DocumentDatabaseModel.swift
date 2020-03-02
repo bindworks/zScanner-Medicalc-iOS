@@ -46,11 +46,13 @@ class DocumentDatabaseModel: Object {
 //MARK: -
 extension DocumentDatabaseModel {
     func toDomainModel() -> DocumentDomainModel {
+        #warning("TODO: finish storing subtype")
         return DocumentDomainModel(
             id: id,
             folder: folder!.toDomainModel(),
-            type: DocumentTypeDomainModel(id: typeId, name: typeName),
-            created: created,
+            type: type!.toDomainModel(),
+            subType: DocumentSubTypeDomainModel(id: "", name: ""),
+            date: date,
             name: name,
             notes: notes,
             pages: pages.map({ $0.toDomainModel() }),

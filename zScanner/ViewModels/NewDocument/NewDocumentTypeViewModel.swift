@@ -8,8 +8,15 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 class NewDocumentTypeViewModel {
+    
+    private typealias TypePicker = ListPickerField<DocumentTypeDomainModel>
+    private typealias SubTypePicker = ListPickerField<DocumentSubTypeDomainModel>
+    
+    let fields = BehaviorRelay<[FormField]>(value: [])
+    var isValid = Observable<Bool>.just(false)
     
     // MARK: Instance part
     private let database: Database
@@ -18,41 +25,73 @@ class NewDocumentTypeViewModel {
     init(database: Database, folderName: String) {
         self.database = database
         self.folderName = folderName
-        self.isValid = Observable
-            .combineLatest(fields.map({ $0.isValid }))
-            .map({ results in results.reduce(true, { $0 && $1 }) })
+       
+        setupObservables()
+    }
+
+    // MARK: Helpers
+    private let disposeBag = DisposeBag()
+    private var fieldsDisposeBag = DisposeBag()
+    
+    private var documentTypes: [DocumentTypeDomainModel] {
+        return database.loadObjects(DocumentTypeDatabaseModel.self).map({ $0.toDomainModel() })
     }
     
-    // MARK: Interface
-    private(set) lazy var fields: [FormField] = {
+    private var defaultFields: [FormField] {
         var documentTypes: [DocumentTypeDomainModel] {
-            return database.loadObjects(DocumentTypeDatabaseModel.self)
-                .map({ $0.toDomainModel() })
+            return database.loadObjects(DocumentTypeDatabaseModel.self).map({ $0.toDomainModel() })
         }
-        
+    
         return [
             TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
-            ListPickerField<DocumentTypeDomainModel>(title: "form.listPicker.docType.title".localized, list: documentTypes),
+            TypePicker(title: "form.listPicker.docType.title".localized, list: documentTypes),
         ]
-    }()
-
-    var isValid = Observable<Bool>.just(false)
+    }
     
-    func addSubTypesField(of documentType: DocumentTypeDomainModel) {
-        let listPicker = ListPickerField<DocumentSubTypeDomainModel>(title: "form.listPicker.docSubType.title".localized, list: documentType.subtypes)
+    private func setupObservables() {
+        fields.accept(defaultFields)
         
-        if let _ = fields.last as? ListPickerField<DocumentSubTypeDomainModel> {
-            fields.remove(at: fields.count - 1)
+        fields.subscribe(onNext: { [weak self] newFields in
+            guard let self = self else { return }
+            
+            self.fieldsDisposeBag = DisposeBag()
+            
+            newFields.compactMap({ $0 as? TypePicker }).first?.selected
+                .distinctUntilChanged()
+                .subscribe(onNext: { [weak self] documentType in
+                    documentType.flatMap({ self?.addSubTypesField(for: $0) })
+                })
+                .disposed(by: self.fieldsDisposeBag)
+            
+            self.isValid = Observable
+                .combineLatest(newFields.map({ $0.isValid }))
+                .map({ results in results.reduce(true, { $0 && $1 }) })
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    private var lock = false
+    
+    private func addSubTypesField(for documentType: DocumentTypeDomainModel) {
+        guard !lock else { return }
+        lock = true; defer { lock = false }
+        
+        var existingSubTypePicker: SubTypePicker? { fields.value.compactMap({ $0 as? SubTypePicker }).first }
+        var newSubTypePicker: SubTypePicker { SubTypePicker(title: "form.listPicker.docSubType.title".localized, list: documentType.subtypes) }
+        
+        let newFields = fields.value.filter({ !($0 is SubTypePicker) })
+        
+        if documentType.subtypes.isEmpty {
+            fields.accept(newFields)
+            return
         }
         
-        fields.append(listPicker)
-    }
-    
-    func addDateTimePickerPlaceholder(at index: Int, for date: DateTimePickerField) {
-        fields.insert(DateTimePickerPlaceholder(for: date), at: index)
-    }
-    
-    func removeDateTimePickerPlaceholder() {
-        fields.removeAll(where: { $0 is DateTimePickerPlaceholder })
+        let subTypePicker = newSubTypePicker
+        
+        if documentType.subtypes.count == 1, let subtype = documentType.subtypes.first {
+            subTypePicker.selected.accept(subtype)
+        }
+        
+        fields.accept(newFields + [subTypePicker])
     }
 }

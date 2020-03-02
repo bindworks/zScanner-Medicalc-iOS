@@ -96,6 +96,7 @@
 		BD80224922F880F8009B8B69 /* ListItemSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80224822F880F8009B8B69 /* ListItemSelectionViewController.swift */; };
 		BD80224D22F8B9E8009B8B69 /* DateTimePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80224C22F8B9E8009B8B69 /* DateTimePickerTableViewCell.swift */; };
 		BD85C93822E502A3004DC76E /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD85C93722E502A3004DC76E /* DocumentViewModel.swift */; };
+		BD87D883240DB7490056F0BE /* DocumentSubTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD87D882240DB7490056F0BE /* DocumentSubTypeDomainModel.swift */; };
 		BD88F15023087F1300569D71 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD88F14F23087F1300569D71 /* UIView.swift */; };
 		BD88F1522308990300569D71 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD88F1512308990300569D71 /* GradientView.swift */; };
 		BD88F1552308A01B00569D71 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = BD88F1572308A01B00569D71 /* Localizable.stringsdict */; };
@@ -240,6 +241,7 @@
 		BD80224822F880F8009B8B69 /* ListItemSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemSelectionViewController.swift; sourceTree = "<group>"; };
 		BD80224C22F8B9E8009B8B69 /* DateTimePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerTableViewCell.swift; sourceTree = "<group>"; };
 		BD85C93722E502A3004DC76E /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
+		BD87D882240DB7490056F0BE /* DocumentSubTypeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSubTypeDomainModel.swift; sourceTree = "<group>"; };
 		BD88F14F23087F1300569D71 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		BD88F1512308990300569D71 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		BD88F1562308A01B00569D71 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = cs; path = cs.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 			children = (
 				BD389A2622F70596002F935F /* FormField.swift */,
 				BD2B9E8022EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift */,
+				BD87D882240DB7490056F0BE /* DocumentSubTypeDomainModel.swift */,
 				BD000CD022E497B9001EE38A /* LoginDomainModel.swift */,
 				BDC4A3E222E5008800D1CF6A /* DocumentDomainModel.swift */,
 				BD99E58323F9A5E800792532 /* Page.swift */,
@@ -1006,6 +1009,7 @@
 				434027612302212C0038A40C /* MenuCoordinator.swift in Sources */,
 				BD000CAE22E3AA6F001EE38A /* UIViewController.swift in Sources */,
 				BD80224922F880F8009B8B69 /* ListItemSelectionViewController.swift in Sources */,
+				BD87D883240DB7490056F0BE /* DocumentSubTypeDomainModel.swift in Sources */,
 				BD402E7B2300D60B00049DF9 /* FolderTableViewCell.swift in Sources */,
 				43C14A122300F07E00F7C24E /* DrawerViewController.swift in Sources */,
 				16B8D4BD23F7035D003DFD71 /* GetFolderRequest.swift in Sources */,

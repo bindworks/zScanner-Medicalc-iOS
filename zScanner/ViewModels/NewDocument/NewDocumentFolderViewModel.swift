@@ -61,6 +61,7 @@ class NewDocumentFolderViewModel {
                 switch status {
                 case .progress:
                     self?.isLoading.accept(true)
+                    
                 case .success(data: let folders):
                     self?.isLoading.accept(false)
                     var folders = folders.map({ $0.toDomainModel() })
@@ -69,6 +70,7 @@ class NewDocumentFolderViewModel {
                         folders.append(.notFound)
                     }
                     self?.searchResults.accept(folders)
+                    
                 case .error:
                     self?.tracker.track(.userNotFound)
                     self?.isLoading.accept(false)
