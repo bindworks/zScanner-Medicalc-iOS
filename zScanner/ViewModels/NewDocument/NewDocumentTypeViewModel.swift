@@ -24,25 +24,24 @@ class NewDocumentTypeViewModel {
     }
     
     // MARK: Interface
-    private(set) lazy var fields: [FormField] = [
-        TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
-    ]
-    
-    private(set) lazy var documentTypes: [FormField] = {
+    private(set) lazy var fields: [FormField] = {
         var documentTypes: [DocumentTypeDomainModel] {
-               return database.loadObjects(DocumentTypeDatabaseModel.self)
-                   .map({ $0.toDomainModel() })
+            return database.loadObjects(DocumentTypeDatabaseModel.self)
+                .map({ $0.toDomainModel() })
         }
         
-        var fields: [ListPickerField<DocumentSubTypeDomainModel>] = []
-        documentTypes.forEach { (documentType) in
-            fields.append(ListPickerField<DocumentSubTypeDomainModel>(title: documentType.name, list: documentType.subtypes))
-        }
-    
-        return fields
+        return [
+            TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
+            ListPickerField<DocumentTypeDomainModel>(title: "form.listPicker.docType.title".localized, list: documentTypes),
+        ]
     }()
-    
+
     var isValid = Observable<Bool>.just(false)
+    
+    func addSubTypesField(documentType: DocumentTypeDomainModel) {
+        let listPicker = ListPickerField<DocumentSubTypeDomainModel>(title: "form.listPicker.docSubType.title".localized, list: documentType.subtypes)
+        fields.append(listPicker)
+    }
     
     func addDateTimePickerPlaceholder(at index: Int, for date: DateTimePickerField) {
         fields.insert(DateTimePickerPlaceholder(for: date), at: index)

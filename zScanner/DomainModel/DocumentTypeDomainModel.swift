@@ -14,6 +14,13 @@ struct DocumentSubTypeDomainModel {
     var name: String
 }
 
+// MARK: ListItem implementation
+extension DocumentSubTypeDomainModel: ListItem {
+    var title: String {
+        return name
+    }
+}
+
 struct DocumentTypeDomainModel {
     var id: String
     var name: String
@@ -21,7 +28,7 @@ struct DocumentTypeDomainModel {
 }
 
 // MARK: ListItem implementation
-extension DocumentSubTypeDomainModel: ListItem {
+extension DocumentTypeDomainModel: ListItem {
     var title: String {
         return name
     }
