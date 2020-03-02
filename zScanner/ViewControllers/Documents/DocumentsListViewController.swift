@@ -121,7 +121,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                         .forEach({ (button) in
                             button.rx.tap
                                 .subscribe({ [weak self] _ in
-                                    self?.loadDocumentTypes(departmentCode: button)
+                                    self?.loadDocumentTypes(for: button.model)
                                 })
                                 .disposed(by: self.disposeBag)
 
@@ -148,8 +148,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         coordinator.openMenu()
     }
 
-    private func loadDocumentTypes(departmentCode: DepartmentButton) {
-        documentsViewModel.fetchDocumentTypes(for: departmentCode)
+    private func loadDocumentTypes(for department: DepartmentDomainModel) {
+        documentsViewModel.fetchDocumentTypes(for: department)
     }
     
     private func setupView() {
