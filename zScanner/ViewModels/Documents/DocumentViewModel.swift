@@ -87,8 +87,7 @@ class DocumentViewModel {
         internalUploadStatus
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self]  status in
-                guard let `self` = self else { return }
-                
+                guard let self = self else { return }
                 let databaseUploadStatus = DocumentUploadStatusDatabaseModel(documentId: self.document.id, status: status)
                 self.database.saveObject(databaseUploadStatus)
             })

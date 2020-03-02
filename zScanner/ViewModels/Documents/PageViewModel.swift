@@ -69,7 +69,7 @@ class PageViewModel {
         pageUploadStatus
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self]  status in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 let pageUploadStatus = PageUploadStatusDatabaseModel(pageId: self.page.id, status: status)
                 self.database.saveObject(pageUploadStatus)
             })

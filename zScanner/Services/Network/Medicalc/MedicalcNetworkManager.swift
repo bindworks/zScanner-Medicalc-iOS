@@ -64,7 +64,7 @@ class MedicalcNetworkManager: NetworkManager {
     
     private func observe<T: Request, U: Decodable>(_ request: T) -> Observable<RequestStatus<U>> where T.DataType == U {
         return Observable.create { [weak self] observer -> Disposable in
-            guard let `self` = self else { return Disposables.create() }
+            guard let self = self else { return Disposables.create() }
             
             var request = request
             
