@@ -11,6 +11,7 @@ import RealmSwift
 
 class DocumentUploadStatusDatabaseModel: Object {
     @objc dynamic var documentId = ""
+    @objc dynamic var timestamp = Date()
     @objc private dynamic var _uploadStatus = -1
     
     convenience init(documentId: String, status: DocumentViewModel.UploadStatus) {
@@ -25,6 +26,7 @@ class DocumentUploadStatusDatabaseModel: Object {
             return DocumentViewModel.UploadStatus(rawValue: _uploadStatus) ?? .awaitingInteraction
         }
         set {
+            timestamp = Date()
             _uploadStatus = newValue.rawValue
         }
     }

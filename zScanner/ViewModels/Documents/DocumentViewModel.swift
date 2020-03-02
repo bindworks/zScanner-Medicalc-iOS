@@ -91,11 +91,6 @@ class DocumentViewModel {
                 
                 let databaseUploadStatus = DocumentUploadStatusDatabaseModel(documentId: self.document.id, status: status)
                 self.database.saveObject(databaseUploadStatus)
-                
-                if status == .success {
-                    self.saveTimeOfSeding()
-                }
-        
             })
             .disposed(by: disposeBag)
     }
@@ -127,15 +122,6 @@ class DocumentViewModel {
     }
     
     private let realm = try! RealmDatabase()
-    
-    func saveTimeOfSeding() {
-        let documentModel = database.loadObject(DocumentDatabaseModel.self, withId: self.document.id)
-        guard let document = documentModel else { return }
-        try! realm.write {
-            document.sent = Date()
-         }
-        database.saveObject(document)
-    }
     
     private var tasks: [Observable<UploadStatus>] {
         var tasks: [Observable<UploadStatus>] = pages.map({ $0.pageUploadStatus.asObservable() })

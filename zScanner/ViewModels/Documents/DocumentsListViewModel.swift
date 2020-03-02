@@ -28,7 +28,7 @@ class DocumentsListViewModel {
         self.database = database
         self.networkManager = ikemNetworkManager
         
-        deleteOldSentDocuments()
+        deleteExpiredDocuments()
         loadDocuments()
     }
     
@@ -106,20 +106,17 @@ class DocumentsListViewModel {
         }
     }
     
-    func deleteOldSentDocuments() {
-        let docs = database
-            .loadObjects(DocumentDatabaseModel.self)
-            .filter({ isOld(doc: $0) })
-        
-        docs.forEach { (doc) in
-            database.deleteObject(doc)
-        }
+    func deleteExpiredDocuments() {
+        database
+            .loadObjects(DocumentUploadStatusDatabaseModel.self)
+            .filter({ $0.isExpired })
+            .compactMap({ database.loadObject(DocumentDatabaseModel.self, withId: $0.documentId) })
+            .forEach({ database.deleteObject($0) })
     }
-    
-    func isOld(doc: DocumentDatabaseModel) -> Bool {
-        guard let sent = doc.sent else { return false }
-            
-        let timeInterval = -Int(sent.timeIntervalSinceNow)
-        return timeInterval < Config.timeToDeleteSentDocuments ? false : true
+}
+
+private extension DocumentUploadStatusDatabaseModel {
+    var isExpired: Bool {
+        return uploadStatus == .success && -timestamp.timeIntervalSinceNow > Config.documentExpirationTime
     }
 }

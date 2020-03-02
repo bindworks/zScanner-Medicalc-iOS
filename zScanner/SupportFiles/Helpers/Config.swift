@@ -19,7 +19,7 @@ enum Config {
     static let maximumNumberOfConcurentUploads = 4
     static let realmSchemaVersion: UInt64 = 1
     // the time converted to seconds, when success sent document, will be deleted from history
-    static let timeToDeleteSentDocuments = 48 * 3600
+    static let documentExpirationTime: TimeInterval = 60 * 60 * 48 // 48 hours
 }
 
 //MARK: -
