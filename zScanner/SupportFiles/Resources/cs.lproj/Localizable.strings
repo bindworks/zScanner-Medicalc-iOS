@@ -50,10 +50,10 @@
 "folderResult.folderNotFound.title" = "Pacient nenalezen";
 
 "newDocumentType.screen.title" = "Vlastnosti záznamu";
-"newDocumentType.button.title" = "Další";
+"newDocumentType.button.title" = "Odeslat záznam";
 
 "newDocumentPhotos.screen.title" = "Obsah záznamu";
-"newDocumentPhotos.button.title" = "Odeslat záznam";
+"newDocumentPhotos.button.title" = "Další";
 "newDocumentPhotos.actioSheet.title" = "Nová fotografie";
 "newDocumentPhotos.actioSheet.cameraAction" = "Vyfotit";
 "newDocumentPhotos.actioSheet.galleryAction" = "Vybrat z galerie";
