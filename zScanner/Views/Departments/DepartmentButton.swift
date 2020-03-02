@@ -28,15 +28,19 @@ class DepartmentButton: PrimaryButton {
     
     let disposedBag = DisposeBag()
     
-    func setup() {
+    private func setup() {
         setTitle(model.name, for: .normal)
         
         rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.isSelected.toggle()
-                self.backgroundColor = self.isSelected ? UIColor.primaryDark : UIColor.primary
+                self.select()
             })
             .disposed(by: disposedBag)
+    }
+    
+    func select() {
+        isSelected.toggle()
+        backgroundColor = self.isSelected ? .primaryDark : .primary
     }
 }

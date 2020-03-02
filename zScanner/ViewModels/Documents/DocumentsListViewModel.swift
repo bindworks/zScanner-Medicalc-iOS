@@ -60,7 +60,7 @@ class DocumentsListViewModel {
     //MARK: Helpers
     let disposeBag = DisposeBag()
     
-    private var lastDepartmentSelected: String?
+    var lastDepartmentSelected: DepartmentButton?
     
     private func loadDocuments() {
         documents = database
@@ -69,14 +69,14 @@ class DocumentsListViewModel {
             .reversed()
     }
     
-    func fetchDocumentTypes(for departmentCode: String) {
+    func fetchDocumentTypes(for departmentCode: DepartmentButton) {
         if departmentCode == lastDepartmentSelected {
             self.documentTypesState.onNext(.success)
             return
         }
         
         networkManager
-            .getDocumentTypes(for: departmentCode)
+            .getDocumentTypes(for: departmentCode.model.id)
             .subscribe(onNext: { [weak self] requestStatus in
                 switch requestStatus {
                 case .progress:
