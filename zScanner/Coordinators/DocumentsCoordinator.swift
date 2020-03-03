@@ -53,7 +53,7 @@ class DocumentsCoordinator: Coordinator {
         menuCoordinator.begin()
     }
     
-    private func runNewDocumentFlow() {
+    private func runNewDocumentFlow(with department: DepartmentDomainModel) {
         // Tracking
         if documentCreatedInThisSession {
             tracker.track(.createDocumentAgain)
@@ -62,7 +62,7 @@ class DocumentsCoordinator: Coordinator {
         }
         
         // Start new-document flow
-        guard let coordinator = NewDocumentCoordinator(flowDelegate: self, window: window, navigationController: navigationController) else { return }
+        guard let coordinator = NewDocumentCoordinator(for: department, flowDelegate: self, window: window, navigationController: navigationController) else { return }
         addChildCoordinator(coordinator)
         coordinator.begin()
     }
@@ -90,8 +90,8 @@ class DocumentsCoordinator: Coordinator {
 
 // MARK: - DocumentsListCoordinator implementation
 extension DocumentsCoordinator: DocumentsListCoordinator {
-    func createNewDocument() {
-        runNewDocumentFlow()
+    func createNewDocument(with department: DepartmentDomainModel) {
+        runNewDocumentFlow(with: department)
     }
     func openMenu() {
         menuCoordinator.openMenu()

@@ -27,8 +27,6 @@ class DocumentsListViewModel {
     init(database: Database, ikemNetworkManager: NetworkManager) {
         self.database = database
         self.networkManager = ikemNetworkManager
-        
-        loadDocuments()
     }
     
     //MARK: Interface
@@ -59,7 +57,7 @@ class DocumentsListViewModel {
     //MARK: Helpers
     let disposeBag = DisposeBag()
     
-    private var lastSelectedDepartment: DepartmentDomainModel?
+    private(set) var lastSelectedDepartment: DepartmentDomainModel?
     
     private func loadDocuments() {
         deleteExpiredDocuments()

@@ -25,13 +25,15 @@ class NewDocumentCoordinator: Coordinator {
     private let steps: [Step]
     private var currentStep: Step
     
-    init?(flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
+    init?(for department: DepartmentDomainModel, flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
         self.flowDelegate = flowDelegate
         
         self.steps = NewDocumentCoordinator.steps()
         
         guard let firstStep = steps.first else { return nil }
         self.currentStep = firstStep
+        
+        self.newDocument.department = department
         
         super.init(window: window, navigationController: navigationController)
     }
@@ -198,11 +200,18 @@ extension NewDocumentCoordinator: NewDocumentTypeCoordinator {
         for field in fields {
             switch field {
             case let textField as TextInputField:
-                newDocument.notes = textField.text.value
+                newDocument.name = textField.text.value
+                
             case let listPicker as ListPickerField<DocumentTypeDomainModel>:
                 if let type = listPicker.selected.value {
                     newDocument.type = type
                 }
+                
+            case let listPicker as ListPickerField<DocumentSubTypeDomainModel>:
+                if let subType = listPicker.selected.value {
+                    newDocument.subType = subType
+                }
+                
             default:
                 break
             }

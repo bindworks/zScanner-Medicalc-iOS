@@ -12,4 +12,16 @@ extension UIViewController {
     var safeArea: UILayoutGuide {
         return view.safeAreaLayoutGuide
     }
+    
+    // Whenever user gonna tap somewhere else than the current view so it will dismiss the keyboard
+    func setupKeyboardHandling() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
+

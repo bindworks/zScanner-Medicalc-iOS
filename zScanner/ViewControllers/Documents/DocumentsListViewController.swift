@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol DocumentsListCoordinator: BaseCoordinator {
-    func createNewDocument()
+    func createNewDocument(with department: DepartmentDomainModel)
     func openMenu()
 }
 
@@ -55,10 +55,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         ]
     }
     
-    override var rightBarButtonItems: [UIBarButtonItem] {
-        return rightBarButtons
-    }
-    
     // MARK: Interface
     func insertNewDocument(document: DocumentViewModel) {
         documentsViewModel.insertNewDocument(document)
@@ -67,11 +63,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     
     // MARK: Helpers
     private let disposeBag = DisposeBag()
-    private var rightBarButtons: [UIBarButtonItem] = [] {
-        didSet {
-            navigationItem.rightBarButtonItems = rightBarButtons
-        }
-    }
+
     
     private func setupBindings() {
         documentsViewModel.documentTypesState
@@ -80,20 +72,29 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             .subscribe(onNext: { [unowned self] status in
                 switch status {
                 case .awaitingInteraction:
-                    self.rightBarButtons = []
+                    break
                     
                 case .loading:
-                    self.rightBarButtons = [self.loadingItem]
+                    self.departmentsStackView.subviews.forEach({
+                        if let button = $0 as? DepartmentButton, button.isSelected {
+                            button.isLoading = true
+                        }
+                    })
                     
                 case .success:
-                    self.rightBarButtons = []
-                    self.departmentsStackView.subviews.forEach({ ($0 as? UIButton)?.isSelected = false })
-                    self.coordinator.createNewDocument()
+                    self.departmentsStackView.subviews.forEach({
+                        if let button = $0 as? DepartmentButton {
+                            button.isLoading = false
+                            button.isSelected = false
+                        }
+                    })
+                    
+                    if let department = self.documentsViewModel.lastSelectedDepartment {
+                        self.coordinator.createNewDocument(with: department)
+                    }
                     
                 case .error(let error):
-                    self.rightBarButtons = []
                     self.handleError(error)
-                    
                 }
             })
             .disposed(by: disposeBag)
@@ -190,14 +191,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             make.bottom.equalTo(safeArea).inset(8)
         }
     }
-    
-    private lazy var loadingItem: UIBarButtonItem = {
-        let loading = UIActivityIndicatorView(style: .gray)
-        loading.startAnimating()
-        let button = UIBarButtonItem(customView: loading)
-        button.isEnabled = false
-        return button
-    }()
     
     private lazy var documentsTableView: UITableView = {
         let tableView = UITableView()

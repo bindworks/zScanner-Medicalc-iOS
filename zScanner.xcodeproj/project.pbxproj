@@ -11,11 +11,13 @@
 		16A2CAC523F70CDB006E9577 /* DepartmentsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */; };
 		16A2CAC723F70E2F006E9577 /* DepartmentDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */; };
 		16A2CAC923F71091006E9577 /* DepartmentDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */; };
+		16B3438B2407DE270085E387 /* DocumentSubTypeDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B3438A2407DE270085E387 /* DocumentSubTypeDatabaseModel.swift */; };
 		16B8D4BD23F7035D003DFD71 /* GetFolderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */; };
 		16DD55DC2406A1C30096BBEB /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DD55DB2406A1C30096BBEB /* TitleView.swift */; };
 		16DD55DE2406F3D40096BBEB /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DD55DD2406F3D40096BBEB /* ErrorView.swift */; };
 		16E4BD5024051A8B003AE138 /* DepartmentsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E4BD4F24051A8B003AE138 /* DepartmentsListViewModel.swift */; };
 		16E4BD52240521BB003AE138 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E4BD51240521BB003AE138 /* LoadingView.swift */; };
+		16EE7D77240EC05F00C541A5 /* DocumentSubTypeNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE7D76240EC05F00C541A5 /* DocumentSubTypeNetworkModel.swift */; };
 		434027612302212C0038A40C /* MenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434027602302212C0038A40C /* MenuCoordinator.swift */; };
 		435A3AF82309AE5000BF2D9C /* LoadingCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */; };
 		4386045E230626B7009ED8D5 /* BehaviorRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4386045D230626B7009ED8D5 /* BehaviorRelay.swift */; };
@@ -95,6 +97,7 @@
 		BD80224922F880F8009B8B69 /* ListItemSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80224822F880F8009B8B69 /* ListItemSelectionViewController.swift */; };
 		BD80224D22F8B9E8009B8B69 /* DateTimePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80224C22F8B9E8009B8B69 /* DateTimePickerTableViewCell.swift */; };
 		BD85C93822E502A3004DC76E /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD85C93722E502A3004DC76E /* DocumentViewModel.swift */; };
+		BD87D883240DB7490056F0BE /* DocumentSubTypeDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD87D882240DB7490056F0BE /* DocumentSubTypeDomainModel.swift */; };
 		BD88F15023087F1300569D71 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD88F14F23087F1300569D71 /* UIView.swift */; };
 		BD88F1522308990300569D71 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD88F1512308990300569D71 /* GradientView.swift */; };
 		BD88F1552308A01B00569D71 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = BD88F1572308A01B00569D71 /* Localizable.stringsdict */; };
@@ -154,11 +157,13 @@
 		16A2CAC423F70CDB006E9577 /* DepartmentsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsRequest.swift; sourceTree = "<group>"; };
 		16A2CAC623F70E2F006E9577 /* DepartmentDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDomainModel.swift; sourceTree = "<group>"; };
 		16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDatabaseModel.swift; sourceTree = "<group>"; };
+		16B3438A2407DE270085E387 /* DocumentSubTypeDatabaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSubTypeDatabaseModel.swift; sourceTree = "<group>"; };
 		16B8D4BC23F7035D003DFD71 /* GetFolderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFolderRequest.swift; sourceTree = "<group>"; };
 		16DD55DB2406A1C30096BBEB /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		16DD55DD2406F3D40096BBEB /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		16E4BD4F24051A8B003AE138 /* DepartmentsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsListViewModel.swift; sourceTree = "<group>"; };
 		16E4BD51240521BB003AE138 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		16EE7D76240EC05F00C541A5 /* DocumentSubTypeNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSubTypeNetworkModel.swift; sourceTree = "<group>"; };
 		434027602302212C0038A40C /* MenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCoordinator.swift; sourceTree = "<group>"; };
 		435A3AF72309AE5000BF2D9C /* LoadingCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCircle.swift; sourceTree = "<group>"; };
 		4386045D230626B7009ED8D5 /* BehaviorRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorRelay.swift; sourceTree = "<group>"; };
@@ -238,6 +243,7 @@
 		BD80224822F880F8009B8B69 /* ListItemSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemSelectionViewController.swift; sourceTree = "<group>"; };
 		BD80224C22F8B9E8009B8B69 /* DateTimePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerTableViewCell.swift; sourceTree = "<group>"; };
 		BD85C93722E502A3004DC76E /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
+		BD87D882240DB7490056F0BE /* DocumentSubTypeDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSubTypeDomainModel.swift; sourceTree = "<group>"; };
 		BD88F14F23087F1300569D71 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		BD88F1512308990300569D71 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		BD88F1562308A01B00569D71 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = cs; path = cs.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -333,6 +339,7 @@
 			children = (
 				BD389A2622F70596002F935F /* FormField.swift */,
 				BD2B9E8022EDC1FA00FFCD3B /* DocumentTypeDomainModel.swift */,
+				BD87D882240DB7490056F0BE /* DocumentSubTypeDomainModel.swift */,
 				BD000CD022E497B9001EE38A /* LoginDomainModel.swift */,
 				BDC4A3E222E5008800D1CF6A /* DocumentDomainModel.swift */,
 				BD99E58323F9A5E800792532 /* Page.swift */,
@@ -398,6 +405,7 @@
 			children = (
 				16A2CAC223F70C85006E9577 /* DepartmentNetworkModel.swift */,
 				BD2B9E7D22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift */,
+				16EE7D76240EC05F00C541A5 /* DocumentSubTypeNetworkModel.swift */,
 				BDEA570C22FA2CD9004C48F0 /* DocumentNetworkModel.swift */,
 				BD406FDF22FF156D0096693D /* FolderNetworkModel.swift */,
 				BD88F15A230953C700569D71 /* PageNetworkModel.swift */,
@@ -639,6 +647,7 @@
 				16A2CAC823F71091006E9577 /* DepartmentDatabaseModel.swift */,
 				BDFC478422E907F200F312F0 /* DocumentDatabaseModel.swift */,
 				BD2B9E8722EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift */,
+				16B3438A2407DE270085E387 /* DocumentSubTypeDatabaseModel.swift */,
 				BD44E279232703BC00A0B9E5 /* DocumentUploadStatusDatabaseModel.swift */,
 				BD8AA80E23003D530082441F /* FolderDatabaseModel.swift */,
 				BDBF4E20232EED4C0078BF53 /* LoginDatabaseModel.swift */,
@@ -960,6 +969,7 @@
 				BDA25B1C22EF979A006DA7E4 /* Tracker.swift in Sources */,
 				BD59A09922E36EF900FA9CD0 /* NativeAPI.swift in Sources */,
 				BD2B9E8822EDF0C900FFCD3B /* DocumentTypeDatabaseModel.swift in Sources */,
+				16EE7D77240EC05F00C541A5 /* DocumentSubTypeNetworkModel.swift in Sources */,
 				BDA25B2022EF9C33006DA7E4 /* Event.swift in Sources */,
 				BD59A0AD22E395AF00FA9CD0 /* UIColor.swift in Sources */,
 				BD59A09022E36EF900FA9CD0 /* RequestBehavior.swift in Sources */,
@@ -1003,9 +1013,11 @@
 				434027612302212C0038A40C /* MenuCoordinator.swift in Sources */,
 				BD000CAE22E3AA6F001EE38A /* UIViewController.swift in Sources */,
 				BD80224922F880F8009B8B69 /* ListItemSelectionViewController.swift in Sources */,
+				BD87D883240DB7490056F0BE /* DocumentSubTypeDomainModel.swift in Sources */,
 				BD402E7B2300D60B00049DF9 /* FolderTableViewCell.swift in Sources */,
 				43C14A122300F07E00F7C24E /* DrawerViewController.swift in Sources */,
 				16B8D4BD23F7035D003DFD71 /* GetFolderRequest.swift in Sources */,
+				16B3438B2407DE270085E387 /* DocumentSubTypeDatabaseModel.swift in Sources */,
 				BDA25B2322EF9D7A006DA7E4 /* FirebaseAnalytics.swift in Sources */,
 				BD2F209422EBB49000534916 /* DocumentsCoordinator.swift in Sources */,
 				BD59A06C22E36D2A00FA9CD0 /* ViewControllerService.swift in Sources */,
@@ -1172,7 +1184,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = B8FL52PVGW;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1204,7 +1216,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = B8FL52PVGW;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

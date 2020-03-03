@@ -8,10 +8,10 @@
 
 import Foundation
 
-// MARK: -
-struct DocumentTypeDomainModel {
+struct DocumentTypeDomainModel: Equatable {
     var id: String
     var name: String
+    var subtypes: [DocumentSubTypeDomainModel]
 }
 
 // MARK: ListItem implementation

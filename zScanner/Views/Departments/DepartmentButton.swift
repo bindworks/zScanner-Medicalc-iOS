@@ -32,15 +32,32 @@ class DepartmentButton: PrimaryButton {
         }
     }
     
+    var isLoading: Bool = false {
+        didSet {
+            isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        }
+    }
+    
     let disposedBag = DisposeBag()
     
     private func setup() {
         setTitle(model.name, for: .normal)
         
+        addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.right.equalToSuperview().inset(30)
+        }
+        
         rx.tap
             .subscribe(onNext: { [weak self] _ in
-                self?.isSelected.toggle()
+                self?.isSelected = true
             })
             .disposed(by: disposedBag)
     }
+    
+    private var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .white)
+        return activityIndicator
+    }()
 }

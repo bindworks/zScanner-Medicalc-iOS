@@ -44,49 +44,37 @@ class NewDocumentTypeViewController: BaseViewController {
     
     // MARK: Helpers
     private let disposeBag = DisposeBag()
-    private var pickerIndexPath: IndexPath?
-    
-    private func showDateTimePicker(for indexPath: IndexPath, date: DateTimePickerField) {
-        tableView.beginUpdates()
-        let newIndex = indexPath.row + 1
-        viewModel.addDateTimePickerPlaceholder(at: newIndex, for: date)
-        let index = IndexPath(row: newIndex, section: indexPath.section)
-        tableView.insertRows(at: [index], with: .fade)
-        tableView.endUpdates()
-        
-        pickerIndexPath = index
-    }
-    
-    private func hideDateTimePicker() {
-        tableView.beginUpdates()
-        if let index = pickerIndexPath {
-            viewModel.removeDateTimePickerPlaceholder()
-            tableView.deleteRows(at: [index], with: .fade)
-        }
-        tableView.endUpdates()
-        
-        pickerIndexPath = nil
-    }
+    private var fieldsDisposeBag = DisposeBag()
     
     private func setupBindings() {
-        viewModel.isValid
-            .bind(to: continueButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        continueButton.rx.tap.do(onNext: { [unowned self] in
-            self.tableView.visibleCells.forEach({ ($0 as? TextInputTableViewCell)?.enableSelection() })
-            if self.pickerIndexPath != nil {
-                self.hideDateTimePicker()
-            }
+        viewModel.fields.subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.fieldsDisposeBag = DisposeBag()
+            
+            self.tableView.reloadData()
+            
+            self.viewModel.isValid
+                .bind(to: self.continueButton.rx.isEnabled)
+                .disposed(by: self.fieldsDisposeBag)
         })
-        .subscribe(onNext: { [unowned self] in
-            self.coordinator.saveFields(self.viewModel.fields)
-            self.coordinator.showNextStep()
-        }).disposed(by: disposeBag)
+        .disposed(by: self.disposeBag)
+ 
+        continueButton.rx.tap
+            .do(onNext: { [unowned self] in
+                self.tableView.visibleCells.forEach({ ($0 as? TextInputTableViewCell)?.enableSelection() })
+            })
+            .subscribe(onNext: { [unowned self] in
+                self.coordinator.saveFields(self.viewModel.fields.value)
+                self.coordinator.showNextStep()
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupView() {
         navigationItem.title = viewModel.folderName
+        
+        setupKeyboardHandling()
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -118,19 +106,25 @@ class NewDocumentTypeViewController: BaseViewController {
         button.setTitle("newDocumentType.button.title".localized, for: .normal)
         return button
     }()
+    
+    private lazy var documentTypesHeaderView = TitleView(title: "form.listPicker.title".localized)
 }
 
 // MARK: - UITableViewDataSource implementation
 extension NewDocumentTypeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.fields.count
+        return viewModel.fields.value.count
     }
-    
+      
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = viewModel.fields[indexPath.row]
+        let item = viewModel.fields.value[indexPath.row]
         
         switch item {
         case let list as ListPickerField<DocumentTypeDomainModel>:
+            let cell = tableView.dequeueCell(FormFieldTableViewCell.self)
+            cell.setup(with: list)
+            return cell
+        case let list as ListPickerField<DocumentSubTypeDomainModel>:
             let cell = tableView.dequeueCell(FormFieldTableViewCell.self)
             cell.setup(with: list)
             return cell
@@ -155,12 +149,7 @@ extension NewDocumentTypeViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate implementation
 extension NewDocumentTypeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = viewModel.fields[indexPath.row]
-        
-        // Hide picker if user select different cell
-        if self.pickerIndexPath != nil && !(item is DateTimePickerField) {
-            self.hideDateTimePicker()
-        }
+        let item = viewModel.fields.value[indexPath.row]
         
         // Remove focus from textField is user select different cell
         tableView.visibleCells.forEach({ ($0 as? TextInputTableViewCell)?.enableSelection() })
@@ -168,16 +157,15 @@ extension NewDocumentTypeViewController: UITableViewDelegate {
         switch item {
         case let list as ListPickerField<DocumentTypeDomainModel>:
             coordinator.showSelector(for: list)
-        case let date as DateTimePickerField:
-            if pickerIndexPath == nil {
-                showDateTimePicker(for: indexPath, date: date)
-            } else {
-                hideDateTimePicker()
-            }
+            
+        case let list as ListPickerField<DocumentSubTypeDomainModel>:
+            coordinator.showSelector(for: list)
+            
         case is TextInputField:
             if let cell = tableView.cellForRow(at: indexPath) as? TextInputTableViewCell {
                 cell.enableTextEdit()
             }
+            
         default:
             break
         }
