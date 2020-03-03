@@ -44,7 +44,7 @@ class NewDocumentTypeViewModel {
     
         return [
             TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
-            TypePicker(title: "form.listPicker.docType.title".localized, list: documentTypes),
+            TypePicker(title: "form.listPicker.documentType.title".localized, list: documentTypes),
         ]
     }
     
@@ -77,7 +77,7 @@ class NewDocumentTypeViewModel {
         lock = true; defer { lock = false }
         
         var existingSubTypePicker: SubTypePicker? { fields.value.compactMap({ $0 as? SubTypePicker }).first }
-        var newSubTypePicker: SubTypePicker { SubTypePicker(title: "form.listPicker.docSubType.title".localized, list: documentType.subtypes) }
+        var newSubTypePicker: SubTypePicker { SubTypePicker(title: "form.listPicker.documentSubType.title".localized, list: documentType.subtypes) }
         
         let newFields = fields.value.filter({ !($0 is SubTypePicker) })
         
