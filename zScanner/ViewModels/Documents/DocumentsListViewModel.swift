@@ -27,8 +27,6 @@ class DocumentsListViewModel {
     init(database: Database, ikemNetworkManager: NetworkManager) {
         self.database = database
         self.networkManager = ikemNetworkManager
-        
-        loadDocuments()
     }
     
     //MARK: Interface
