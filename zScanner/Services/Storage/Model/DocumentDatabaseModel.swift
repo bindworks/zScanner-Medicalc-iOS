@@ -11,10 +11,11 @@ import RealmSwift
 
 class DocumentDatabaseModel: Object {
     @objc dynamic var id = ""
-    @objc dynamic var date = Date()
+    @objc dynamic var created = Date()
     @objc dynamic var name = ""
     @objc dynamic var notes = ""
-    @objc dynamic var type: DocumentTypeDatabaseModel?
+    @objc dynamic var typeId = ""
+    @objc dynamic var typeName = ""
     @objc dynamic var department: DepartmentDatabaseModel?
     @objc dynamic var folder: FolderDatabaseModel?
     let pages = List<PageDatabaseModel>()
@@ -24,12 +25,13 @@ class DocumentDatabaseModel: Object {
         self.init()
         
         self.id = document.id
-        self.date = document.date
+        self.created = document.created
         self.name = document.name
         self.notes = document.notes
         
         let realm = try! Realm()
-        self.type = realm.loadObject(DocumentTypeDatabaseModel.self, withId: document.type.id) ?? DocumentTypeDatabaseModel(documentType: document.type)
+        self.typeId = document.type.id
+        self.typeName = document.type.name
         self.department = realm.loadObject(DepartmentDatabaseModel.self, withId: document.department.id) ?? DepartmentDatabaseModel(document: document.department)
         self.folder = realm.loadObject(FolderDatabaseModel.self, withId: document.folder.id) ?? FolderDatabaseModel(folder: document.folder)
         
@@ -47,8 +49,8 @@ extension DocumentDatabaseModel {
         return DocumentDomainModel(
             id: id,
             folder: folder!.toDomainModel(),
-            type: type!.toDomainModel(),
-            date: date,
+            type: DocumentTypeDomainModel(id: typeId, name: typeName),
+            created: created,
             name: name,
             notes: notes,
             pages: pages.map({ $0.toDomainModel() }),

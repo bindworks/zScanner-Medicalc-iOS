@@ -39,7 +39,6 @@ class DocumentsListViewModel {
     }
     
     func updateDocuments() {
-        
         // Find all documents with active upload
         let activeUploadDocuments = documents.filter({
             var currentStatus: DocumentViewModel.UploadStatus?
@@ -63,10 +62,20 @@ class DocumentsListViewModel {
     private var lastSelectedDepartment: DepartmentDomainModel?
     
     private func loadDocuments() {
+        deleteExpiredDocuments()
+        
         documents = database
             .loadObjects(DocumentDatabaseModel.self)
             .map({ DocumentViewModel(document: $0.toDomainModel(), networkManager: networkManager, database: database) })
             .reversed()
+    }
+    
+    func deleteExpiredDocuments() {
+       database
+           .loadObjects(DocumentUploadStatusDatabaseModel.self)
+           .filter({ $0.isExpired })
+           .compactMap({ database.loadObject(DocumentDatabaseModel.self, withId: $0.documentId) })
+           .forEach({ database.deleteObject($0) })
     }
     
     func fetchDocumentTypes(for department: DepartmentDomainModel) {
@@ -104,5 +113,11 @@ class DocumentsListViewModel {
                 .map({ DocumentTypeDatabaseModel(documentType: $0) })
                 .forEach({ self.database.saveObject($0) })
         }
+    }
+}
+
+private extension DocumentUploadStatusDatabaseModel {
+    var isExpired: Bool {
+        return uploadStatus == .success && Date().timeIntervalSince(timestamp) > Config.documentExpirationTime
     }
 }

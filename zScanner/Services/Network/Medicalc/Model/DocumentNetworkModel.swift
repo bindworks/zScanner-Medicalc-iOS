@@ -27,7 +27,7 @@ struct DocumentNetworkModel: Encodable {
         self.documentSubType = domainModel.type.id
         
         self.pages = domainModel.pages.count
-        self.datetime = domainModel.date.utcString
+        self.datetime = domainModel.created.utcString
         self.name = domainModel.type.name
         self.notes = domainModel.notes
         self.department = domainModel.department.name

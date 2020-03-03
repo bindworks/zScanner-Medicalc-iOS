@@ -81,8 +81,7 @@ class NewDocumentCoordinator: Coordinator {
     }
     
     private func finish() {
-        #warning("TODO What we gonna do with the date?")
-        newDocument.date = Date()
+        newDocument.created = Date()
 
         let databaseDocument = DocumentDatabaseModel(document: newDocument)
         database.saveObject(databaseDocument)
@@ -200,10 +199,6 @@ extension NewDocumentCoordinator: NewDocumentTypeCoordinator {
             switch field {
             case let textField as TextInputField:
                 newDocument.notes = textField.text.value
-            case let datePicker as DateTimePickerField:
-                if let date = datePicker.date.value {
-                    newDocument.date = date
-                }
             case let listPicker as ListPickerField<DocumentTypeDomainModel>:
                 if let type = listPicker.selected.value {
                     newDocument.type = type
