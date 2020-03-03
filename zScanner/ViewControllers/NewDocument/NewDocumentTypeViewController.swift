@@ -74,6 +74,8 @@ class NewDocumentTypeViewController: BaseViewController {
     private func setupView() {
         navigationItem.title = viewModel.folderName
         
+        setupKeyboardHandling()
+        
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()

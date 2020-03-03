@@ -92,17 +92,6 @@ class NewDocumentPhotosViewController: BaseViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
-    // Whenever user gonna tap somewhere else than the current view so it will dismiss the keyboard
-    private func setupKeyboardHandling() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
     private func setupBindings() {
         viewModel.pages
             .bind(
