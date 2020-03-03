@@ -33,7 +33,7 @@
 "document.screen.title" = "zScanner";
 "document.modeSelector.cancel" = "Zrušit";
 "document.modeSelector.title" = "Zvolte typ záznamu";
-"document.emptyView.title" = "Nemáte žádné nahrané dokumenty, dokument vytvoříte klepnutím na tlačítko plus.";
+"document.emptyView.title" = "Nemáte žádné odeslané dokumenty, dokument vytvoříte po výběru oddělení.";
 "departments.tableHeader.title" = "Pracoviště";
 "departments.fetchError.title" = "Chyba komunikace se serverem.";
 "departments.reloadButton.title" = "Zkusit znovu";
