@@ -11,7 +11,7 @@ import Foundation
 struct DocumentTypeNetworkModel: Decodable {
     let id: String
     let display: String
-    let subtypes: [DocumentTypeNetworkModel]?
+    let subtypes: [DocumentSubTypeNetworkModel]?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -29,7 +29,7 @@ extension DocumentTypeNetworkModel {
         return DocumentTypeDomainModel(
             id: id,
             name: display,
-            subtypes: subtypes?.map({ DocumentSubTypeDomainModel(id: $0.id, name: $0.display) }) ?? []
+            subtypes: subtypes?.map({ $0.toDomainModel() }) ?? []
         )
     }
 }
