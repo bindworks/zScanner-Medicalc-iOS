@@ -13,7 +13,7 @@ struct DocumentDomainModel {
     var folder: FolderDomainModel
     var type: DocumentTypeDomainModel
     var subType: DocumentSubTypeDomainModel
-    var date: Date
+    var created: Date
     var name: String
     var notes: String
     var pages: [PageDomainModel]
@@ -44,7 +44,7 @@ extension DocumentDomainModel {
                 id: "",
                 name: ""
             ),
-            date: Date(),
+            created: Date(),
             name: "",
             notes: "",
             pages: [],

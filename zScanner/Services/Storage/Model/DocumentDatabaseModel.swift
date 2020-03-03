@@ -50,9 +50,9 @@ extension DocumentDatabaseModel {
         return DocumentDomainModel(
             id: id,
             folder: folder!.toDomainModel(),
-            type: type!.toDomainModel(),
+            type: DocumentTypeDomainModel(id: typeId, name: typeName, subtypes: []),
             subType: DocumentSubTypeDomainModel(id: "", name: ""),
-            date: date,
+            created: created,
             name: name,
             notes: notes,
             pages: pages.map({ $0.toDomainModel() }),
