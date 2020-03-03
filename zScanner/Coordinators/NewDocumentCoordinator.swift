@@ -200,7 +200,8 @@ extension NewDocumentCoordinator: NewDocumentTypeCoordinator {
         for field in fields {
             switch field {
             case let textField as TextInputField:
-                newDocument.notes = textField.text.value
+                newDocument.name = textField.text.value
+                
             case let listPicker as ListPickerField<DocumentTypeDomainModel>:
                 if let type = listPicker.selected.value {
                     newDocument.type = type
