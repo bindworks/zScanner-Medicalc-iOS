@@ -83,7 +83,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     self.rightBarButtons = []
                     
                 case .loading:
-                    self.rightBarButtons = [self.loadingItem]
+                    self.rightBarButtons = []
                     
                 case .success:
                     self.rightBarButtons = []
