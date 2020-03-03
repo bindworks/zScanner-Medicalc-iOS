@@ -67,8 +67,8 @@
 "newDocument.popAlert.cancel" = "Zrušit";
 
 // MARK: - Form
-"form.listPicker.docType.title" = "Typ dokumentu";
-"form.listPicker.docSubType.title" = "Podtyp dokumentu";
+"form.listPicker.documentType.title" = "Typ dokumentu";
+"form.listPicker.documentSubType.title" = "Podtyp dokumentu";
 "form.listPicker.unselected" = "Vybrat";
 "form.documentDecription.title" = "Název (nepovinný)";
 "form.dateTimePicker.title" = "Platnost";

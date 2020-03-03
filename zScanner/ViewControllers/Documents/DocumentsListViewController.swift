@@ -88,7 +88,10 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 case .success:
                     self.rightBarButtons = []
                     self.departmentsStackView.subviews.forEach({ ($0 as? UIButton)?.isSelected = false })
-                    self.coordinator.createNewDocument(with: self.documentsViewModel.lastSelectedDepartment!)
+                    
+                    if let department = self.documentsViewModel.lastSelectedDepartment {
+                        self.coordinator.createNewDocument(with: department)
+                    }
                     
                 case .error(let error):
                     self.rightBarButtons = []

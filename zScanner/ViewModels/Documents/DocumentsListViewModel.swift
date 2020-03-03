@@ -57,7 +57,7 @@ class DocumentsListViewModel {
     //MARK: Helpers
     let disposeBag = DisposeBag()
     
-    var lastSelectedDepartment: DepartmentDomainModel?
+    private(set) var lastSelectedDepartment: DepartmentDomainModel?
     
     private func loadDocuments() {
         deleteExpiredDocuments()
