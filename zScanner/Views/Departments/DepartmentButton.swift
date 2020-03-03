@@ -51,7 +51,7 @@ class DepartmentButton: PrimaryButton {
         
         rx.tap
             .subscribe(onNext: { [weak self] _ in
-                self?.isSelected.toggle()
+                self?.isSelected = true
             })
             .disposed(by: disposedBag)
     }
