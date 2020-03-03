@@ -39,9 +39,9 @@ class ErrorView: UIView {
         
         addSubview(reloadButton)
         reloadButton.snp.makeConstraints { make in
-            make.top.equalTo(messageLabel.snp.bottom).offset(8)
-            make.trailing.leading.equalToSuperview().inset(64)
-            make.bottom.equalToSuperview()
+            make.top.equalTo(messageLabel.snp.bottom).offset(16)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(36)
         }
     }
     
@@ -60,6 +60,7 @@ class ErrorView: UIView {
     private var reloadButton: PrimaryButton = {
         let reloadButton = PrimaryButton()
         reloadButton.setTitle("departments.reloadButton.title".localized, for: .normal)
+        reloadButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         return reloadButton
     }()
 }

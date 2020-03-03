@@ -87,6 +87,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     
                 case .success:
                     self.rightBarButtons = []
+                    self.departmentsStackView.subviews.forEach({ ($0 as? UIButton)?.isSelected = false })
                     self.coordinator.createNewDocument()
                     
                 case .error(let error):
@@ -120,7 +121,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                         .forEach({ (button) in
                             button.rx.tap
                                 .subscribe({ [weak self] _ in
-                                    self?.loadDocumentTypes(departmentCode: button.model.id)
+                                    self?.loadDocumentTypes(for: button.model)
                                 })
                                 .disposed(by: self.disposeBag)
 
@@ -147,8 +148,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         coordinator.openMenu()
     }
 
-    private func loadDocumentTypes(departmentCode: String) {
-        documentsViewModel.fetchDocumentTypes(for: departmentCode)
+    private func loadDocumentTypes(for department: DepartmentDomainModel) {
+        documentsViewModel.fetchDocumentTypes(for: department)
     }
     
     private func setupView() {
