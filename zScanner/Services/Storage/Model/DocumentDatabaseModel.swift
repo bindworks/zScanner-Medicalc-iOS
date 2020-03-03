@@ -13,9 +13,10 @@ class DocumentDatabaseModel: Object {
     @objc dynamic var id = ""
     @objc dynamic var created = Date()
     @objc dynamic var name = ""
-    @objc dynamic var notes = ""
     @objc dynamic var typeId = ""
     @objc dynamic var typeName = ""
+    @objc dynamic var subTypeId = ""
+    @objc dynamic var subTypeName = ""
     @objc dynamic var department: DepartmentDatabaseModel?
     @objc dynamic var folder: FolderDatabaseModel?
     let pages = List<PageDatabaseModel>()
@@ -27,11 +28,12 @@ class DocumentDatabaseModel: Object {
         self.id = document.id
         self.created = document.created
         self.name = document.name
-        self.notes = document.notes
-        
-        let realm = try! Realm()
         self.typeId = document.type.id
         self.typeName = document.type.name
+        self.subTypeId = document.subType.id
+        self.subTypeName = document.subType.name
+        
+        let realm = try! Realm()
         self.department = realm.loadObject(DepartmentDatabaseModel.self, withId: document.department.id) ?? DepartmentDatabaseModel(document: document.department)
         self.folder = realm.loadObject(FolderDatabaseModel.self, withId: document.folder.id) ?? FolderDatabaseModel(folder: document.folder)
         
@@ -46,15 +48,13 @@ class DocumentDatabaseModel: Object {
 //MARK: -
 extension DocumentDatabaseModel {
     func toDomainModel() -> DocumentDomainModel {
-        #warning("TODO: finish storing subtype")
         return DocumentDomainModel(
             id: id,
             folder: folder!.toDomainModel(),
             type: DocumentTypeDomainModel(id: typeId, name: typeName, subtypes: []),
-            subType: DocumentSubTypeDomainModel(id: "", name: ""),
+            subType: DocumentSubTypeDomainModel(id: subTypeId, name: subTypeName),
             created: created,
             name: name,
-            notes: notes,
             pages: pages.map({ $0.toDomainModel() }),
             department: department!.toDomainModel()
         )

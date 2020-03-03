@@ -16,20 +16,17 @@ struct DocumentNetworkModel: Encodable {
     var pages: Int
     var datetime: String
     var name: String
-    var notes: String
     var department: String
     
     init(from domainModel: DocumentDomainModel) {
         self.correlation = domainModel.id
         self.folderInternalId = domainModel.folder.id
         self.documentType = domainModel.type.id
-        #warning("TODO Find how to add id of subtypes?")
-        self.documentSubType = domainModel.type.id
+        self.documentSubType = domainModel.subType.id
         
         self.pages = domainModel.pages.count
         self.datetime = domainModel.created.utcString
-        self.name = domainModel.type.name
-        self.notes = domainModel.notes
-        self.department = domainModel.department.name
+        self.name = domainModel.name
+        self.department = domainModel.department.id
     }
 }

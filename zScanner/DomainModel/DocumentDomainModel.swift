@@ -15,7 +15,6 @@ struct DocumentDomainModel {
     var subType: DocumentSubTypeDomainModel
     var created: Date
     var name: String
-    var notes: String
     var pages: [PageDomainModel]
     var department: DepartmentDomainModel
 }
@@ -46,7 +45,6 @@ extension DocumentDomainModel {
             ),
             created: Date(),
             name: "",
-            notes: "",
             pages: [],
             department: DepartmentDomainModel(
                 id: "",
