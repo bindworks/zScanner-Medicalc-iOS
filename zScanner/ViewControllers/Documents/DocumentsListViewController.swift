@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol DocumentsListCoordinator: BaseCoordinator {
-    func createNewDocument()
+    func createNewDocument(with department: DepartmentDomainModel)
     func openMenu()
 }
 
@@ -88,7 +88,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                 case .success:
                     self.rightBarButtons = []
                     self.departmentsStackView.subviews.forEach({ ($0 as? UIButton)?.isSelected = false })
-                    self.coordinator.createNewDocument()
+                    self.coordinator.createNewDocument(with: self.documentsViewModel.lastSelectedDepartment!)
                     
                 case .error(let error):
                     self.rightBarButtons = []

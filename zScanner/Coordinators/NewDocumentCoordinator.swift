@@ -25,13 +25,15 @@ class NewDocumentCoordinator: Coordinator {
     private let steps: [Step]
     private var currentStep: Step
     
-    init?(flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
+    init?(for department: DepartmentDomainModel, flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
         self.flowDelegate = flowDelegate
         
         self.steps = NewDocumentCoordinator.steps()
         
         guard let firstStep = steps.first else { return nil }
         self.currentStep = firstStep
+        
+        self.newDocument.department = department
         
         super.init(window: window, navigationController: navigationController)
     }
