@@ -71,8 +71,23 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [unowned self] status in
                 switch status {
+                case .awaitingInteraction:
+                    break
+                    
+                case .loading:
+                    self.departmentsStackView.subviews.forEach({
+                        if let button = $0 as? DepartmentButton, button.isSelected {
+                            button.isLoading = true
+                        }
+                    })
+                    
                 case .success:
-                    self.departmentsStackView.subviews.forEach({ ($0 as? UIButton)?.isSelected = false })
+                    self.departmentsStackView.subviews.forEach({
+                        if let button = $0 as? DepartmentButton {
+                            button.isLoading = false
+                            button.isSelected = false
+                        }
+                    })
                     
                     if let department = self.documentsViewModel.lastSelectedDepartment {
                         self.coordinator.createNewDocument(with: department)
@@ -80,8 +95,6 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     
                 case .error(let error):
                     self.handleError(error)
-                    
-                default: break
                 }
             })
             .disposed(by: disposeBag)

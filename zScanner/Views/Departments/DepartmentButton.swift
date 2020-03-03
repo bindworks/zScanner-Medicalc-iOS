@@ -29,12 +29,12 @@ class DepartmentButton: PrimaryButton {
     override var isSelected: Bool {
         didSet {
             backgroundColor = isSelected ? .primaryDark : .primary
-            
-            if isSelected {
-                activityIndicator.startAnimating()
-            } else {
-                activityIndicator.stopAnimating()
-            }
+        }
+    }
+    
+    var isLoading: Bool = false {
+        didSet {
+            isLoading ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
         }
     }
     
