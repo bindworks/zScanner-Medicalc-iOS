@@ -129,14 +129,6 @@ extension DocumentsCoordinator: MenuFlowDelegate {
     
     func logout() {
         deleteHistory()
-        
-        let logout = LogoutNetworkModel(token: userSession.token)
-        
-        // We care only a little about the result of the network call to /logout
-        networkManager
-            .logout(logout)
-            .subscribe(onNext: { _ in })
-
         flowDelegate.logout()
         flowDelegate.coordinatorDidFinish(self)
     }

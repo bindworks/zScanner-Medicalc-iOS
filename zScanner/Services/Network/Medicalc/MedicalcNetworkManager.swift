@@ -21,6 +21,15 @@ class MedicalcNetworkManager: NetworkManager {
     }
     
     // MARK: Interface
+    func login(_ login: LoginNetworkModel) -> Observable<RequestStatus<TokenNetworkModel>> {
+        let request = LoginRequest(login: login)
+        return observe(request)
+    }
+
+    func logout(_ logout: LogoutNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
+        let request = LogoutRequest(logout: logout)
+        return observe(request)
+    }
         
     func getDocumentTypes(for departmentCode: String) -> Observable<RequestStatus<DocumentTypesNetworkModel>> {
         let request = DocumentTypesRequest(departmentCode: departmentCode)
@@ -49,16 +58,6 @@ class MedicalcNetworkManager: NetworkManager {
     
     func uploadPage(_ page: PageNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
         let request = UploadPageReuest(with: page)
-        return observe(request)
-    }
-    
-    func login(_ login: LoginNetworkModel) -> Observable<RequestStatus<TokenNetworkModel>> {
-        let request = LoginRequest(login: login)
-        return observe(request)
-    }
-
-    func logout(_ logout: LogoutNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
-        let request = LogoutRequest(logout: logout)
         return observe(request)
     }
 

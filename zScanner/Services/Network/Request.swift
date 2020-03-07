@@ -20,15 +20,6 @@ protocol Request {
 // MARK: -
 struct EmptyResponse: Decodable {}
 
-// MARK: -
-struct RawResponse: Decodable {
-    let data: Data
-    
-    init(data: Data) {
-        self.data = data
-    }
-}
-
 //MARK: -
 protocol ParametersURLEncoded {
     var encodedUrl: String { get }

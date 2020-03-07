@@ -10,6 +10,19 @@ import Foundation
 import RxSwift
 
 protocol NetworkManager {
+    
+    /// Send login request
+    ///
+    /// - Parameter login: Username and Password
+    /// - Returns: Observable request status
+    func login(_ login: LoginNetworkModel) -> Observable<RequestStatus<TokenNetworkModel>>
+
+    /// Send logout request
+    ///
+    /// - Parameter logout: Token
+    /// - Returns: Observable request status
+    func logout(_ logout: LogoutNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
+
     /// Fetch all document subtypes
     ///
     /// - Returns: Observable request status
@@ -43,11 +56,4 @@ protocol NetworkManager {
     /// - Parameter page: One Document page with Documet corelation id
     /// - Returns: Observable request status
     func uploadPage(_ page: PageNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
-    
-    // User login
-    func login(_ login: LoginNetworkModel) -> Observable<RequestStatus<TokenNetworkModel>>
-
-    // User logout
-    func logout(_ logout: LogoutNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
-
 }
