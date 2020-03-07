@@ -111,6 +111,8 @@
 		BDA25B2022EF9C33006DA7E4 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA25B1F22EF9C33006DA7E4 /* Event.swift */; };
 		BDA25B2322EF9D7A006DA7E4 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA25B2222EF9D7A006DA7E4 /* FirebaseAnalytics.swift */; };
 		BDA428CE2309960900EFBAC2 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA428CD2309960900EFBAC2 /* Data.swift */; };
+		BDB556C32414003B001B660A /* SeaCat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD2E4DB240A643000A023F1 /* SeaCat.framework */; };
+		BDB556C42414003B001B660A /* SeaCat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DBD2E4DB240A643000A023F1 /* SeaCat.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BDBDF4DD22C8016700183BBF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBDF4DC22C8016700183BBF /* AppDelegate.swift */; };
 		BDBDF4E422C8016800183BBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDBDF4E322C8016800183BBF /* Assets.xcassets */; };
 		BDBE340622FA3A50000F8498 /* Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBE340522FA3A50000F8498 /* Encodable.swift */; };
@@ -125,20 +127,31 @@
 		BDEA570B22FA2828004C48F0 /* SubmitRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA570A22FA2828004C48F0 /* SubmitRequest.swift */; };
 		BDEA570D22FA2CD9004C48F0 /* DocumentNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDEA570C22FA2CD9004C48F0 /* DocumentNetworkModel.swift */; };
 		BDFC478522E907F200F312F0 /* DocumentDatabaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFC478422E907F200F312F0 /* DocumentDatabaseModel.swift */; };
-		DBD2E4DC240A643000A023F1 /* SeaCat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD2E4DB240A643000A023F1 /* SeaCat.framework */; };
 		DBD2E4E0240A885200A023F1 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2E4DF240A885200A023F1 /* LoginRequest.swift */; };
 		DBD2E4E2240A88AE00A023F1 /* SeaCatPKIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2E4E1240A88AE00A023F1 /* SeaCatPKIEndpoint.swift */; };
 		DBD2E4E4240ACB6700A023F1 /* LogoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD2E4E3240ACB6700A023F1 /* LogoutRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BDDA127E231499360029A7DF /* CopyFiles */ = {
+		BDB556C52414003B001B660A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BDB556C42414003B001B660A /* SeaCat.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDDA127E231499360029A7DF /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -278,7 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				759FB218037CD6C9254A2406 /* Pods_zScanner.framework in Frameworks */,
-				DBD2E4DC240A643000A023F1 /* SeaCat.framework in Frameworks */,
+				BDB556C32414003B001B660A /* SeaCat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,10 +768,11 @@
 				E10B0090B1E7565DF25D60A1 /* [CP] Check Pods Manifest.lock */,
 				BDBDF4D522C8016700183BBF /* Sources */,
 				BDBDF4D622C8016700183BBF /* Frameworks */,
-				BDDA127E231499360029A7DF /* CopyFiles */,
+				BDDA127E231499360029A7DF /* Copy Files */,
 				BDBDF4D722C8016700183BBF /* Resources */,
 				F7542714446188FE63EE2C02 /* [CP] Embed Pods Frameworks */,
 				BDBF4E22232EFE830078BF53 /* Crashlytics */,
+				BDB556C52414003B001B660A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

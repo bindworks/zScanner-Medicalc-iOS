@@ -46,7 +46,10 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         super.viewWillAppear(animated)
         
         documentsViewModel.updateDocuments()
-        documentsTableView.reloadSections([0], with: .fade)
+        
+        if tableView.isDescendant(of: UIApplication.shared.keyWindow!) {
+            tableView.reloadSections([0], with: .fade)
+        }
     }
     
     override var leftBarButtonItems: [UIBarButtonItem] {
@@ -58,7 +61,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     // MARK: Interface
     func insertNewDocument(document: DocumentViewModel) {
         documentsViewModel.insertNewDocument(document)
-        documentsTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
     }
     
     // MARK: Helpers
@@ -82,18 +85,14 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     })
                     
                 case .success:
-                    self.departmentsStackView.subviews.forEach({
-                        if let button = $0 as? DepartmentButton {
-                            button.isLoading = false
-                            button.isSelected = false
-                        }
-                    })
+                    self.resetButtons()
                     
                     if let department = self.documentsViewModel.lastSelectedDepartment {
                         self.coordinator.createNewDocument(with: department)
                     }
                     
                 case .error(let error):
+                    self.resetButtons()
                     self.handleError(error)
                 }
             })
@@ -153,27 +152,36 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         documentsViewModel.fetchDocumentTypes(for: department)
     }
     
+    private func resetButtons() {
+        departmentsStackView.subviews.forEach({
+            if let button = $0 as? DepartmentButton {
+                button.isLoading = false
+                button.isSelected = false
+            }
+        })
+    }
+    
     private func setupView() {
         navigationItem.title = "document.screen.title".localized
         
-        view.addSubview(documentsTableView)
-        documentsTableView.snp.makeConstraints { make in
-            make.top.trailing.leading.equalToSuperview()
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(safeArea)
         }
         
-        documentsTableView.backgroundView = emptyView
+        tableView.backgroundView = emptyView
         
         emptyView.addSubview(emptyViewLabel)
         emptyViewLabel.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.75)
             make.centerX.equalToSuperview()
-            make.top.equalTo(documentsTableView.sectionHeaderHeight)
-            make.centerY.equalToSuperview().multipliedBy(0.666).priority(900)
+            make.top.greaterThanOrEqualTo(tableView.safeAreaLayoutGuide.snp.top).offset(8)
+            make.centerY.equalToSuperview().multipliedBy(0.666).priority(500)
         }
         
         view.addSubview(departmentsContainerView)
         departmentsContainerView.snp.makeConstraints { make in
-            make.top.equalTo(documentsTableView.snp.bottom).offset(16)
+            make.top.equalTo(tableView.snp.bottom).offset(16)
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(0).priority(100)
             make.height.lessThanOrEqualTo(view.snp.height).multipliedBy(0.666)
@@ -192,7 +200,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         }
     }
     
-    private lazy var documentsTableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.registerCell(DocumentTableViewCell.self)
         tableView.dataSource = self
@@ -212,9 +220,9 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
     }()
     
     private lazy var departmentsContainerView: UIView = {
-        let departmentsContainerView = UIView()
-        departmentsContainerView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        return departmentsContainerView
+        let view = UIView()
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        return view
     }()
     
     private lazy var departmentsHeaderView = TitleView(title: "departments.tableHeader.title".localized)

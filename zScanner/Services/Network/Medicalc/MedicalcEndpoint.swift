@@ -21,6 +21,6 @@ enum MedicalcEndpoint: String, Endpoint {
     }
     
     private var baseUrl: String {
-        return Config.currentEnvironment.baseUrl + "medicalc/v3.1"
+        return Config.currentEnvironment.baseUrl
     }
 }
