@@ -47,7 +47,7 @@ class NewDocumentFolderViewModel {
         activeSearch = networkManager.getFolder(with: id).map({ (result) -> RequestStatus<[FolderNetworkModel]> in
             switch result {
                 case .progress(let percentage): return .progress(percentage)
-                case .success(data: let folder): return .success(data: [folder])
+                case .success(data: let folders): return .success(data: folders)
                 case .error(let error): return .error(error)
             }
         })

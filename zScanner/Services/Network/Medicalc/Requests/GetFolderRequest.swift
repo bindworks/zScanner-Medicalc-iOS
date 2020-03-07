@@ -9,7 +9,7 @@
 import Foundation
 
 struct GetFolderRequest: Request, ParametersURLEncoded {
-    typealias DataType = FolderNetworkModel
+    typealias DataType = [FolderNetworkModel]
     
     var endpoint: Endpoint = MedicalcEndpoint.folderDecode
     var method: HTTPMethod = .get

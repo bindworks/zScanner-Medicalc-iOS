@@ -49,7 +49,7 @@ protocol NetworkManager {
     ///
     /// - Parameter id: Part of the folder external id or name to search
     /// - Returns: Observable request status
-    func getFolder(with id: String) -> Observable<RequestStatus<FolderNetworkModel>>
+    func getFolder(with id: String) -> Observable<RequestStatus<[FolderNetworkModel]>>
 
     /// Upload one page from Document
     ///

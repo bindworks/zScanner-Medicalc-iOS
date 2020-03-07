@@ -51,7 +51,7 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func getFolder(with id: String) -> Observable<RequestStatus<FolderNetworkModel>> {
+    func getFolder(with id: String) -> Observable<RequestStatus<[FolderNetworkModel]>> {
         let request = GetFolderRequest(with: id)
         return observe(request)
     }
