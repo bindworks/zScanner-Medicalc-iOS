@@ -1,11 +1,14 @@
 //
-//  LoginNetworkModel.swift
+//  AuthNetworkModel.swift
 //  zScanner
 //
-//  Created by Jakub Skořepa on 07/03/2020.
-//  Copyright © 2020 Institut klinické a experimentální medicíny. All rights reserved.
+//  Created by Jakub Skořepa on 26/08/2019.
+//  Copyright © 2019 Institut klinické a experimentální medicíny. All rights reserved.
 //
 
 import Foundation
 
-typealias LoginNetworkModel = String
+struct LoginNetworkModel: Encodable {
+    var username: String
+    var password: String
+}

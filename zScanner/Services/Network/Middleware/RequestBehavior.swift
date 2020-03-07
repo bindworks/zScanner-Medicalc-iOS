@@ -31,7 +31,7 @@ struct CombinedRequestBehavior: RequestBehavior {
     
     let behaviors: [RequestBehavior]
     
-    var additionalHeaders: [String : String] {
+    var additionalHeaders: [String: String] {
         return behaviors.reduce([String: String](), { sum, behavior in
             return sum.merging(behavior.additionalHeaders, uniquingKeysWith: { (current, _) in current })
         })

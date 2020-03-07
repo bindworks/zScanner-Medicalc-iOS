@@ -16,9 +16,9 @@ struct LogoutRequest: Request, ParametersJsonEncoded {
     var parameters: Parameters? = nil
     var headers: HTTPHeaders = [:]
     
-    init(access_token: Data) {
-        parameters = [
-            "access_token": access_token
-        ]
+    init(logout: LogoutNetworkModel) {
+        if let data = logout.token.data(using: .utf8) {
+            parameters = ["access_token": data]
+        }
     }
 }

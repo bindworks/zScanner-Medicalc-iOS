@@ -45,9 +45,9 @@ protocol NetworkManager {
     func uploadPage(_ page: PageNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
     
     // User login
-    func login(_ auth: AuthNetworkModel) -> Observable<RequestStatus<LoginNetworkModel>>
+    func login(_ login: LoginNetworkModel) -> Observable<RequestStatus<TokenNetworkModel>>
 
     // User logout
-    func logout(with access_token:Data) -> Observable<RequestStatus<EmptyResponse>>
+    func logout(_ logout: LogoutNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
 
 }

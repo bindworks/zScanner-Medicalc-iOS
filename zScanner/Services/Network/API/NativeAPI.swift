@@ -11,7 +11,7 @@ import SeaCat
 
 struct NativeAPI: API {
 
-    func process<R, D>(_ request: R, with callback: @escaping (RequestStatus<D>) -> Void) where R : Request, D : Decodable, D == R.DataType {
+    func process<R, D>(_ request: R, with callback: @escaping (RequestStatus<D>) -> Void) where R: Request, D: Decodable, D == R.DataType {
         guard reachability.connection != .unavailable else {
             callback(.error(RequestError(.noInternetConnection)))
             return

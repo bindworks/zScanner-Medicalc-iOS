@@ -19,6 +19,6 @@ class AuthBehavior {
 
 extension AuthBehavior: RequestBehavior {
     var additionalHeaders: [String: String] {
-        ["Authorization" : "Bearer " + token]
+        ["Authorization": "Bearer " + token]
     }
 }

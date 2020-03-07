@@ -52,13 +52,13 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func login(_ auth: AuthNetworkModel) -> Observable<RequestStatus<LoginNetworkModel>> {
-        let request = LoginRequest(with: auth)
+    func login(_ login: LoginNetworkModel) -> Observable<RequestStatus<TokenNetworkModel>> {
+        let request = LoginRequest(login: login)
         return observe(request)
     }
 
-    func logout(with access_token: Data) -> Observable<RequestStatus<EmptyResponse>> {
-        let request = LogoutRequest(access_token: access_token)
+    func logout(_ logout: LogoutNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
+        let request = LogoutRequest(logout: logout)
         return observe(request)
     }
 
