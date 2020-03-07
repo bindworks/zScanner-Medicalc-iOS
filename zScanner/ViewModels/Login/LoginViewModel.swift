@@ -32,7 +32,7 @@ class LoginViewModel {
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        self.loginModel = LoginDomainModel(username: "", access_code: "")
+        self.loginModel = LoginDomainModel(username: "", token: "")
         isValid = Observable<Bool>.combineLatest(usernameField.isValid, passwordField.isValid) { (username, password) -> Bool in
             return username && password
         }
@@ -46,21 +46,16 @@ class LoginViewModel {
 
         loginModel.username = usernameField.text.value
 
-        // Call to https://zscanner.seacat.io/login, get the access token, store it in the local storage
         networkManager
             .login(with: loginModel.username, password: passwordField.text.value)
-            .subscribe(onNext: { [weak self] requestStatus in
-                switch requestStatus {
-
-                    case .progress(_):
-                        break
-
-                    case .success(data: let networkModel):
-                        self?.success(access_token: networkModel.data)
-                        
-                    case .error(let error):
-                        self?.error(error)
-
+            .subscribe(onNext: { [weak self] status in
+                switch status {
+                case .progress:
+                    break
+                case .success(let token):
+                    self?.success(with: token)
+                case .error(let error):
+                    self?.error(error)
                 }
             })
             .disposed(by: disposeBag)
@@ -73,12 +68,12 @@ class LoginViewModel {
         disposeBag = DisposeBag()
     }
     
-    private func success(access_token: Data) {
+    private func success(with token: String) {
         guard (try? status.value()) == .loading else { return }
         
-        self.loginModel.access_code = String(decoding: access_token, as: UTF8.self)
         cleanUp()
-        
+    
+        loginModel.token = token
         status.onNext(.success)
         status.onCompleted()
     }

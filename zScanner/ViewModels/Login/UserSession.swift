@@ -16,4 +16,8 @@ class UserSession {
     init(login: LoginDomainModel) {
         self.login = login
     }
+    
+    var token: String {
+        login.token
+    }
 }

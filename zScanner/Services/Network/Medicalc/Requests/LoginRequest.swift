@@ -9,7 +9,7 @@
 import Foundation
 
 struct LoginRequest: Request, ParametersQSEncoded {
-    typealias DataType = RawResponse
+    typealias DataType = LoginNetworkModel
     
     var endpoint: Endpoint = SeaCatPKIEndpoint.login
     var method: HTTPMethod = .post

@@ -11,16 +11,13 @@ import RxSwift
 
 class MedicalcNetworkManager: NetworkManager {
     
-    
     // MARK: Instance part
     private let api: API
     private let requestBehavior: RequestBehavior
-    private let access_token: String?
     
-    init(api: API, requestBehavior: RequestBehavior = EmptyRequestBehavior(), access_token:String? = nil) {
+    init(api: API, requestBehavior: RequestBehavior = EmptyRequestBehavior()) {
         self.api = api
         self.requestBehavior = requestBehavior
-        self.access_token = access_token
     }
     
     // MARK: Interface
@@ -55,7 +52,7 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func login(with username:String, password:String) -> Observable<RequestStatus<RawResponse>> {
+    func login(with username:String, password:String) -> Observable<RequestStatus<LoginNetworkModel>> {
         let request = LoginRequest(username: username, password: password)
         return observe(request)
     }
@@ -75,10 +72,6 @@ class MedicalcNetworkManager: NetworkManager {
                 self.requestBehavior.additionalHeaders,
                 uniquingKeysWith: { (current, _) in current }
             )
-            
-            if self.access_token != nil {
-                request.headers["Authorization"] = "Bearer " + self.access_token!
-            }
             
             self.requestBehavior.beforeSend()
             

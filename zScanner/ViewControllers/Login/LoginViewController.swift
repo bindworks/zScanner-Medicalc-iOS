@@ -126,8 +126,8 @@ class LoginViewController: BaseViewController, ErrorHandling {
         container.addSubview(logoView)
         logoView.snp.makeConstraints { make in
             make.top.centerX.equalToSuperview()
-            make.width.equalTo(114)
-            make.height.equalTo(102)
+            make.width.equalTo(140)
+            make.height.equalTo(125)
         }
         
         container.addSubview(titleLabel)
@@ -171,10 +171,8 @@ class LoginViewController: BaseViewController, ErrorHandling {
     
     private lazy var logoView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .none
+        imageView.image = #imageLiteral(resourceName: "medicalcLogo")
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .white
-        imageView.backgroundColor = .primary
         return imageView
     }()
     

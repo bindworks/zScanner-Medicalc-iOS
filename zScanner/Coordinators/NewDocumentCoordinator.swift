@@ -25,7 +25,7 @@ class NewDocumentCoordinator: Coordinator {
     private let steps: [Step]
     private var currentStep: Step
     
-    init?(userSession: UserSession, for department: DepartmentDomainModel, flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
+    init?(for department: DepartmentDomainModel, networkManager: NetworkManager, flowDelegate: NewDocumentFlowDelegate, window: UIWindow, navigationController: UINavigationController? = nil) {
         self.flowDelegate = flowDelegate
         
         self.steps = NewDocumentCoordinator.steps()
@@ -34,9 +34,7 @@ class NewDocumentCoordinator: Coordinator {
         self.currentStep = firstStep
         
         self.newDocument.department = department
-        
-        let api: API = NativeAPI()
-        self.networkManager = MedicalcNetworkManager(api: api, access_token: userSession.login.access_code)
+        self.networkManager = networkManager
         
         super.init(window: window, navigationController: navigationController)
     }

@@ -113,6 +113,8 @@
 		BDA428CE2309960900EFBAC2 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA428CD2309960900EFBAC2 /* Data.swift */; };
 		BDB556C32414003B001B660A /* SeaCat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBD2E4DB240A643000A023F1 /* SeaCat.framework */; };
 		BDB556C42414003B001B660A /* SeaCat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DBD2E4DB240A643000A023F1 /* SeaCat.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BDB556C724140A68001B660A /* LoginNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB556C624140A68001B660A /* LoginNetworkModel.swift */; };
+		BDB556C9241413B0001B660A /* AuthBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB556C8241413B0001B660A /* AuthBehavior.swift */; };
 		BDBDF4DD22C8016700183BBF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBDF4DC22C8016700183BBF /* AppDelegate.swift */; };
 		BDBDF4E422C8016800183BBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDBDF4E322C8016800183BBF /* Assets.xcassets */; };
 		BDBE340622FA3A50000F8498 /* Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBE340522FA3A50000F8498 /* Encodable.swift */; };
@@ -262,6 +264,8 @@
 		BDA25B1F22EF9C33006DA7E4 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		BDA25B2222EF9D7A006DA7E4 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 		BDA428CD2309960900EFBAC2 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		BDB556C624140A68001B660A /* LoginNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNetworkModel.swift; sourceTree = "<group>"; };
+		BDB556C8241413B0001B660A /* AuthBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBehavior.swift; sourceTree = "<group>"; };
 		BDBDF4D922C8016700183BBF /* zScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDBDF4DC22C8016700183BBF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDBDF4E322C8016800183BBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -401,6 +405,7 @@
 		BD2B9E7C22EDC1A000FFCD3B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BDB556C624140A68001B660A /* LoginNetworkModel.swift */,
 				16A2CAC223F70C85006E9577 /* DepartmentNetworkModel.swift */,
 				BD2B9E7D22EDC1B700FFCD3B /* DocumentTypeNetworkModel.swift */,
 				16EE7D76240EC05F00C541A5 /* DocumentSubTypeNetworkModel.swift */,
@@ -594,6 +599,7 @@
 			children = (
 				BD59A07D22E36EF900FA9CD0 /* RequestBehavior.swift */,
 				BD59A07E22E36EF900FA9CD0 /* NetworkActivityIndicatorBehavior.swift */,
+				BDB556C8241413B0001B660A /* AuthBehavior.swift */,
 			);
 			path = Middleware;
 			sourceTree = "<group>";
@@ -915,12 +921,14 @@
 				BDD3C0F122F8CBAF008406EA /* Date.swift in Sources */,
 				BD80224722F82C03009B8B69 /* TextInputTableViewCell.swift in Sources */,
 				BD000CD122E497B9001EE38A /* LoginDomainModel.swift in Sources */,
+				BDB556C724140A68001B660A /* LoginNetworkModel.swift in Sources */,
 				BD59A06422E36CB200FA9CD0 /* BackButton.swift in Sources */,
 				BD70566F23301D7E0074184A /* URL.swift in Sources */,
 				BD7EAC3E23258A1A002C225A /* PageDatabaseModel.swift in Sources */,
 				DBD2E4E4240ACB6700A023F1 /* LogoutRequest.swift in Sources */,
 				16E4BD5024051A8B003AE138 /* DepartmentsListViewModel.swift in Sources */,
 				16DD55DC2406A1C30096BBEB /* TitleView.swift in Sources */,
+				BDB556C9241413B0001B660A /* AuthBehavior.swift in Sources */,
 				BD389A2A22F7093B002F935F /* FolderDomainModel.swift in Sources */,
 				BD000CB222E3B38B001EE38A /* UITextField.swift in Sources */,
 				BD59A09122E36EF900FA9CD0 /* NetworkActivityIndicatorBehavior.swift in Sources */,

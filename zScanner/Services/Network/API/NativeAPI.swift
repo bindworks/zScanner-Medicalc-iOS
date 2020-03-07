@@ -79,17 +79,27 @@ struct NativeAPI: API {
                 return
             }
 
-            if D.self is RawResponse.Type {
-                callback(.success(data: RawResponse(data: data) as! D))
-                return
-            }
+            switch response?.mimeType {
+            case "text/plain":
+                let text = String(decoding: data, as: UTF8.self) as? D
+                if let text = text {
+                    callback(.success(data: text))
+                } else {
+                    callback(.error(RequestError(.dataCorruptedError)))
+                }
+                
+            case "application/json":
+                do {
+                    let decoder = JSONDecoder()
+                    let objects = try decoder.decode(D.self, from: data)
+                    callback(.success(data: objects))
+                } catch {
+                    callback(.error(RequestError(.jsonParserError)))
+                }
             
-            do {
-                let decoder = JSONDecoder()
-                let objects = try decoder.decode(D.self, from: data)
-                callback(.success(data: objects))
-            } catch {
-                callback(.error(RequestError(.jsonParserError)))
+            default:
+                assertionFailure("Unsopported mime type")
+            
             }
         }
 

@@ -19,28 +19,7 @@ class AppCoordinator: Coordinator {
 
     // MARK: Inteface
     func begin() {
-        progress()
-    }
-
-    func progress() {
-        if (!SeaCat.ready) {
-            // If we don't have a SeaCat identity, go to a splash screen to wait to get one
-            showSplashScreen()
-            return
-        }
-        
-        guard let userSession = restoredUserSession else {
-            self.runLoginFlow()
-            return
-        }
-
-        // We need to have a proper access code
-        if userSession.login.access_code == "" {
-            self.runLoginFlow()
-            return
-        }
-        
-        startDocumentsCoordinator(with: userSession)
+        showSplashScreen()
     }
     
     // MARK: Navigation methods
@@ -66,7 +45,8 @@ class AppCoordinator: Coordinator {
     private let tracker: Tracker = FirebaseAnalytics()
 
     private func storeUserSession(_ userSession: UserSession) {
-        database.deleteAll(of: LoginDatabaseModel.self)
+        removeUserSession()
+        
         let databaseLogin = LoginDatabaseModel(login: userSession.login)
         database.saveObject(databaseLogin)
     }
@@ -87,7 +67,15 @@ class AppCoordinator: Coordinator {
 // MARK: - SeaCatSplashCoordinator implementation
 extension AppCoordinator: SeaCatSplashCoordinator {
     func seaCatInitialized() {
-        progress()
+        
+        // It's not about SeaCat is ready but more about certificate exists.
+        // In this case we are creating certificate with credentials on login.
+        // Therefore is more like credentials exists -> is logged in
+        if let userSession = restoredUserSession {
+            startDocumentsCoordinator(with: userSession)
+        } else {
+            self.runLoginFlow()
+        }
     }
 }
 
@@ -96,7 +84,7 @@ extension AppCoordinator: LoginFlowDelegate {
     func successfulLogin(userSession: UserSession) {
         tracker.track(.login)
         storeUserSession(userSession)
-        progress()
+        startDocumentsCoordinator(with: userSession)
     }
 }
 
@@ -105,6 +93,6 @@ extension AppCoordinator: DocumentsFlowDelegate {
     func logout() {
         removeUserSession()
         tracker.track(.logout)
-        progress()
+        runLoginFlow()
     }
 }
