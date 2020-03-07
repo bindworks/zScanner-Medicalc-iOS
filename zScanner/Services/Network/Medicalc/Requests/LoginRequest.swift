@@ -16,11 +16,13 @@ struct LoginRequest: Request, ParametersQSEncoded {
     var parameters: Parameters? = nil
     var headers: HTTPHeaders = [:]
     
-    init(username: String, password: String) {
+    init(with auth: AuthNetworkModel) {
         //This has to go in the body!!! of the POST request
         parameters = [
-            "username": username,
-            "password": password // Eventually protect this by encryption/bcrypt/anything
+            "username": auth.username,
+            
+            // NOTE by Teska: Eventually protect this by encryption/bcrypt/anything
+            "password": auth.password
         ]
     }
 }

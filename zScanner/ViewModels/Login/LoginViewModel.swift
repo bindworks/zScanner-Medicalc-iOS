@@ -45,9 +45,10 @@ class LoginViewModel {
         status.onNext(.loading)
 
         loginModel.username = usernameField.text.value
+        let auth = AuthNetworkModel(username: usernameField.text.value, password: passwordField.text.value)
 
         networkManager
-            .login(with: loginModel.username, password: passwordField.text.value)
+            .login(auth)
             .subscribe(onNext: { [weak self] status in
                 switch status {
                 case .progress:

@@ -9,6 +9,6 @@
 import Foundation
 
 struct AuthNetworkModel: Encodable {
+    var username: String
     var password: String
-    var token: String
 }

@@ -71,7 +71,7 @@ extension AppCoordinator: SeaCatSplashCoordinator {
         // It's not about SeaCat is ready but more about certificate exists.
         // In this case we are creating certificate with credentials on login.
         // Therefore is more like credentials exists -> is logged in
-        if let userSession = restoredUserSession {
+        if let userSession = restoredUserSession, SeaCat.ready {
             startDocumentsCoordinator(with: userSession)
         } else {
             self.runLoginFlow()

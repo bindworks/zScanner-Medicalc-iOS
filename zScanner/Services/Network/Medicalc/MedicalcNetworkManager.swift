@@ -52,8 +52,8 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func login(with username:String, password:String) -> Observable<RequestStatus<LoginNetworkModel>> {
-        let request = LoginRequest(username: username, password: password)
+    func login(_ auth: AuthNetworkModel) -> Observable<RequestStatus<LoginNetworkModel>> {
+        let request = LoginRequest(with: auth)
         return observe(request)
     }
 

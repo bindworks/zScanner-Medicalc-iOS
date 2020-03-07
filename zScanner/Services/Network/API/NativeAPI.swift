@@ -49,10 +49,7 @@ struct NativeAPI: API {
             urlRequest.httpBody = urlcomponents.query?.data(using: .utf8)
             urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         }
-
         
-        let configuration = URLSessionConfiguration.default
-
         let completionHandler: (Data?, URLResponse?, Error?) -> Void = { (data, response, error) in
             if let error = error {
                 callback(.error(RequestError(.serverError(error))))
@@ -119,8 +116,10 @@ struct NativeAPI: API {
 
             urlRequest.addValue("multipart/form-data; boundary=\(uploadingRequest.boundary)", forHTTPHeaderField: "Content-Type")
 
+            let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 300
             configuration.timeoutIntervalForResource = 300
+            
             let session = URLSession(
                 configuration: configuration,
                 delegate: uploadDelegate,
@@ -133,7 +132,7 @@ struct NativeAPI: API {
             )
         } else {
             let session = URLSession(
-                configuration: configuration,
+                configuration: .default,
                 delegate: SeaCatURLSessionDelegate(seacat: SeaCat.main!),
                 delegateQueue: .main
             )
