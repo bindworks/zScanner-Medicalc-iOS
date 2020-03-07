@@ -95,7 +95,7 @@ struct NativeAPI: API {
                 }
             
             default:
-                assertionFailure("Unsopported mime type")
+                assertionFailure("Unsupported mime type")
             
             }
         }
