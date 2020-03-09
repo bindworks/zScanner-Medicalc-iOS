@@ -17,11 +17,6 @@ struct LoginRequest: Request, ParametersQSEncoded {
     var headers: HTTPHeaders = [:]
     
     init(login: LoginNetworkModel) {
-        parameters = [
-            "username": login.username,
-            
-            // NOTE by Teska: Eventually protect this by encryption/bcrypt/anything
-            "password": login.password
-        ]
+        parameters = login
     }
 }

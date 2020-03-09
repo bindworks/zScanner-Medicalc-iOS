@@ -39,8 +39,9 @@ struct NativeAPI: API {
             urlRequest.addValue("application-json", forHTTPHeaderField: "Content-Type")
         }
 
-        else if request is ParametersQSEncoded {
+        if request is ParametersQSEncoded {
             var urlcomponents = URLComponents()
+            urlcomponents.queryItems = [URLQueryItem]()
             if let params = request.parameters {
                 for i in params.properties() {
                     urlcomponents.queryItems?.append(URLQueryItem(name: i.name, value: i.value as? String))
