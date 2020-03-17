@@ -36,7 +36,7 @@ struct NativeAPI: API {
 
         if request is ParametersJsonEncoded {
             urlRequest.httpBody = request.parameters?.toJSONData()
-            urlRequest.addValue("application-json", forHTTPHeaderField: "Content-Type")
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
 
         if request is ParametersQSEncoded {
@@ -97,7 +97,6 @@ struct NativeAPI: API {
             
             default:
                 assertionFailure("Unsupported mime type")
-            
             }
         }
 
