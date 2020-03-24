@@ -95,7 +95,7 @@ class PhotoSelectorCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    private lazy var textField : UITextField = {
+    private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.font = .body
         textField.placeholder = "newDocumentPhotos.description.placeholder".localized

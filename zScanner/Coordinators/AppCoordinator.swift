@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import SeaCat
+import RxSwift
 
 class AppCoordinator: Coordinator {
-
+    
     //MARK: - Instance part
     init() {
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -18,10 +20,9 @@ class AppCoordinator: Coordinator {
 
     // MARK: Inteface
     func begin() {
-        //        showSplashScreen()
-        startDocumentsCoordinator(with: UserSession(login: LoginDomainModel(username: "Test")))
+        showSplashScreen()
     }
-
+    
     // MARK: Navigation methods
     private func showSplashScreen() {
         let viewController = SeaCatSplashViewController(coordinator: self)
@@ -41,10 +42,14 @@ class AppCoordinator: Coordinator {
     }
 
     // MARK: Helpers
-    private let database: Database = try! RealmDatabase()
+    private let disposeBag = DisposeBag()
     private let tracker: Tracker = FirebaseAnalytics()
+    private let database: Database = try! RealmDatabase()
+    private let networkManager: NetworkManager = MedicalcNetworkManager(api: NativeAPI())
 
     private func storeUserSession(_ userSession: UserSession) {
+        removeUserSession()
+        
         let databaseLogin = LoginDatabaseModel(login: userSession.login)
         database.saveObject(databaseLogin)
     }
@@ -59,19 +64,26 @@ class AppCoordinator: Coordinator {
     private func removeUserSession() {
         database.deleteAll(of: LoginDatabaseModel.self)
     }
+
+    private func networkLogout() {
+        guard let userSession = restoredUserSession else { return }
+        let logout = LogoutNetworkModel(token: userSession.token)
+        
+        // We care only a little about the result of the network call to /logout
+        networkManager
+            .logout(logout)
+            .subscribe(onNext: { _ in })
+            .disposed(by: disposeBag)
+    }
 }
 
 // MARK: - SeaCatSplashCoordinator implementation
 extension AppCoordinator: SeaCatSplashCoordinator {
     func seaCatInitialized() {
-
-        // It's not about SeaCat is ready but more about certificate exists.
-        // In this case we are creating certificate with credentials on login.
-        // Therefore is more like credentials exists -> is logged in
-        if let userSession = restoredUserSession, SeaCatClient.isReady() {
+        if let userSession = restoredUserSession, SeaCat.ready {
             startDocumentsCoordinator(with: userSession)
         } else {
-            self.runLoginFlow()
+            runLoginFlow()
         }
     }
 }
@@ -88,8 +100,8 @@ extension AppCoordinator: LoginFlowDelegate {
 // MARK: - DocumentsFlowDelegate implementation
 extension AppCoordinator: DocumentsFlowDelegate {
     func logout() {
+        networkLogout()
         removeUserSession()
-        SeaCatClient.reset()
         tracker.track(.logout)
         runLoginFlow()
     }

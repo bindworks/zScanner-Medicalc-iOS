@@ -23,7 +23,8 @@ class DocumentsCoordinator: Coordinator {
     init(userSession: UserSession, flowDelegate: DocumentsFlowDelegate, window: UIWindow) {
         self.userSession = userSession
         self.flowDelegate = flowDelegate
-        self.networkManager = MedicalcNetworkManager(api: api)
+        let auth = AuthBehavior(token: userSession.token)
+        self.networkManager = MedicalcNetworkManager(api: api, requestBehavior: auth)
         
         super.init(window: window)
         
@@ -62,7 +63,7 @@ class DocumentsCoordinator: Coordinator {
         }
         
         // Start new-document flow
-        guard let coordinator = NewDocumentCoordinator(for: department, flowDelegate: self, window: window, navigationController: navigationController) else { return }
+        guard let coordinator = NewDocumentCoordinator(for: department, networkManager: networkManager, flowDelegate: self, window: window, navigationController: navigationController) else { return }
         addChildCoordinator(coordinator)
         coordinator.begin()
     }

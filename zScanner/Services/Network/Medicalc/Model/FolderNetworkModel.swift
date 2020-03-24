@@ -9,8 +9,8 @@
 import Foundation
 
 struct FolderNetworkModel: Decodable {
-    var externalId : String
-    var internalId : String
+    var externalId: String
+    var internalId: String
     var name: String
 }
 

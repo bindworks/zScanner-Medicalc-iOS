@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import SeaCat
 
 struct NativeAPI: API {
 
-    func process<R, D>(_ request: R, with callback: @escaping (RequestStatus<D>) -> Void) where R : Request, D : Decodable, D == R.DataType {
+    func process<R, D>(_ request: R, with callback: @escaping (RequestStatus<D>) -> Void) where R: Request, D: Decodable, D == R.DataType {
         guard reachability.connection != .unavailable else {
             callback(.error(RequestError(.noInternetConnection)))
             return
@@ -35,15 +36,21 @@ struct NativeAPI: API {
 
         if request is ParametersJsonEncoded {
             urlRequest.httpBody = request.parameters?.toJSONData()
-            urlRequest.addValue("application-json", forHTTPHeaderField: "Content-Type")
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
+
+        if request is ParametersQSEncoded {
+            var urlcomponents = URLComponents()
+            urlcomponents.queryItems = [URLQueryItem]()
+            if let params = request.parameters {
+                for i in params.properties() {
+                    urlcomponents.queryItems?.append(URLQueryItem(name: i.name, value: i.value as? String))
+                }
+            }
+            urlRequest.httpBody = urlcomponents.query?.data(using: .utf8)
+            urlRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         }
         
-        let configuration = URLSessionConfiguration.default
-//        guard let configuration = SeaCatClient.getNSURLSessionConfiguration() else {
-//            callback(.error(RequestError(.seacatError)))
-//            return
-//        }
-
         let completionHandler: (Data?, URLResponse?, Error?) -> Void = { (data, response, error) in
             if let error = error {
                 callback(.error(RequestError(.serverError(error))))
@@ -70,12 +77,26 @@ struct NativeAPI: API {
                 return
             }
 
-            do {
-                let decoder = JSONDecoder()
-                let objects = try decoder.decode(D.self, from: data)
-                callback(.success(data: objects))
-            } catch {
-                callback(.error(RequestError(.jsonParserError)))
+            switch response?.mimeType {
+            case "text/plain":
+                let text = String(decoding: data, as: UTF8.self) as? D
+                if let text = text {
+                    callback(.success(data: text))
+                } else {
+                    callback(.error(RequestError(.dataCorruptedError)))
+                }
+                
+            case "application/json":
+                do {
+                    let decoder = JSONDecoder()
+                    let objects = try decoder.decode(D.self, from: data)
+                    callback(.success(data: objects))
+                } catch {
+                    callback(.error(RequestError(.jsonParserError)))
+                }
+            
+            default:
+                assertionFailure("Unsupported mime type")
             }
         }
 
@@ -95,17 +116,26 @@ struct NativeAPI: API {
 
             urlRequest.addValue("multipart/form-data; boundary=\(uploadingRequest.boundary)", forHTTPHeaderField: "Content-Type")
 
+            let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 300
             configuration.timeoutIntervalForResource = 300
-            let session = URLSession(configuration: configuration, delegate: uploadDelegate, delegateQueue: .main)
-
+            
+            let session = URLSession(
+                configuration: configuration,
+                delegate: uploadDelegate,
+                delegateQueue: .main
+            )
             task = session.uploadTask(
                 with: urlRequest as URLRequest,
                 from: requestBody,
                 completionHandler: completionHandler
             )
         } else {
-            let session = URLSession(configuration: configuration)
+            let session = URLSession(
+                configuration: .default,
+                delegate: SeaCatURLSessionDelegate(seacat: SeaCat.main!),
+                delegateQueue: .main
+            )
             task = session.dataTask(
                 with: urlRequest as URLRequest,
                 completionHandler: completionHandler
@@ -151,7 +181,7 @@ struct NativeAPI: API {
 }
 
 // MARK: -
-private class UploadDelegate: NSObject, URLSessionDelegate, URLSessionTaskDelegate {
+private class UploadDelegate: SeaCatURLSessionDelegate, URLSessionTaskDelegate {
 
     // TODO: Debug lifecyle of UploadDelegate (when is called deinit = released from the memory)
     // TODO: Put class to separated file
@@ -160,6 +190,7 @@ private class UploadDelegate: NSObject, URLSessionDelegate, URLSessionTaskDelega
 
     init(callback: @escaping (RequestStatus<EmptyResponse>) -> Void) {
         self.callback = callback
+        super.init(seacat: SeaCat.main!)
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {

@@ -11,7 +11,6 @@ import RxSwift
 
 class MedicalcNetworkManager: NetworkManager {
     
-    
     // MARK: Instance part
     private let api: API
     private let requestBehavior: RequestBehavior
@@ -22,16 +21,16 @@ class MedicalcNetworkManager: NetworkManager {
     }
     
     // MARK: Interface
-    func submitPassword(_ auth: AuthNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
-        let request = SubmitPasswordRequest(auth: auth)
+    func login(_ login: LoginNetworkModel) -> Observable<RequestStatus<TokenNetworkModel>> {
+        let request = LoginRequest(login: login)
         return observe(request)
     }
-    
-    func getStatus(_ token: TokenNetworkModel) -> Observable<RequestStatus<StatusResponseNetworkModel>> {
-        let request = GetStatusRequest(token: token)
+
+    func logout(_ logout: LogoutNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
+        let request = LogoutRequest(logout: logout)
         return observe(request)
     }
-    
+        
     func getDocumentTypes(for departmentCode: String) -> Observable<RequestStatus<DocumentTypesNetworkModel>> {
         let request = DocumentTypesRequest(departmentCode: departmentCode)
         return observe(request)
@@ -52,7 +51,7 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func getFolder(with id: String) -> Observable<RequestStatus<FolderNetworkModel>> {
+    func getFolder(with id: String) -> Observable<RequestStatus<[FolderNetworkModel]>> {
         let request = GetFolderRequest(with: id)
         return observe(request)
     }
@@ -61,7 +60,7 @@ class MedicalcNetworkManager: NetworkManager {
         let request = UploadPageReuest(with: page)
         return observe(request)
     }
-    
+
     private func observe<T: Request, U: Decodable>(_ request: T) -> Observable<RequestStatus<U>> where T.DataType == U {
         return Observable.create { [weak self] observer -> Disposable in
             guard let self = self else { return Disposables.create() }

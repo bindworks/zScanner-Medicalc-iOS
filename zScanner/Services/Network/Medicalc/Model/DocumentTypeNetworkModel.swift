@@ -16,7 +16,7 @@ struct DocumentTypeNetworkModel: Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case display
-        case subtypes = "sub-types"
+        case subtypes = "sub-type"
     }
 }
 

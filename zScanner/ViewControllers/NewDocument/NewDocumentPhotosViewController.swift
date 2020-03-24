@@ -207,7 +207,7 @@ class NewDocumentPhotosViewController: BaseViewController {
 
 // MARK: - UIImagePickerControllerDelegate implementation
 extension NewDocumentPhotosViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let pickedImage = info[.originalImage] as? UIImage {
             let page = Page(image: pickedImage)
             viewModel.addPage(page, fromGallery: picker.sourceType == .photoLibrary)

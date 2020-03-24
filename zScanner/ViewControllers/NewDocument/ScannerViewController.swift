@@ -73,7 +73,7 @@ class ScannerViewController: UIViewController {
             captureSession.addOutput(metadataOutput)
             
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [.ean8, .ean13, .qr]
+            metadataOutput.metadataObjectTypes = [.ean8, .ean13, .qr, .code128]
         } else {
             failed()
             return

@@ -8,10 +8,11 @@
 
 import UIKit
 import Firebase
+import SeaCat
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow? {
         get { return appCoordinator?.window }
         set { assertionFailure("This will never happen without storyboards.") }
@@ -22,6 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         RealmDatabase.configure()
+        
+        let authUrl = Config.currentEnvironment.authUrl
+        if !authUrl.isEmpty {
+            SeaCat.configure(apiURL: authUrl)
+        }
+        
         runApp()
         return true
     }

@@ -9,8 +9,8 @@
 import Foundation
 
 struct FolderDomainModel: Equatable {
-    var externalId : String
-    var id : String
+    var externalId: String
+    var id: String
     var name: String
 }
 

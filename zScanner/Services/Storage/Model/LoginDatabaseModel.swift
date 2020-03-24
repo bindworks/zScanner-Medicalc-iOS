@@ -11,16 +11,18 @@ import RealmSwift
 
 class LoginDatabaseModel: Object {
     @objc dynamic var username = ""
+    @objc dynamic var token = ""
     
     convenience init(login: LoginDomainModel) {
         self.init()
         
         self.username = login.username
+        self.token = login.token
     }
 }
 
 extension LoginDatabaseModel {
     func toDomainModel() -> LoginDomainModel {
-        return LoginDomainModel(username: username)
+        return LoginDomainModel(username: username, token: token)
     }
 }

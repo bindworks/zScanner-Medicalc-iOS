@@ -45,8 +45,8 @@ class DepartmentButton: PrimaryButton {
         
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.right.equalToSuperview().inset(30)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(12)
         }
         
         rx.tap

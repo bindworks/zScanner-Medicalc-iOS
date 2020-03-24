@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DocumentTypesRequest: Request {
+struct DocumentTypesRequest: Request, ParametersURLEncoded {
     typealias DataType = DocumentTypesNetworkModel
     
     var endpoint: Endpoint = MedicalcEndpoint.documentTypes

@@ -10,12 +10,14 @@ import Foundation
 
 struct PageNetworkModel: Encodable {
     var correlation: String
-    var page: Int
+    var pageIndex: Int
     var pageUrl: URL
+    var description: String
     
     init(from domainModel: PageDomainModel) {
         self.pageUrl = URL(documentsWith: domainModel.relativePath)
-        self.page = domainModel.index
+        self.pageIndex = domainModel.index
         self.correlation = domainModel.correlationId
+        self.description = domainModel.description
     }
 }

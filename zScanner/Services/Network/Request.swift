@@ -47,6 +47,11 @@ extension ParametersURLEncoded where Self: Request {
 protocol ParametersJsonEncoded {}
 
 // MARK: -
+// Query string encoded POST body (aka `application/x-www-form-urlencoded`)
+protocol ParametersQSEncoded {}
+
+
+// MARK: -
 protocol FileUploading {
     var fileUrl: URL { get }
     var boundary: String { get }

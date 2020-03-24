@@ -10,6 +10,19 @@ import Foundation
 import RxSwift
 
 protocol NetworkManager {
+    
+    /// Send login request
+    ///
+    /// - Parameter login: Username and Password
+    /// - Returns: Observable request status
+    func login(_ login: LoginNetworkModel) -> Observable<RequestStatus<TokenNetworkModel>>
+
+    /// Send logout request
+    ///
+    /// - Parameter logout: Token
+    /// - Returns: Observable request status
+    func logout(_ logout: LogoutNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
+
     /// Fetch all document subtypes
     ///
     /// - Returns: Observable request status
@@ -36,23 +49,11 @@ protocol NetworkManager {
     ///
     /// - Parameter id: Part of the folder external id or name to search
     /// - Returns: Observable request status
-    func getFolder(with id: String) -> Observable<RequestStatus<FolderNetworkModel>>
+    func getFolder(with id: String) -> Observable<RequestStatus<[FolderNetworkModel]>>
 
     /// Upload one page from Document
     ///
     /// - Parameter page: One Document page with Documet corelation id
     /// - Returns: Observable request status
     func uploadPage(_ page: PageNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
-    
-    /// Send password as part os SeaCat authentification
-    ///
-    /// - Parameter auth: user password
-    /// - Returns: Observable request status
-    func submitPassword(_ auth: AuthNetworkModel) -> Observable<RequestStatus<EmptyResponse>>
-    
-    /// Get SeaCat login status
-    ///
-    /// - Parameter token: token used when submitting password
-    /// - Returns: Observable request status
-    func getStatus(_ token: TokenNetworkModel) -> Observable<RequestStatus<StatusResponseNetworkModel>>
 }

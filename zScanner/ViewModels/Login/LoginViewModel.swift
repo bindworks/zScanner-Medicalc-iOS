@@ -32,7 +32,7 @@ class LoginViewModel {
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        self.loginModel = LoginDomainModel(username: "")
+        self.loginModel = LoginDomainModel(username: "", token: "")
         isValid = Observable<Bool>.combineLatest(usernameField.isValid, passwordField.isValid) { (username, password) -> Bool in
             return username && password
         }
@@ -45,36 +45,16 @@ class LoginViewModel {
         status.onNext(.loading)
 
         loginModel.username = usernameField.text.value
+        let login = LoginNetworkModel(username: usernameField.text.value, password: passwordField.text.value)
 
-        seaCatToken = UUID().uuidString
-        startSeaCatLogin(password: passwordField.text.value)
-    }
-    
-    // MAKR: Helpers
-    private var disposeBag = DisposeBag()
-    private var seaCatTimer: Timer?
-    private var timeoutTimer: Timer?
-    private var seaCatToken: String?
-    
-    private func startSeaCatLogin(password: String) {
-        guard let csr = SCCSR() else {
-            assertionFailure()
-            return
-        }
-        
-        guard let token = seaCatToken else { return }
-        
-        csr.setGivenName(loginModel.username)
-        csr.setUniqueIdentifier(token)
-        csr.submit(nil)
-        
-        networkManager.submitPassword(AuthNetworkModel(password: password, token: token))
+        networkManager
+            .login(login)
             .subscribe(onNext: { [weak self] status in
                 switch status {
                 case .progress:
                     break
-                case .success:
-                    self?.startCheckingSeaCatStatus()
+                case .success(let token):
+                    self?.success(with: token)
                 case .error(let error):
                     self?.error(error)
                 }
@@ -82,67 +62,19 @@ class LoginViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func startCheckingSeaCatStatus() {
-        SeaCatClient.addObserver(self, selector: #selector(onStateChanged), name: SeaCat_Notification_StateChanged)
-        seaCatTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.onStateChanged), userInfo: nil, repeats: true)
-        onStateChanged()
-        
-        timeoutTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(timeout), userInfo: nil, repeats: false)
-    }
-    
-    private var statusCheckRunning = false
-    
-    private func checkSeaCatStatus() {
-        guard let token = seaCatToken, !statusCheckRunning else { return }
-       
-        statusCheckRunning = true
-        
-        networkManager.getStatus(TokenNetworkModel(token: token))
-            .subscribe(onNext: { [weak self] status in
-                switch status {
-                case .success(data: let data):
-                    let state = data.status
-                    if state.cert && SeaCatClient.isReady() {
-                        self?.success()
-                    } else if !(state.cert || state.username || state.password) {
-                        self?.error(RequestError(.logicError, message: "login.failed.message".localized))
-                    }
-                default:
-                    break
-                }
-            }, onError: { [weak self] _ in
-                self?.statusCheckRunning = false
-            }, onCompleted: { [weak self] in
-                self?.statusCheckRunning = false
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    @objc private func onStateChanged() {
-        DispatchQueue.main.async {
-            if SeaCatClient.isReady() {
-                self.success()
-            }
-        }
-        checkSeaCatStatus()
-    }
-    
-    @objc private func timeout() {
-        error(RequestError(.timeout))
-    }
-    
+    // MAKR: Helpers
+    private var disposeBag = DisposeBag()
+
     private func cleanUp() {
-        seaCatTimer?.invalidate()
-        timeoutTimer?.invalidate()
-        SeaCatClient.removeObserver(self, name: SeaCat_Notification_StateChanged)
         disposeBag = DisposeBag()
     }
     
-    private func success() {
+    private func success(with token: String) {
         guard (try? status.value()) == .loading else { return }
         
         cleanUp()
-        
+    
+        loginModel.token = token
         status.onNext(.success)
         status.onCompleted()
     }
@@ -152,7 +84,6 @@ class LoginViewModel {
         
         cleanUp()
         
-        SeaCatClient.reset()
         status.onNext(.error(error))
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.status.onNext(.awaitingInteraction)
