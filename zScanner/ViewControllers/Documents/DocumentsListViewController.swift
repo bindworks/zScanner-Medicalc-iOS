@@ -183,8 +183,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         departmentsContainerView.snp.makeConstraints { make in
             make.top.equalTo(tableView.snp.bottom).offset(16)
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(0).priority(100)
-            make.height.lessThanOrEqualTo(view.snp.height).multipliedBy(0.666)
+            make.height.equalTo(view.snp.height).multipliedBy(0.33)
         }
         
         departmentsContainerView.addSubview(departmentsHeaderView)
@@ -192,11 +191,21 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
             make.top.trailing.leading.equalToSuperview()
         }
         
-        departmentsContainerView.addSubview(departmentsStackView)
-        departmentsStackView.snp.makeConstraints { make in
+        departmentsContainerView.addSubview(departmentsScrollView)
+        departmentsScrollView.snp.makeConstraints { make in
             make.top.equalTo(departmentsHeaderView.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(8)
             make.bottom.equalTo(safeArea).inset(8)
+        }
+
+        departmentsScrollView.addSubview(departmentsStackView)
+        departmentsStackView.snp.makeConstraints { make in
+            make.top.equalTo(departmentsScrollView.contentLayoutGuide.snp.top)
+            make.leading.equalTo(departmentsScrollView.snp.leading)
+            make.trailing.equalTo(departmentsScrollView.snp.trailing)
+            make.bottom.equalTo(departmentsScrollView.contentLayoutGuide.snp.bottom)
+            make.width.equalTo(departmentsScrollView.snp.width)
+            make.width.equalTo(departmentsScrollView.contentLayoutGuide.snp.width)
         }
     }
     
@@ -224,6 +233,8 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         return view
     }()
+    
+    private lazy var departmentsScrollView = UIScrollView()
     
     private lazy var departmentsHeaderView = TitleView(title: "departments.tableHeader.title".localized)
     
