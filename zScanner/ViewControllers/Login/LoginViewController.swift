@@ -173,6 +173,8 @@ class LoginViewController: BaseViewController, ErrorHandling {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "medicalcLogo")
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .white
+        imageView.backgroundColor = .white
         return imageView
     }()
     
