@@ -45,7 +45,7 @@
 "newDocumentFolder.searchHistory.title" = "Historie hledání";
 "newDocumentFolder.scanFailedAlert.title" = "Chyba kamery";
 "newDocumentFolder.scanFailedAlert.message" = "Kamera není dostupná, zkontrolujte prosím nastavení.";
-"newDocumentFolder.emptyView.title" = "Pro vyhledání pacienta zadejte platné rodné číslo.";
+"newDocumentFolder.emptyView.title" = "Pro vyhledání pacienta zadejde platné rodné číslo nebo nascanujte čárový kód.";
 
 "folderResult.folderNotFound.title" = "Pacient nenalezen";
 
