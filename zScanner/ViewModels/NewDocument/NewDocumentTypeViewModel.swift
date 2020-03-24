@@ -43,7 +43,6 @@ class NewDocumentTypeViewModel {
         }
     
         return [
-            TextInputField(title: "form.documentDecription.title".localized, validator: { _ in true }),
             TypePicker(title: "form.listPicker.documentType.title".localized, list: documentTypes),
         ]
     }
