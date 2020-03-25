@@ -119,6 +119,18 @@ class NewDocumentPhotosViewController: BaseViewController {
                 self.coordinator.showNextStep()
             })
             .disposed(by: disposeBag)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification){
+        guard let keyboardFrame = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        collectionView.contentInset.bottom = view.convert(keyboardFrame.cgRectValue, from: nil).size.height + 20
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification){
+        collectionView.contentInset.bottom = bottomGradientOverlayHeight
     }
     
     private func setupView() {
@@ -161,7 +173,6 @@ class NewDocumentPhotosViewController: BaseViewController {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
         collectionView.register(PhotoSelectorCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoSelectorCollectionViewCell")
         return collectionView
-    
     }()
     
     private lazy var continueButton: PrimaryButton = {
