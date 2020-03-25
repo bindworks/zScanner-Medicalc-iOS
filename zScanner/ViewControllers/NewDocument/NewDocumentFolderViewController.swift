@@ -47,8 +47,9 @@ class NewDocumentFolderViewController: BaseViewController {
     }
 
     override var rightBarButtonItems: [UIBarButtonItem] {
+        let barcode = #imageLiteral(resourceName: "barcode")
         return [
-            UIBarButtonItem(image: #imageLiteral(resourceName: "barcode"), style: .plain, target: self, action: #selector(scanBarcode))
+            UIBarButtonItem(image: barcode.imageResize(sizeChange: CGSize(width: 40, height: 40)), style: .plain, target: self, action: #selector(scanBarcode))
         ]
     }
     
@@ -273,4 +274,20 @@ extension NewDocumentFolderViewController: ScannerDelegate {
             self?.present(alert, animated: true)
         }
     }
+}
+
+extension UIImage {
+
+    func imageResize (sizeChange:CGSize)-> UIImage{
+
+        let hasAlpha = true
+        let scale: CGFloat = 0.0 // Use scale factor of main screen
+
+        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
+        self.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
+
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
+    }
+
 }

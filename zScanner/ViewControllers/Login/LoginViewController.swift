@@ -173,6 +173,8 @@ class LoginViewController: BaseViewController, ErrorHandling {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "medicalcLogo")
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .white
+        imageView.backgroundColor = .white
         return imageView
     }()
     
@@ -187,6 +189,7 @@ class LoginViewController: BaseViewController, ErrorHandling {
     private lazy var usernameTextField: UITextField = {
         let textField = UITextField()
         textField.textContentType = .username
+        textField.autocapitalizationType = .none
         textField.delegate = self
         textField.font = .body
         return textField

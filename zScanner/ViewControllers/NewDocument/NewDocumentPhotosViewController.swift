@@ -212,7 +212,12 @@ extension NewDocumentPhotosViewController: UIImagePickerControllerDelegate, UINa
             let page = Page(image: pickedImage)
             viewModel.addPage(page, fromGallery: picker.sourceType == .photoLibrary)
         }
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: {
+            if self.viewModel.pages.value.count > 4 {
+                let indexPath = IndexPath(item: self.viewModel.pages.value.count - 1, section: 0)
+                self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+            }
+        })
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

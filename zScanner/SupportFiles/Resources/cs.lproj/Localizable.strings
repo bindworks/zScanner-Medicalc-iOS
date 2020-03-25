@@ -45,7 +45,7 @@
 "newDocumentFolder.searchHistory.title" = "Historie hledání";
 "newDocumentFolder.scanFailedAlert.title" = "Chyba kamery";
 "newDocumentFolder.scanFailedAlert.message" = "Kamera není dostupná, zkontrolujte prosím nastavení.";
-"newDocumentFolder.emptyView.title" = "Pro vyhledání pacienta zadejte platné rodné číslo.";
+"newDocumentFolder.emptyView.title" = "Pro vyhledání pacienta zadejde platné rodné číslo nebo nascanujte čárový kód.";
 
 "folderResult.folderNotFound.title" = "Pacient nenalezen";
 
@@ -58,7 +58,7 @@
 "newDocumentPhotos.actioSheet.cameraAction" = "Vyfotit";
 "newDocumentPhotos.actioSheet.galleryAction" = "Vybrat z galerie";
 "newDocumentPhotos.actioSheet.cancel" = "Zrušit";
-"newDocumentPhotos.emptyView.title" = "Nejsou vybrány žádné fotografie, fotografii vyberete klepnutím na tlačítko plus.";
+"newDocumentPhotos.emptyView.title" = "Nejsou nahrány žádné fotografie, fotografii vyberete klepnutím na tlačítko plus.";
 "newDocumentPhotos.description.placeholder" = "Popisný název";
 
 "newDocument.popAlert.title" = "Opravdu chcete jít o krok zpět?";
@@ -67,8 +67,8 @@
 "newDocument.popAlert.cancel" = "Zrušit";
 
 // MARK: - Form
-"form.listPicker.documentType.title" = "Typ dokumentu";
-"form.listPicker.documentSubType.title" = "Podtyp dokumentu";
+"form.listPicker.documentType.title" = "Typ události";
+"form.listPicker.documentSubType.title" = "Specifikace události";
 "form.listPicker.unselected" = "Vybrat";
 "form.documentDecription.title" = "Název (nepovinný)";
 "form.dateTimePicker.title" = "Platnost";
