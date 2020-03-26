@@ -43,14 +43,7 @@ class NewDocumentFolderViewModel {
     func getFolder(with id: String) {
         lastUsedSearchMode = .scan
         searchResults.accept([])
-        let id = id.trimmingCharacters(in: CharacterSet.decimalDigits.inverted)
-        activeSearch = networkManager.getFolder(with: id).map({ (result) -> RequestStatus<[FolderNetworkModel]> in
-            switch result {
-                case .progress(let percentage): return .progress(percentage)
-                case .success(data: let folders): return .success(data: folders)
-                case .error(let error): return .error(error)
-            }
-        })
+        activeSearch = networkManager.searchFolders(with: id)
     }
     
     // MARK: Helpers
