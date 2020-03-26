@@ -44,12 +44,6 @@ protocol NetworkManager {
     /// - Parameter query: Part of the folder external id or name to search
     /// - Returns: Observable request status
     func searchFolders(with query: String) -> Observable<RequestStatus<[FolderNetworkModel]>>
-    
-    /// Search folders on backend
-    ///
-    /// - Parameter id: Part of the folder external id or name to search
-    /// - Returns: Observable request status
-    func getFolder(with id: String) -> Observable<RequestStatus<[FolderNetworkModel]>>
 
     /// Upload one page from Document
     ///

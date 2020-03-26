@@ -14,7 +14,6 @@ enum MedicalcEndpoint: String, Endpoint {
     case submitDocument = "/documents/summary"
     case uploadPage = "/documents/page"
     case folderSearch = "/folders/search"
-    case folderDecode = "/folders/decode"
     
     var url: String {
         return baseUrl + self.rawValue

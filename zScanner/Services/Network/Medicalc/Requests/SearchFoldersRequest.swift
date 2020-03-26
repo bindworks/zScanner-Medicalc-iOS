@@ -1,5 +1,5 @@
 //
-//  GetFolderRequest.swift
+//  SearchFoldersRequest.swift
 //  zScanner
 //
 //  Created by Jakub Skořepa on 11/08/2019.

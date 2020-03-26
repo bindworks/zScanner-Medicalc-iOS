@@ -51,11 +51,6 @@ class MedicalcNetworkManager: NetworkManager {
         return observe(request)
     }
     
-    func getFolder(with id: String) -> Observable<RequestStatus<[FolderNetworkModel]>> {
-        let request = GetFolderRequest(with: id)
-        return observe(request)
-    }
-    
     func uploadPage(_ page: PageNetworkModel) -> Observable<RequestStatus<EmptyResponse>> {
         let request = UploadPageReuest(with: page)
         return observe(request)
