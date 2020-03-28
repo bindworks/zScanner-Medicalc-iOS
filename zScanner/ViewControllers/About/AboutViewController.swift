@@ -42,10 +42,10 @@ class AboutViewController: BaseViewController {
         let ikemStackView = getCompanyStackView(logo: #imageLiteral(resourceName: "ikemLogo"), text: "about.copyright.ikem.title".localized)
         stackView.addArrangedSubview(ikemStackView)
        
-        let bindworksStackView = getCompanyStackView(logo: #imageLiteral(resourceName: "bindworksLogo"), text: "about.copyright.bindworks.title".localized, firstImage: false)
+        let bindworksStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "bindWorksLogo"), scaledToWidth: 200), text: "about.copyright.bindworks.title".localized, firstImage: false)
         stackView.addArrangedSubview(bindworksStackView)
         
-        let teskaLabsStackView = getCompanyStackView(logo: #imageLiteral(resourceName: "teskaLabsLogo"), text: "about.copyright.teskalabs.title".localized, firstImage: false)
+        let teskaLabsStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "teskalabsLogo"), scaledToWidth: 200), text: "about.copyright.teskalabs.title".localized, firstImage: false)
         stackView.addArrangedSubview(teskaLabsStackView)
         
         stackView.addArrangedSubview(versionLabel)
@@ -67,8 +67,6 @@ class AboutViewController: BaseViewController {
             make.bottom.equalTo(scrollView.snp.bottom)
             make.width.equalTo(scrollView.snp.width)
         }
-        
-        
     }
     
     private func getCompanyStackView(logo: UIImage, text: String, firstImage: Bool = true) -> UIStackView {
@@ -103,6 +101,20 @@ class AboutViewController: BaseViewController {
         companyText.textColor = .primary
         companyText.font = .footnote
         return companyText
+    }
+    
+    func scaleImage(sourceImage:UIImage, scaledToWidth: CGFloat) -> UIImage {
+        let oldWidth = sourceImage.size.width
+        let scaleFactor = scaledToWidth / oldWidth
+
+        let newHeight = sourceImage.size.height * scaleFactor
+        let newWidth = oldWidth * scaleFactor
+
+        UIGraphicsBeginImageContext(CGSize(width:newWidth, height:newHeight))
+        sourceImage.draw(in: CGRect(x:0, y:0, width:newWidth, height:newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
     }
     
     private lazy var aboutHeader: UILabel = {
