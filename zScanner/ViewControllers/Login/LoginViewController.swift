@@ -167,6 +167,62 @@ class LoginViewController: BaseViewController, ErrorHandling {
         }
         
         titleLabel.text = "login.screen.title".localized
+
+        view.addSubview(creditStackView)
+        creditStackView.snp.makeConstraints { make in
+            make.top.equalTo(container.snp.bottom).offset(100)
+            make.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        let bindworksStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "bindWorksLogo"), scaledToWidth: 150), text: "about.copyright.bindworks.title".localized)
+        creditStackView.addArrangedSubview(bindworksStackView)
+     
+        let teskaLabsStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "teskalabsLogo"), scaledToWidth: 150), text: "about.copyright.teskalabs.title".localized)
+        creditStackView.addArrangedSubview(teskaLabsStackView)
+        teskaLabsStackView.snp.makeConstraints { make in
+            make.height.equalTo(bindworksStackView.snp.height)
+        }
+    }
+    
+    private func getCompanyStackView(logo: UIImage, text: String) -> UIStackView {
+        let companyStackView = UIStackView()
+        companyStackView.axis = .vertical
+        companyStackView.alignment = .center
+        companyStackView.spacing = 0
+        companyStackView.addArrangedSubview(getCompanyText(text: text))
+        companyStackView.addArrangedSubview(getCompanyLogo(image: logo))
+        return companyStackView
+    }
+    
+    private func getCompanyLogo(image: UIImage) -> UIImageView {
+        let companyLogo = UIImageView(image: image)
+        companyLogo.contentMode = .scaleAspectFit
+        companyLogo.tintColor = .primary
+        return companyLogo
+    }
+    
+    private func getCompanyText(text: String) -> UILabel {
+        let companyText = UILabel()
+        companyText.text = text
+        companyText.textAlignment = .center
+        companyText.textColor = .primary
+        companyText.font = .credit
+        return companyText
+    }
+    
+    //Change the width of the image in that ratio
+    func scaleImage(sourceImage:UIImage, scaledToWidth: CGFloat) -> UIImage {
+        let oldWidth = sourceImage.size.width
+        let scaleFactor = scaledToWidth / oldWidth
+
+        let newHeight = sourceImage.size.height * scaleFactor
+        let newWidth = oldWidth * scaleFactor
+
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        sourceImage.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
     }
     
     private lazy var logoView: UIImageView = {
@@ -219,6 +275,15 @@ class LoginViewController: BaseViewController, ErrorHandling {
     private lazy var container: UIView = {
         let view = UIView()
         return view
+    }()
+    
+    private lazy var creditStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        return stackView
     }()
 }
 
