@@ -29,34 +29,93 @@ class AboutViewController: BaseViewController {
     private func setupView() {
         navigationItem.title = "drawer.aboutApp.title".localized
       
-        stackView.addArrangedSubview(drawerLogo)
-        stackView.addArrangedSubview(aboutHeader)
-        stackView.addArrangedSubview(aboutParagraph)
-        stackView.addArrangedSubview(aboutCopyright)
-        stackView.addArrangedSubview(versionLabel)
-
-        view.addSubview(stackView)
-        
-        stackView.snp.makeConstraints { make in
-            make.top.greaterThanOrEqualTo(safeArea).inset(20)
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().multipliedBy(0.666).priority(500)
-            make.width.equalToSuperview().multipliedBy(0.85)
-        }
-        
-        drawerLogo.snp.makeConstraints { make in
+        let medicalcLogo = getCompanyLogo(image: #imageLiteral(resourceName: "medicalcLogo"))
+        stackView.addArrangedSubview(medicalcLogo)
+        medicalcLogo.snp.makeConstraints { make in
             make.height.equalTo(102)
             make.width.equalTo(114)
         }
+        
+        stackView.addArrangedSubview(aboutHeader)
+        stackView.addArrangedSubview(aboutParagraph)
+        
+        let ikemStackView = getCompanyStackView(logo: #imageLiteral(resourceName: "ikemLogo"), text: "about.copyright.ikem.title".localized)
+        stackView.addArrangedSubview(ikemStackView)
+       
+        let bindworksStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "bindWorksLogo"), scaledToWidth: 200), text: "about.copyright.bindworks.title".localized, firstImage: false)
+        stackView.addArrangedSubview(bindworksStackView)
+        
+        let teskaLabsStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "teskalabsLogo"), scaledToWidth: 200), text: "about.copyright.teskalabs.title".localized, firstImage: false)
+        stackView.addArrangedSubview(teskaLabsStackView)
+        
+        stackView.addArrangedSubview(versionLabel)
+
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        
+        scrollView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(scrollView.snp.top)
+            make.leading.equalTo(scrollView.snp.leading)
+            make.trailing.equalTo(scrollView.snp.trailing)
+            make.bottom.equalTo(scrollView.snp.bottom)
+            make.width.equalTo(scrollView.snp.width)
+        }
     }
     
-    private lazy var drawerLogo: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "medicalcLogo")
-        imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .white
-        return imageView
-    }()
+    private func getCompanyStackView(logo: UIImage, text: String, firstImage: Bool = true) -> UIStackView {
+        let companyStackView = UIStackView()
+        companyStackView.axis = .vertical
+        companyStackView.alignment = .center
+        companyStackView.spacing = 0
+        
+        if firstImage {
+            companyStackView.addArrangedSubview(getCompanyLogo(image: logo))
+            companyStackView.addArrangedSubview(getCompanyText(text: text))
+        } else {
+            companyStackView.addArrangedSubview(getCompanyText(text: text))
+            companyStackView.addArrangedSubview(getCompanyLogo(image: logo))
+        }
+        
+        return companyStackView
+    }
+  
+    private func getCompanyLogo(image: UIImage) -> UIImageView {
+        let companyLogo = UIImageView()
+        companyLogo.image = image
+        companyLogo.contentMode = .scaleAspectFit
+        companyLogo.tintColor = .primary
+        return companyLogo
+    }
+    
+    private func getCompanyText(text: String) -> UILabel {
+        let companyText = UILabel()
+        companyText.text = text
+        companyText.textAlignment = .center
+        companyText.textColor = .primary
+        companyText.font = .footnote
+        return companyText
+    }
+    
+    func scaleImage(sourceImage:UIImage, scaledToWidth: CGFloat) -> UIImage {
+        let oldWidth = sourceImage.size.width
+        let scaleFactor = scaledToWidth / oldWidth
+
+        let newHeight = sourceImage.size.height * scaleFactor
+        let newWidth = oldWidth * scaleFactor
+
+        UIGraphicsBeginImageContext(CGSize(width:newWidth, height:newHeight))
+        sourceImage.draw(in: CGRect(x:0, y:0, width:newWidth, height:newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
     
     private lazy var aboutHeader: UILabel = {
         let label = UILabel()
@@ -76,21 +135,19 @@ class AboutViewController: BaseViewController {
         return label
     }()
     
-    private lazy var aboutCopyright: UILabel = {
-        let label = UILabel()
-        label.text = "about.copyright.title".localized
-        label.textAlignment = .center
-        label.textColor = .primary
-        label.font = .footnote
-        return label
-    }()
-    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 15
+        stackView.distribution = .fill
+        stackView.spacing = 30
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
+    }()
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        return scrollView
     }()
     
     private lazy var versionLabel: UILabel = {

@@ -83,8 +83,10 @@
 
 // MARK: - About
 "about.header.title" = "zScanner";
-"about.info.paragraph" = "Aplikace zScanner je určena k rychlému importu dokumentů vyšetření a fotodokumentace do NIS IKEM Zlatokop";
-"about.copyright.title" = "© 2019 Datové centrum IKEM";
+"about.info.paragraph" = "Aplikace zScanner je určena k rychlému importu dokumentů vyšetření a fotodokumentace do NIS Medicalc";
+"about.copyright.ikem.title" = "© 2020 Datové centrum IKEM";
+"about.copyright.bindworks.title" = "Design a vývoj";
+"about.copyright.teskalabs.title" = "Zabezpečeno pomocí SeaCat";
 
 // MARK: Error handling
 "dialog.requestError.ok" = "Ok";

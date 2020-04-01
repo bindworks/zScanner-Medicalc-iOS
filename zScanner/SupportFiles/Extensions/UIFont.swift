@@ -26,4 +26,9 @@ extension UIFont {
         let font = UIFont.systemFont(ofSize: 15, weight: .regular)
         return UIFontMetrics(forTextStyle: .footnote).scaledFont(for: font)
     }
+    
+    static var credit: UIFont {
+        let font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        return UIFontMetrics(forTextStyle: .footnote).scaledFont(for: font)
+    }
 }
