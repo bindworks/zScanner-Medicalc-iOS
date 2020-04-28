@@ -58,7 +58,7 @@
 "newDocumentPhotos.actioSheet.cameraAction" = "Vyfotit";
 "newDocumentPhotos.actioSheet.galleryAction" = "Vybrat z galerie";
 "newDocumentPhotos.actioSheet.cancel" = "Zrušit";
-"newDocumentPhotos.emptyView.title" = "Nejsou nahrány žádné fotografie, fotografii vyberete klepnutím na tlačítko +.";
+"newDocumentPhotos.emptyView.title" = "Nejsou nahrány žádné fotografie, fotografie vytvoříte klepnutím na tlačítko +.";
 "newDocumentPhotos.description.placeholder" = "Popisný název";
 
 "newDocument.popAlert.title" = "Opravdu chcete jít o krok zpět?";

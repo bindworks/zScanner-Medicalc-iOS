@@ -57,6 +57,7 @@ class ListItemSelectionViewController<T: ListItem>: BaseViewController, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = viewModel.list[indexPath.row]
         let cell = tableView.dequeueCell(UITableViewCell.self)
+        cell.textLabel?.numberOfLines = 0
         cell.textLabel?.text = item.title
         return cell
     }
