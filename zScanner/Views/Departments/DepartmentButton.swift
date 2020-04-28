@@ -43,6 +43,10 @@ class DepartmentButton: PrimaryButton {
     private func setup() {
         setTitle(model.name, for: .normal)
         
+        snp.makeConstraints { make in
+            make.height.equalTo(35)
+        }
+        
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

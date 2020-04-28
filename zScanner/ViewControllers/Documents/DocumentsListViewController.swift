@@ -183,7 +183,7 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
         departmentsContainerView.snp.makeConstraints { make in
             make.top.equalTo(tableView.snp.bottom).offset(16)
             make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(view.snp.height).multipliedBy(0.33)
+            make.height.equalTo(view.snp.height).multipliedBy(0.6)
         }
         
         departmentsContainerView.addSubview(departmentsHeaderView)
