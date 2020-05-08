@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>746617992183-9u9k6vut6oqnfvhv3uruai7mcph8rm9h.apps.googleusercontent.com</string>
+	<string>489308729351-bmvebdqb9f2dn2bp59odm1eb3ft38mcs.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.746617992183-9u9k6vut6oqnfvhv3uruai7mcph8rm9h</string>
+	<string>com.googleusercontent.apps.489308729351-bmvebdqb9f2dn2bp59odm1eb3ft38mcs</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAKfVgze20Zh9adBJ2xwOCxtR3ws7E14NQ</string>
+	<string>AIzaSyCuNhgn1WUQulFry5MPPztoztvjH2j2gdc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>746617992183</string>
+	<string>489308729351</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>cz.ikem.zScanner</string>
+	<string>cz.medicalc.zScanner-ios</string>
 	<key>PROJECT_ID</key>
-	<string>zscanner-8cd2f</string>
+	<string>medicalc-zscanner</string>
 	<key>STORAGE_BUCKET</key>
-	<string>zscanner-8cd2f.appspot.com</string>
+	<string>medicalc-zscanner.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:746617992183:ios:7d4d2ee53d1cacc8</string>
+	<string>1:489308729351:ios:4fc30388591c2ae2f47aa2</string>
 	<key>DATABASE_URL</key>
-	<string>https://zscanner-8cd2f.firebaseio.com</string>
+	<string>https://medicalc-zscanner.firebaseio.com</string>
 </dict>
 </plist>
