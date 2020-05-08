@@ -53,7 +53,7 @@ struct NativeAPI: API {
         
         let completionHandler: (Data?, URLResponse?, Error?) -> Void = { (data, response, error) in
             if let error = error {
-                callback(.error(RequestError(.serverError(error))))
+                callback(.error(RequestError(request is LoginRequest ? .seacatError : .serverError(error))))
                 return
             }
 

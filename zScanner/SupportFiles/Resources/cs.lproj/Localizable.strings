@@ -97,5 +97,5 @@
 "dialog.requestError.message[serverError]" = "Chyba serveru, prosím obraťte se na podporu. (%@)";
 "dialog.requestError.message[jsonParserError]" = "Chybný formát dat, zkuste to prosím znovu.";
 "dialog.requestError.message[dataCorruptedError]" = "Data nelze zpracovat, zkuste to prosím znovu.";
-"dialog.requestError.message[seacatError]" = "Nelze ověřit vaši identitu, prosím obraťte se na podporu.";
+"dialog.requestError.message[seacatError]" = "Nelze ověřit vaši identitu, zkontrolujte vaše přihlašovací údaje a zkuste to znovu.";
 "dialog.requestError.message[timeout]" = "Časový limit vypršel, zkuste to prosím znovu.";
