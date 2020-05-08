@@ -42,7 +42,7 @@ class AboutViewController: BaseViewController {
         let ikemStackView = getCompanyStackView(logo: #imageLiteral(resourceName: "ikemLogo"), text: "about.copyright.ikem.title".localized)
         stackView.addArrangedSubview(ikemStackView)
        
-        let bindworksStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "bindworksLogo"), scaledToWidth: 200), text: "about.copyright.bindworks.title".localized, firstImage: false)
+        let bindworksStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "bindWorksLogo"), scaledToWidth: 200), text: "about.copyright.bindworks.title".localized, firstImage: false)
         stackView.addArrangedSubview(bindworksStackView)
         
         let teskaLabsStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "teskaLabsLogo"), scaledToWidth: 200), text: "about.copyright.teskalabs.title".localized, firstImage: false)

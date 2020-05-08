@@ -174,7 +174,7 @@ class LoginViewController: BaseViewController, ErrorHandling {
             make.leading.trailing.equalToSuperview().inset(20)
         }
         
-        let bindworksStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "bindworksLogo"), scaledToWidth: 150), text: "about.copyright.bindworks.title".localized)
+        let bindworksStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "bindWorksLogo"), scaledToWidth: 150), text: "about.copyright.bindworks.title".localized)
         creditStackView.addArrangedSubview(bindworksStackView)
      
         let teskaLabsStackView = getCompanyStackView(logo: scaleImage(sourceImage: #imageLiteral(resourceName: "teskaLabsLogo"), scaledToWidth: 150), text: "about.copyright.teskalabs.title".localized)
