@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol DocumentViewDelegate: class {
-    func handleError(_ error: RequestError)
+    func processError(_ error: RequestError)
 }
 
 class DocumentTableViewCell: UITableViewCell {
@@ -90,7 +90,7 @@ class DocumentTableViewCell: UITableViewCell {
             self?.successImageView.isHidden = true
             self?.retryButton.isHidden = false
             if let error = error as? RequestError {
-                self?.delegate?.handleError(error)
+                self?.delegate?.processError(error)
             }
         }
         

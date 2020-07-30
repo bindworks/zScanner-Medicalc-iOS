@@ -94,8 +94,13 @@ extension DocumentsCoordinator: DocumentsListCoordinator {
     func createNewDocument(with department: DepartmentDomainModel) {
         runNewDocumentFlow(with: department)
     }
+    
     func openMenu() {
         menuCoordinator.openMenu()
+    }
+    
+    func forceLogout() {
+        logout()
     }
 }
 

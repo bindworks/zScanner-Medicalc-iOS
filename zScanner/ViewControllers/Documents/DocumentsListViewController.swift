@@ -12,6 +12,7 @@ import RxSwift
 protocol DocumentsListCoordinator: BaseCoordinator {
     func createNewDocument(with department: DepartmentDomainModel)
     func openMenu()
+    func forceLogout()
 }
 
 class DocumentsListViewController: BaseViewController, ErrorHandling {
@@ -92,6 +93,13 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                     }
                     
                 case .error(let error):
+                    if case let .serverError(e) = error.type {
+                        if let httpError = e as? HTTPError, httpError.errorCode == 403 {
+                            self.coordinator.forceLogout()
+                            return
+                        }
+                    }
+                    
                     self.resetButtons()
                     self.handleError(error)
                 }
@@ -128,11 +136,16 @@ class DocumentsListViewController: BaseViewController, ErrorHandling {
                             self.departmentsStackView.addArrangedSubview(button)
                         })
                     
-                case .error( _):
+                case .error(let error):
+                    if case let .serverError(e) = error.type {
+                        if let httpError = e as? HTTPError, httpError.errorCode == 403 {
+                            self.coordinator.forceLogout()
+                            return
+                        }
+                    }
+                
                     self.departmentsStackView.subviews.forEach({ $0.removeFromSuperview() })
-                    
                     self.departmentsStackView.addArrangedSubview(self.departmentsErrorView)
-                    
                 }
             })
             .disposed(by: disposeBag)
@@ -272,4 +285,15 @@ extension DocumentsListViewController: UITableViewDataSource {
 }
 
 //MARK: - DocumentViewDelegate implementation
-extension DocumentsListViewController: DocumentViewDelegate {}
+extension DocumentsListViewController: DocumentViewDelegate {
+    func processError(_ error: RequestError) {
+        if case let .serverError(e) = error.type {
+            if let httpError = e as? HTTPError, httpError.errorCode == 403 {
+                coordinator.forceLogout()
+                return
+            }
+        }
+        
+        handleError(error)
+    }
+}
